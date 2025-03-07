@@ -1,10 +1,11 @@
 import { Container, Row, Col } from "react-bootstrap";
 import StudentLeftPanel from "./StudentPanels/StudentLeftPanel"
+import StudentPostManager from "./StudentPanels/StudentPostManager"
 import { useLocation } from "react-router-dom"
 
 function StudentPage() {
     const location = useLocation();
-    const {username, password, userType} = location.state || {};
+    const {username, password} = location.state || {};
     return (
         <>
             <Container fluid>
@@ -13,7 +14,7 @@ function StudentPage() {
                         <StudentLeftPanel username={username} password={password}/>
                     </Col>
                     <Col md="9">
-                    Tutors' posts goes here
+                        <StudentPostManager />
                     </Col>
                 </Row>
             </Container>

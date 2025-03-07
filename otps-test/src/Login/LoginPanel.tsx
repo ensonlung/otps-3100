@@ -29,7 +29,7 @@ function LoginPanel({onSignIn}: LoginPanelProp) {
                         </Form.Group>
                     </Form>
                     <Button variant="success" onClick={() => onSignIn(username, password, userType)}>
-                        Sign-in
+                        Login
                     </Button>
                 </Card.Body>
             </Card>

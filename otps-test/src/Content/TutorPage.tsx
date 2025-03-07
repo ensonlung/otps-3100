@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 
 function TutorPage() {
     const location = useLocation();
-    const {username, password, userType} = location.state || {};
+    const {username, password} = location.state || {};
     return (
         <>
             <Container fluid>
