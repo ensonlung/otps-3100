@@ -1,13 +1,11 @@
 import LoginPanel from "./LoginPanel";
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
+import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
-    const HandleSignIn = (username: string, password: string) => {
-        navigate("/Content/Fake", { state: {username, password}, replace: true});
+    const HandleSignIn = (username: string, password: string, userType: string) => {
+        navigate(userType === "Student" ? "/Content/StudentPage" : "/Content/TutorPage", { state: {username, password}, replace: true});
     };
     return (
         <>
