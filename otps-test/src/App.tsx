@@ -1,4 +1,5 @@
 import Login from "./Login/Login"
+import Registration from "./Login/Registration"
 import Fake from "./Content/Fake"
 import StudentPage from "./Content/StudentPage"
 import TutorPage from "./Content/TutorPage"
@@ -10,6 +11,7 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/Login" element={<Login />} />
+                    <Route path="/Registration" element={<Registration />} />
                     <Route path="/Content/Fake" element={<Fake />} />
                     <Route path="/Content/StudentPage" element={<StudentPage />} />
                     <Route path="/Content/TutorPage" element={<TutorPage />} />

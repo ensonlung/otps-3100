@@ -9,11 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sequelize/mysql": "^7.0.0-alpha.45",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.13.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^7.2.0"
+    "react-phone-number-input": "^3.4.12",
+    "react-router-dom": "^7.2.0",
+    "sequelize": "^6.37.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
