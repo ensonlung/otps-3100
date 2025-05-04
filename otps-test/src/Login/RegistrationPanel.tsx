@@ -1,13 +1,37 @@
 import { Row, Col, Card, Form, Button } from "react-bootstrap"
-import 'react-phone-number-input/style.css'
-import PhoneInput from "react-phone-number-input"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function RegistrationPanel() {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState()
+    const [bday, setBday] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [userName, setUserName] = useState('')
+    const [password, setPassword] = useState('')
+    const [rePassword, setRePassword] = useState('')
+    const navigate = useNavigate();
+    const HandleRegister = async () => {
+        if (password != rePassword) {
+            console.log("Two passwords are not the same.");
+            alert("Two passwords are not the same. Register Failed.");
+            return;
+        }
+        try {
+            const studentInfo = [ [1, lastName, firstName, email, bday, phoneNumber, userName, password] ];
+            const response = await axios.post("http://localhost:5000/api/students/register", {
+                studentInfo: studentInfo,
+            });
+            console.log(response.data);
+            alert("Registration Complete. Please login again.");
+            navigate("/Login")
+        }
+        catch (error) {
+            console.error("Error registration");
+        }
+    };
     return (
         <>
             <Card style={{width: "32rem"}}>
@@ -34,35 +58,33 @@ function RegistrationPanel() {
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Birth Date:</Form.Label>
-                            <Col sm="10"><Form.Control type="date"></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="date" onChange={(e) => setBday(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Phone Number:</Form.Label>
-                            <Col sm="10">
-                                <PhoneInput placeholder="phone number" defaultCountry={"HK"} onChange={setPhoneNumber}/>
-                            </Col>
+                            <Col sm="10"><Form.Control type="phone" placeholder="phone number" onChange={(e) => setPhoneNumber(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Username:</Form.Label>
-                            <Col sm="10"><Form.Control type="text" placeholder="username"></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="text" placeholder="username" onChange={(e) => setUserName(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Row>
                             <Col md="5">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>Password:</Form.Label>
-                                    <Col sm="12"><Form.Control type="password" placeholder="password"></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="password" placeholder="password" onChange={(e) => setPassword(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                             <Col md="5">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>Re-enter Password:</Form.Label>
-                                    <Col sm="12"><Form.Control type="password" placeholder="password"></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="password" placeholder="password" onChange={(e) => setRePassword(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                         </Row>
                         
                     </Form>
-                    <Button variant="success" onClick={() => console.log(firstName, lastName, email, phoneNumber)}>
+                    <Button variant="success" onClick={HandleRegister}>
                         Register
                     </Button>
                 </Card.Body>
