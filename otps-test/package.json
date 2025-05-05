@@ -1,0 +1,39 @@
+{
+  "name": "otps-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@sequelize/mysql": "^7.0.0-alpha.45",
+    "axios": "^1.9.0",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "google-spreadsheet": "^4.1.4",
+    "google-spreadsheets": "^2.0.0",
+    "googleapis": "^148.0.0",
+    "mysql2": "^3.13.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.9",
+    "react-dom": "^18.2.0",
+    "react-number-format": "^5.4.4",
+    "react-phone-number-input": "^3.4.12",
+    "react-router-dom": "^7.2.0",
+    "sequelize": "^6.37.6",
+    "firebase": "^11.6.1",
+    "firebase-admin": "^13.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^4.9.3",
+    "vite": "^6.2.0"
+  }
+}
