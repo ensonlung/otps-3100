@@ -22,11 +22,11 @@ function RegistrationPanel() {
             return;
         }
         try {
-            const checkResponse = await axios.post('http://localhost:3000/api/check-username', {
+            const checkRegisterUsername = await axios.post('http://localhost:3000/api/check-username', {
                 username: userName,
             });
     
-            if (checkResponse.data.exists) {
+            if (checkRegisterUsername.data.exists) {
                 setError('Username already taken! Please choose a different username.');
                 return;
             }

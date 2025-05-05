@@ -41,5 +41,23 @@ app.post('/api/check-username', async (req, res) => {
   }
 });
 
+
+app.post('/api/check-login', async (req, res) => {
+  const { username } = req.body;
+  const { password } = req.body;
+  try {
+    const userRef = db.collection('student');
+    const snapshot = await userRef.where('studentInfo.username', '==', username).where('studentInfo.passowrd', '==', password).get();  
+    if (!snapshot.empty) {
+      return res.json({ success: true });
+    }
+    return res.json({ success: false });
+  } catch (error) {
+    console.error('Error checking login information:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
