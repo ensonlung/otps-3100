@@ -47,7 +47,7 @@ app.post('/api/check-login', async (req, res) => {
   const { password } = req.body;
   try {
     const userRef = db.collection('student');
-    const snapshot = await userRef.where('studentInfo.username', '==', username).where('studentInfo.passowrd', '==', password).get();  
+    const snapshot = await userRef.where('studentInfo.username', '==', username).where('studentInfo.password', '==', password).get();  
     if (!snapshot.empty) {
       return res.json({ success: true });
     }
