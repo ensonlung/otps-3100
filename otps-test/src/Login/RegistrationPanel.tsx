@@ -12,24 +12,37 @@ function RegistrationPanel() {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
+    const [error, setError] = useState('')
     const navigate = useNavigate();
     const HandleRegister = async () => {
+        setError('');
         if (password != rePassword) {
             console.log("Two passwords are not the same.");
-            alert("Two passwords are not the same. Register Failed.");
+            setError('Two passwords do not match. Register Failed.');
             return;
         }
         try {
+            const checkResponse = await axios.post('http://localhost:3000/api/check-username', {
+                username: userName,
+            });
+    
+            if (checkResponse.data.exists) {
+                setError('Username already taken! Please choose a different username.');
+                return;
+            }
+
             const studentInfo = {"id": 1, "last name": lastName, "first name": firstName, "email": email, 
-                "bday": bday, "phone number": phoneNumber, "user name": userName, "password": password};
+                "bday": bday, "phone number": phoneNumber, "username": userName, "password": password};
             const response = await axios.post("http://localhost:3000/api/students/register", {
                 studentInfo: studentInfo,
             });
+            
             console.log(response.data);
             alert("Registration Complete. Please login again.");
             navigate("/Login")
         }
         catch (error) {
+            setError('Registration failed. Please try again.');
             console.error("Error registration");
         }
     };
@@ -88,6 +101,7 @@ function RegistrationPanel() {
                     <Button variant="success" onClick={HandleRegister}>
                         Register
                     </Button>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                 </Card.Body>
             </Card>
         </>

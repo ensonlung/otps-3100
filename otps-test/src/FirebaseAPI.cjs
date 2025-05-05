@@ -26,5 +26,20 @@ app.post('/api/students/register', async (req, res) => {
   }
 });
 
+app.post('/api/check-username', async (req, res) => {
+  const { username } = req.body;
+  try {
+    const userRef = db.collection('student');
+    const snapshot = await userRef.where('studentInfo.username', '==', username).get();  
+    if (!snapshot.empty) {
+      return res.json({ exists: true });
+    }
+    return res.json({ exists: false });
+  } catch (error) {
+    console.error('Error checking username:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
