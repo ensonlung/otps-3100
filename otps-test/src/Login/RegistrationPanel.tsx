@@ -20,8 +20,9 @@ function RegistrationPanel() {
             return;
         }
         try {
-            const studentInfo = [ [1, lastName, firstName, email, bday, phoneNumber, userName, password] ];
-            const response = await axios.post("http://localhost:5000/api/students/register", {
+            const studentInfo = {"id": 1, "last name": lastName, "first name": firstName, "email": email, 
+                "bday": bday, "phone number": phoneNumber, "user name": userName, "password": password};
+            const response = await axios.post("http://localhost:3000/api/students/register", {
                 studentInfo: studentInfo,
             });
             console.log(response.data);

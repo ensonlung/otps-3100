@@ -6,7 +6,8 @@ You should have node.js installed (version 19+)
 Run `npm run dev` in `./otps-test/`
 
 ## Backend Launch
-Run `node ./GoogleSheetsAPI.cjs` in `./otps-test/src/`
+Google Sheet Version: Run `node ./GoogleSheetsAPI.cjs` in `./otps-test/src/`
+Firebase Version: Run `node ./FirebaseAPI.cjs` in `./otps-test/src/`
 
 ## Database
 Google sheets: https://docs.google.com/spreadsheets/d/1cimE_VuUp_lK_3b92_tJbh0q_GNDX-nwt2Ts6T1IlqU/edit?gid=0#gid=0
