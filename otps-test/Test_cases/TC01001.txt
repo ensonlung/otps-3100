@@ -1,9 +1,9 @@
-First Name: Carey
-Last Name: Lee
-Email: 1155212667@link.cuhk.edu.hk
-Birth Day: 02/03/2005
+First Name: Carrie
+Last Name: Lam
+Email: 115523453@link.cuhk.edu.hk
+Birth Day: 08/05/1982
 Phone Number: 56782335
-User Name: Carey
+User Name: Carrie
 Password: aAeEBa2Ff!7
 Re-enter Password: aAeEBa2Ff!7
 Invitation Code: TUT-INV01
