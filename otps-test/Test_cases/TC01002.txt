@@ -1,0 +1,9 @@
+First Name: Tom
+Last Name: Wong
+Email: 1145194472@link.cuhk.edu.hk
+Birth Day: 16/06/2004
+Phone Number: 54781432
+User Name: Tom
+Password: AaeE1idD-B
+Re-enter Password: AaeE1idD-B
+Invitation Code: TUT-INV02
