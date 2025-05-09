@@ -1,0 +1,117 @@
+Name: Amy Wong
+Female, Hong Kong
+
+Subject Offered: Math
+Available Days: Monday, Wednesday, Friday
+District: Kowloon
+Tuition Fee: 350/hr
+Email: amywong_tutor@gmail.com
+Contact: 9888-8888
+
+---
+
+Name: David Lee
+Male, Hong Kong
+
+Subject Offered: Chinese
+Available Days: Tuesday, Thursday
+District: Central
+Tuition Fee: 280/hr
+Email: davidlee_chinese@gmail.com
+Contact: 9777-7777
+
+---
+
+Name: Sarah Lam
+Female, Hong Kong
+
+Subject Offered: Science
+Available Days: Saturday, Sunday
+District: Tsuen Wan
+Tuition Fee: 400/hr
+Email: sarah_science@gmail.com
+Contact: 9666-6666
+
+---
+
+Name: Michael Ho
+Male, Hong Kong
+
+Subject Offered: English, Math
+Available Days: Wednesday, Saturday
+District: Mong Kok
+Tuition Fee: 320/hr
+Email: michaelho_tutor@gmail.com
+Contact: 9555-5555
+
+---
+
+Name: Jessica Ng
+Female, Hong Kong
+
+Subject Offered: History
+Available Days: Monday, Friday
+District: Wan Chai
+Tuition Fee: 300/hr
+Email: jessica_history@gmail.com
+Contact: 9444-4444
+
+---
+
+Name: Kevin Cheung
+Male, Hong Kong
+
+Subject Offered: Physics
+Available Days: Thursday, Sunday
+District: Sha Tin
+Tuition Fee: 380/hr
+Email: kevinphysics@gmail.com
+Contact: 9333-3333
+
+---
+
+Name: Emily Tsang
+Female, Hong Kong
+
+Subject Offered: Chemistry
+Available Days: Tuesday, Saturday
+District: Kwun Tong
+Tuition Fee: 360/hr
+Email: emilychem@gmail.com
+Contact: 9222-2222
+
+---
+
+Name: Brian Lau
+Male, Hong Kong
+
+Subject Offered: Biology
+Available Days: Wednesday, Friday
+District: Tai Po
+Tuition Fee: 340/hr
+Email: brianbio@gmail.com
+Contact: 9111-1111
+
+---
+
+Name: Cindy Yeung
+Female, Hong Kong
+
+Subject Offered: Geography
+Available Days: Monday, Thursday
+District: Yuen Long
+Tuition Fee: 310/hr
+Email: cindygeo@gmail.com
+Contact: 9000-0000
+
+---
+
+Name: Alex Wong
+Male, Hong Kong
+
+Subject Offered: Economics
+Available Days: Saturday, Sunday
+District: Causeway Bay
+Tuition Fee: 420/hr
+Email: alexecon@gmail.com
+Contact: 9123-4567
