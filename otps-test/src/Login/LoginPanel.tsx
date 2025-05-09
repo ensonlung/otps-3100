@@ -15,7 +15,7 @@ function LoginPanel({onSignIn}: LoginPanelProp) {
     const HandleLogin = async () => {
         setError('');
         try {
-            const checkLogin = await axios.post('http://localhost:3000/api/check-login', {
+            const checkLogin = await axios.post('http://localhost:3000/api/verify-login', {
                 username: username,
                 password: password,
             });

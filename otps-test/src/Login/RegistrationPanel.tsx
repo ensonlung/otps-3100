@@ -22,7 +22,7 @@ function RegistrationPanel() {
             return;
         }
         try {
-            const checkRegisterUsername = await axios.post('http://localhost:3000/api/check-username', {
+            const checkRegisterUsername = await axios.post('http://localhost:3000/api/verify-username', {
                 username: userName,
             });
     
@@ -33,7 +33,7 @@ function RegistrationPanel() {
 
             const studentInfo = {"id": 1, "last name": lastName, "first name": firstName, "email": email, 
                 "bday": bday, "phone number": phoneNumber, "username": userName, "password": password};
-            const response = await axios.post("http://localhost:3000/api/students/register", {
+            const response = await axios.post("http://localhost:3000/api/register", {
                 studentInfo: studentInfo,
             });
             
