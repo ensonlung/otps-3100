@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import FilterForm from "./FilterForm"
+import SearchBar from "./SearchBar"
 import TutorPost from "../Widget/TutorPost"
 
 function StudentPostManager() {
@@ -11,6 +12,8 @@ function StudentPostManager() {
                         <TutorPost />
                     </Col>
                     <Col className="bg-light" md="4">
+                        <SearchBar />
+                        <br/>
                         <FilterForm />
                     </Col>
                 </Row>

@@ -1,7 +1,7 @@
 import { Form, Button } from "react-bootstrap"
 import { useState } from "react"
 
-function StudentPostManager() {
+function FilterForm() {
     // Options
     const subjects = [
         "All", "Chinese", "English", "Mathematics", "History", "Chinese History", "Chemistry", "Biology", "Physics", "Geography", "Economics"
@@ -96,4 +96,4 @@ function StudentPostManager() {
     );
 }
 
-export default StudentPostManager;
+export default FilterForm;
