@@ -4,7 +4,7 @@ const searchController = {
     searchRelevantName: async (req, res) => {
         const { name } = req.body;
         try {
-            const userRef = db.collection('student');
+            const userRef = db.collection('account');
             const snapshot = await userRef.get(); // Fetch all documents
             const matchingRecords = [];
 

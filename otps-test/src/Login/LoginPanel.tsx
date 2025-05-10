@@ -18,6 +18,7 @@ function LoginPanel({onSignIn}: LoginPanelProp) {
             const checkLogin = await axios.post('http://localhost:3000/api/verify-login', {
                 username: username,
                 password: password,
+                userType: userType,
             });
             if (!checkLogin.data.success){
                 setError('Username or Password is wrong.');

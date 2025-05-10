@@ -4,9 +4,10 @@ const loginController = {
     verifyLogin: async (req, res) => {
     const { username } = req.body;
     const { password } = req.body;
+    const { userType } = req.body;
     try {
-      const userRef = db.collection('student');
-      const snapshot = await userRef.where('studentInfo.username', '==', username).where('studentInfo.password', '==', password).get();  
+      const userRef = db.collection('account');
+      const snapshot = await userRef.where('userInfo.username', '==', username).where('userInfo.password', '==', password).where('userInfo.user type', '==', userType).get();  
       if (!snapshot.empty) {
         return res.json({ success: true });
       }

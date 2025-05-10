@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function RegistrationPanel() {
+    const [userType, setUserType] = useState('Student');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ function RegistrationPanel() {
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
     const [error, setError] = useState('')
+    const [id, setId] = useState(0);
     const navigate = useNavigate();
     const HandleRegister = async () => {
         setError('');
@@ -30,11 +32,11 @@ function RegistrationPanel() {
                 setError('Username already taken! Please choose a different username.');
                 return;
             }
-
-            const studentInfo = {"id": 1, "last name": lastName, "first name": firstName, "email": email, 
+            setId(id + 1);
+            const userInfo = {"id": id, "user type": userType, "last name": lastName, "first name": firstName, "email": email, 
                 "bday": bday, "phone number": phoneNumber, "username": userName, "password": password};
             const response = await axios.post("http://localhost:3000/api/register", {
-                studentInfo: studentInfo,
+                userInfo: userInfo,
             });
             
             console.log(response.data);
@@ -52,6 +54,12 @@ function RegistrationPanel() {
                 <Card.Header>Register</Card.Header>
                 <Card.Body>
                     <Form>
+                        <Row>
+                        <div key="inline-radio" className="mb-3">
+                            <Form.Check inline label="Student" name="user" type={"radio"} defaultChecked onClick={() => setUserType("Student")}/>
+                            <Form.Check inline label="Tutor" name="user" type={"radio"} onClick={() => setUserType("Tutor")}/>
+                        </div>
+                        </Row>
                         <Row>
                             <Col md="6">
                                 <Form.Group as={Row} className="mb-3">
