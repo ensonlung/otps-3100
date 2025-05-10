@@ -18,6 +18,7 @@ interface FilterFormProps {
 
     // On Filter Button Click
     const HandleFilter = async(e: React.FormEvent) => {
+        e.preventDefault(); // Prevent form submission from refreshing the page
         try {
             const filteredPost = await axios.post('http://localhost:3000/api/filter-post', {
                 subject: subject,
@@ -28,21 +29,22 @@ interface FilterFormProps {
                 fee: fee,
             });
             const rawPosts: any[] = filteredPost.data.posts;
-            
+
             const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
-                name: post.name,
-                gender: post.gender,
-                subject: post.subject,
-                district: post.district,
-                tuitionFee: post.fee,
-                availableDays: post.days,
-                contact: post.contact,
+                name: post.name || 'Unknown',
+                gender: post.gender || 'Unknown',
+                subject: post.subject || [],
+                district: post.district || [],
+                tuitionFee: post.fee || 'Not specified',
+                availableDays: post.day || [],
+                contact: post.contact || 'Not Spec',
             }));
-            
+
             setDisplayPosts(formattedPost);
         }
         catch (error) {
             console.error("Error Filtering");
+            setDisplayPosts([]);
         }
         console.log(subject, gender, district, day, time, fee);
     }

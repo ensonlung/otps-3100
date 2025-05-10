@@ -9,7 +9,7 @@ const filterController = {
       const { time } = req.body;
       const { fee } = req.body;
         try {
-          let postRef = await db.collection('post');
+          let postRef = db.collection('post');
           if (gender != 'All'){
             const userSnapshot = await db.collection('account').where(gender, '==', gender).get();
             const names = [];
@@ -38,21 +38,25 @@ const filterController = {
               postRef = postRef.where('postContent.fee','>=', 350);
               break;
           }
-          const filteredPost = [];
-          postRef.get().then((querySnapshot) => {
-            querySnapshot.forEach(post => {
-              filteredPost.push({
-                name: post.name,
-                subject: post.subject,
-                gender: post.gender,
-                day: post.day,
-                district: post.district,
-                fee: post.fee,
-              });
-            });
-          });
-          
-          return res.status(201).json({ posts: filteredPost });
+          const querySnapshot = await postRef.get();
+          const filteredPosts = await Promise.all(
+            querySnapshot.docs.map(async (doc) => {
+              const postData = doc.data().postContent;
+              const gender = await getGenderByName(postData.username);
+
+              return {
+                name: postData.username,
+                subject: postData.subject,
+                gender: gender,
+                day: postData.day,
+                district: postData.district,
+                fee: postData.fee,
+                contact: "9824-3576",
+              };
+            })
+          );
+          console.log(filteredPosts);
+          return res.status(201).json({ posts: filteredPosts });
         } 
         catch (error) {
           console.log(error);
@@ -60,5 +64,16 @@ const filterController = {
         }
     },
 };
+
+async function getGenderByName(name) {
+  try {
+    const userQuery = await db.collection('account').where('userInfo.username', '==', name).get();
+    const userData = userQuery.docs[0].data();
+    return userData.userInfo.gender;
+  } catch (error) {
+    console.error('Error fetching gender for name', name, ':', error);
+    return undefined;
+  }
+}
 
 module.exports = filterController;

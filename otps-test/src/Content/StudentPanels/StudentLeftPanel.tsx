@@ -1,7 +1,7 @@
 import { Container, Row, Card, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
-interface StudentLeftPanelProp {
+export interface StudentLeftPanelProp {
     username: string;
     password: string;
 }

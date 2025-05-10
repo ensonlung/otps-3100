@@ -15,7 +15,7 @@ function TutorPage() {
                         <TutorLeftPanel username={username} password={password}/>
                     </Col>
                     <Col md="6">
-                        <TutorPostForm/>
+                        <TutorPostForm username={username} password={password}/>
                     </Col>
                     <Col className="bg-light" md="3">
                         <h3>Feedback</h3>

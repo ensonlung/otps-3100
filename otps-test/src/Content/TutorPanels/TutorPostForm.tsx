@@ -2,8 +2,10 @@ import { Row, Col, Modal, Button, Form } from "react-bootstrap"
 import Select from "react-select"
 import { useState } from "react"
 import { subjects, districts, days } from "../../TutorPostInfo.cjs"
+import axios from "axios";
+import { StudentLeftPanelProp } from "../StudentPanels/StudentLeftPanel";
 
-function TutorPostForm() {
+function TutorPostForm({username, password}: StudentLeftPanelProp) {
     // useStates
     const [showModal, setShowModal] = useState(false)
 
@@ -18,9 +20,16 @@ function TutorPostForm() {
 
     // Handle Create Psot
     const HandleCreatePost = async() => {
-        // TODO(Mario)
-        console.log(subject, district, day, startTime, endTime, fee, selfIntro);
-        setShowModal(false);
+        try{
+            const createPost = await axios.post('http://localhost:3000/api/create-post', {
+                postContent: {username, subject, district, day, startTime, endTime, fee, selfIntro}
+            });
+            console.log(subject, district, day, startTime, endTime, fee, selfIntro);
+            setShowModal(false);
+        }
+        catch (error){
+            console.error("Error Post Creation");
+        }
     }
 
     return (
