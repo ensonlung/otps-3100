@@ -1,0 +1,16 @@
+/* TutorPost.module.css */
+.title {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Tab-like space between name and username */
+  }
+  
+  .name {
+    color: #2c3e50; /* Dark blue color for name */
+    font-size: 1.5rem; /* Font size for name (24px) */
+  }
+  
+  .username {
+    color: #7f8c8d; /* Gray color for username */
+    font-size: 1.05rem; /* Font size for username (20px) */
+  }

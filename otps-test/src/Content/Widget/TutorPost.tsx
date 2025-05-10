@@ -2,6 +2,7 @@ import { Form, Card, ListGroup, Row, Col, Button, Modal } from "react-bootstrap"
 import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
+import styles from './TutorPost.module.css';
 
 export interface TutorPostProps {
     name: string;
@@ -46,7 +47,7 @@ function TutorPost(props: TutorPostProps) {
         <>
             <Card>
                 <Card.Body>
-                    <Card.Title> {props.name}    @{props.username} </Card.Title>
+                    <Card.Title> {props.name} <span className={styles.username}>@{props.username}</span></Card.Title>
                     <Card.Text> {props.gender} </Card.Text>
                 </Card.Body>
                 <ListGroup>
@@ -58,11 +59,11 @@ function TutorPost(props: TutorPostProps) {
                 </ListGroup>
                 <Form>
                     <Form.Group>
-                    <Form.Label>Leave your comments here:</Form.Label>
+                    {/* <Form.Label>Leave your comments here:</Form.Label> */}
                     {/* <Form.Control as="textarea" placeholder="Type here" value={comment} onChange={(e) => {setComment(e.target.value)}}/> */}
                     <Row>
-                        <Col md="2">Rating:</Col>
-                        <Col md="6">
+                        {/* <Col md="2">Rating:</Col> */}
+                        {/* <Col md="6"> */}
                             {/* { <Form.Select value={rate} onChange={(e) => {setRate(e.target.value)}}> }
                                 <option>1</option>
                                 <option>2</option>
@@ -70,7 +71,7 @@ function TutorPost(props: TutorPostProps) {
                                 <option>4</option>
                                 <option>5</option>
                             </Form.Select> */}
-                        </Col>
+                        {/* </Col> */}
                         {/* <Col md="2"><Button variant="success" onClick={HandleComment}>Comment</Button></Col> */}
                         {/* <Col md="2"><Button variant="danger" onClick={() => setShowReport(true)}>Report</Button></Col> */}
                     </Row>
@@ -79,13 +80,13 @@ function TutorPost(props: TutorPostProps) {
             </Card>
 
                 {/* <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}> */}
-                <Modal.Header closeButton>
-                    <Modal.Title>Report Post</Modal.Title>
-                </Modal.Header>
+                {/* <Modal.Header closeButton> */}
+                    {/* <Modal.Title>Report Post</Modal.Title> */}
+                {/* </Modal.Header> */}
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Reason:</Form.Label>
+                            {/* <Form.Label>Reason:</Form.Label> */}
                             {/* <Select isMulti options={reportReason} onChange={(e) => {setReason(Array.from(e, (reason) => reason.label))}}/> */}
                             <br/>
                             {/* <Form.Control as="textarea" placeholder="Specify reasons if needed" onChange={(e) => setSpecialReason(e.target.value)}/> */}
