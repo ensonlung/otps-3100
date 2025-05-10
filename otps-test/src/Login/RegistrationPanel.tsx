@@ -7,6 +7,7 @@ function RegistrationPanel() {
     const [userType, setUserType] = useState('Student');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
+    const [gender, setGender] = useState('');
     const [email, setEmail] = useState('');
     const [bday, setBday] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -14,7 +15,6 @@ function RegistrationPanel() {
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
     const [error, setError] = useState('')
-    const [id, setId] = useState(0);
     const navigate = useNavigate();
     const HandleRegister = async () => {
         setError('');
@@ -32,9 +32,8 @@ function RegistrationPanel() {
                 setError('Username already taken! Please choose a different username.');
                 return;
             }
-            setId(id + 1);
-            const userInfo = {"id": id, "user type": userType, "last name": lastName, "first name": firstName, "email": email, 
-                "bday": bday, "phone number": phoneNumber, "username": userName, "password": password};
+            const userInfo = {"user type": userType, "last name": lastName, "first name": firstName, "gender": gender,
+                "email": email, "bday": bday, "phone number": phoneNumber, "username": userName, "password": password};
             const response = await axios.post("http://localhost:3000/api/register", {
                 userInfo: userInfo,
             });
@@ -56,8 +55,8 @@ function RegistrationPanel() {
                     <Form>
                         <Row>
                         <div key="inline-radio" className="mb-3">
-                            <Form.Check inline label="Student" name="user" type={"radio"} defaultChecked onClick={() => setUserType("Student")}/>
-                            <Form.Check inline label="Tutor" name="user" type={"radio"} onClick={() => setUserType("Tutor")}/>
+                            <Form.Check inline label="Student" name="type" type={"radio"} defaultChecked onClick={() => setUserType("Student")}/>
+                            <Form.Check inline label="Tutor" name="type" type={"radio"} onClick={() => setUserType("Tutor")}/>
                         </div>
                         </Row>
                         <Row>
@@ -73,6 +72,15 @@ function RegistrationPanel() {
                                     <Col sm="12"><Form.Control type="text" placeholder="last name" onChange={(e) => setLastName(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
+                        </Row>
+                        <Row>
+                        <div key="inline-radio" className="mb-3">
+                            <Form.Label>Gender:</Form.Label>
+                            <Col>
+                            <Form.Check inline label="Male" name="gender" type={"radio"} defaultChecked onClick={() => setGender("Male")}/>
+                            <Form.Check inline label="Female" name="gender" type={"radio"} onClick={() => setGender("Female")}/>
+                            </Col>
+                        </div>
                         </Row>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Email:</Form.Label>
