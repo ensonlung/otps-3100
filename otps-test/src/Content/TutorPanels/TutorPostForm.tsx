@@ -1,4 +1,5 @@
 import { Row, Col, Modal, Button, Form } from "react-bootstrap"
+import Select from "react-select"
 import { useState } from "react"
 import { subjects, districts, days } from "../../TutorPostInfo.cjs"
 
@@ -7,9 +8,9 @@ function TutorPostForm() {
     const [showModal, setShowModal] = useState(false)
 
     // new post useStates
-    const [subject, setSubject] = useState("Chinese")
-    const [district, setDistrict] = useState("Island")
-    const [day, setDay] = useState("Monday")
+    const [subject, setSubject] = useState<string[]>([])
+    const [district, setDistrict] = useState<string[]>([])
+    const [day, setDay] = useState<string[]>([])
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [fee, setFee] = useState("0")
@@ -34,27 +35,15 @@ function TutorPostForm() {
                     <Form>
                         <Form.Group>
                             <Form.Label>Subject</Form.Label>
-                            <Form.Select onChange={(e) => setSubject(e.target.value)}>
-                                {
-                                    subjects.slice(1).map((subject, index) => (<option key={index}>{subject}</option>))
-                                }
-                            </Form.Select>
+                            <Select isMulti options={subjects.slice(1)} onChange={(e) => {setSubject(Array.from(e, (subject) => subject.label))}}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>District</Form.Label>
-                            <Form.Select onChange={(e) => setDistrict(e.target.value)}>
-                                {
-                                    districts.slice(1).map((district, index) => (<option key={index}>{district}</option>))
-                                }
-                            </Form.Select>
+                            <Select isMulti options={districts.slice(1)} onChange={(e) => {setDistrict(Array.from(e, (district) => district.label))}}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Day</Form.Label>
-                            <Form.Select onChange={(e) => setDay(e.target.value)}>
-                                {
-                                    days.slice(1).map((day, index) => (<option key={index}>{day}</option>))
-                                }
-                            </Form.Select>
+                            <Select isMulti options={days.slice(1)} onChange={(e) => {setDay(Array.from(e, (day) => day.label))}}/>
                         </Form.Group>
                         <Row>
                             <Col md="6">

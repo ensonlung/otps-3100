@@ -26,7 +26,7 @@ function FilterForm() {
                     <Form.Label>Subject:</Form.Label>
                     <Form.Select onChange={(e) => setSubject(e.target.value)}>
                         {
-                            subjects.map((subject, index) => (<option key={index}>{subject}</option>))
+                            subjects.map((subject, index) => (<option key={index}>{subject.label}</option>))
                         }
                     </Form.Select>
                 </Form.Group>
@@ -42,7 +42,7 @@ function FilterForm() {
                     <Form.Label>District:</Form.Label>
                     <Form.Select onChange={(e) => setDistrict(e.target.value)}>
                         {
-                            districts.map((district, index) => (<option key={index}>{district}</option>))
+                            districts.map((district, index) => (<option key={index}>{district.label}</option>))
                         }
                     </Form.Select>
                 </Form.Group>
@@ -50,7 +50,7 @@ function FilterForm() {
                     <Form.Label>Day:</Form.Label>
                     <Form.Select onChange={(e) => setDay(e.target.value)}>
                         {
-                            days.map((day, index) => (<option key={index}>{day}</option>))
+                            days.map((day, index) => (<option key={index}>{day.label}</option>))
                         }
                     </Form.Select>
                 </Form.Group>
