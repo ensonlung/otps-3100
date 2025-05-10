@@ -51,3 +51,9 @@ export const times = [
 export const fees = [
     "All", "<$150", "$150-$250", "$250-$350", ">$350"
 ]
+
+export const reportReason = [
+    { label: "Improper Fee", value: 0 },
+    { label: "Inappropriate Content in Self Description", value: 1},
+    { label: "Others (please specify in the text box below)", value: 2}
+]
