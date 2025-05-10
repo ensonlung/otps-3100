@@ -31,6 +31,7 @@ interface FilterFormProps {
             const rawPosts: any[] = filteredPost.data.posts;
 
             const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
+                username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',
                 subject: post.subject || [],

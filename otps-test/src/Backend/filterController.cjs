@@ -42,12 +42,13 @@ const filterController = {
           const filteredPosts = await Promise.all(
             querySnapshot.docs.map(async (doc) => {
               const postData = doc.data().postContent;
-              const gender = await getGenderByName(postData.username);
+              const record = await getRecordByName(postData.username);
 
               return {
-                name: postData.username,
+                username: postData.username,
+                name: record["last name"] + record["first name"],
                 subject: postData.subject,
-                gender: gender,
+                gender: record.gender,
                 day: postData.day,
                 district: postData.district,
                 fee: postData.fee,
@@ -65,11 +66,11 @@ const filterController = {
     },
 };
 
-async function getGenderByName(name) {
+async function getRecordByName(name) {
   try {
     const userQuery = await db.collection('account').where('userInfo.username', '==', name).get();
     const userData = userQuery.docs[0].data();
-    return userData.userInfo.gender;
+    return userData.userInfo;
   } catch (error) {
     console.error('Error fetching gender for name', name, ':', error);
     return undefined;

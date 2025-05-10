@@ -5,6 +5,7 @@ import { reportReason } from "../../TutorPostInfo.cjs"
 
 export interface TutorPostProps {
     name: string;
+    username: string;
     gender: 'Male' | 'Female';
     subject: string[];
     district: string[];
@@ -45,7 +46,7 @@ function TutorPost(props: TutorPostProps) {
         <>
             <Card>
                 <Card.Body>
-                    <Card.Title> {props.name} </Card.Title>
+                    <Card.Title> {props.name}    @{props.username} </Card.Title>
                     <Card.Text> {props.gender} </Card.Text>
                 </Card.Body>
                 <ListGroup>

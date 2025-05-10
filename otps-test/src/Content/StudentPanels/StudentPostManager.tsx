@@ -22,6 +22,7 @@ const StudentPostManager: React.FC = () => {
             const rawPosts: any[] = response.data.posts;
 
             const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',
                 subject: post.subject || [],
