@@ -9,6 +9,8 @@ function StudentPostManager() {
             <Container fluid>
                 <Row>
                     <Col md="8">
+                        <TutorPost /> <br/>
+                        <TutorPost /> <br/>
                         <TutorPost />
                     </Col>
                     <Col className="bg-light" md="4">
