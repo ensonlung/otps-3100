@@ -3,11 +3,17 @@ import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
 
-interface TutorPostProp {
-    // TODO
-}
+export interface TutorPostProps {
+    name: string;
+    gender: 'Male' | 'Female';
+    subject: string[];
+    district: string[];
+    availableDays: string[];
+    tuitionFee: string;
+    contact: string;
+  }
 
-function TutorPost() {
+function TutorPost(props: TutorPostProps) {
     const [rate, setRate] = useState("1")
     const [comment, setComment] = useState("")
 
@@ -39,16 +45,16 @@ function TutorPost() {
         <>
             <Card>
                 <Card.Body>
-                    <Card.Title>Peter Chan</Card.Title>
-                    <Card.Text>Male, Hong Kong</Card.Text>
+                    <Card.Title> {props.name} </Card.Title>
+                    <Card.Text> {props.gender} </Card.Text>
                 </Card.Body>
                 <ListGroup>
-                    <ListGroup.Item>Subject Offered: English</ListGroup.Item>
-                    <ListGroup.Item>Available Days: Thursday, Saturday</ListGroup.Item>
-                    <ListGroup.Item>District: Shatin</ListGroup.Item>
-                    <ListGroup.Item>Tuition Fee: 300/hr</ListGroup.Item>
-                    <ListGroup.Item>Email: smartpeter@gmail.com</ListGroup.Item>
-                    <ListGroup.Item>Contact: 9999-9999</ListGroup.Item>
+                    <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
+                    <ListGroup.Item>Available Days: {props.availableDays.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
+                    {/* <ListGroup.Item>Email: smartpeter@gmail.com</ListGroup.Item>
+                    <ListGroup.Item>Contact: 9999-9999</ListGroup.Item> */}
                 </ListGroup>
                 <Form>
                     <Form.Group>

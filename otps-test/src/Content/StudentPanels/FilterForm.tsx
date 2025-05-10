@@ -1,10 +1,14 @@
 import { Form, Button } from "react-bootstrap"
-import { useState } from "react"
+import React, { useState } from "react"
 import { subjects, districts, days, times, fees } from "../../TutorPostInfo.cjs"
+import axios from "axios";
+import { TutorPostProps } from "../Widget/TutorPost";
 
-function FilterForm() {
+interface FilterFormProps {
+    setDisplayPosts: (posts: TutorPostProps[]) => void;
+  }
 
-    // useStates
+  const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {   
     const [subject, setSubject] = useState("All")
     const [gender, setGender] = useState("All")
     const [district, setDistrict] = useState("All")
@@ -13,8 +17,33 @@ function FilterForm() {
     const [fee, setFee] = useState("All")
 
     // On Filter Button Click
-    const HandleFilter = async() => {
-        // TODO(Mario)
+    const HandleFilter = async(e: React.FormEvent) => {
+        try {
+            const filteredPost = await axios.post('http://localhost:3000/api/filter-post', {
+                subject: subject,
+                gender: gender,
+                district: district,
+                day: day,
+                time: time,
+                fee: fee,
+            });
+            const rawPosts: any[] = filteredPost.data.posts;
+            
+            const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
+                name: post.name,
+                gender: post.gender,
+                subject: post.subject,
+                district: post.district,
+                tuitionFee: post.fee,
+                availableDays: post.days,
+                contact: post.contact,
+            }));
+            
+            setDisplayPosts(formattedPost);
+        }
+        catch (error) {
+            console.error("Error Filtering");
+        }
         console.log(subject, gender, district, day, time, fee);
     }
 
