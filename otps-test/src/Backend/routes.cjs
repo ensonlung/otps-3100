@@ -11,5 +11,6 @@ const reportController = require('./reportController.cjs');
 router.post('/register', registerController.registerAccount);
 router.post('/verify-username', registerController.verifyUsername);
 router.post('/verify-login', loginController.verifyLogin);
+router.post('/create-post', postController.createPost);
 
 module.exports = router;
