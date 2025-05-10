@@ -1,6 +1,7 @@
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import TutorLeftPanel from "./TutorPanels/TutorLeftPanel"
 import TutorPostForm from "./TutorPanels/TutorPostForm"
+import TutorFeedBack from "./TutorPanels/TutorFeedback"
 import { useLocation } from "react-router-dom"
 
 function TutorPage() {
@@ -17,7 +18,8 @@ function TutorPage() {
                         <TutorPostForm/>
                     </Col>
                     <Col className="bg-light" md="3">
-                        Students' comments go here
+                        <h3>Feedback</h3>
+                        <TutorFeedBack/>
                     </Col>
                 </Row>
             </Container>

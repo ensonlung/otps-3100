@@ -57,3 +57,9 @@ export const reportReason = [
     { label: "Inappropriate Content in Self Description", value: 1},
     { label: "Others (please specify in the text box below)", value: 2}
 ]
+
+export const tutorReportReason = [
+    { label: "Hate Speech", value: 0 },
+    { label: "Unrelated content", value: 1},
+    { label: "Others (please specify in the text box below)", value: 2}
+]
