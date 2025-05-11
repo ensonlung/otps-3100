@@ -1,8 +1,10 @@
 import { Card, ListGroup, Button, Modal, Col, Row } from "react-bootstrap"
 import { useState } from "react"
 import styles from '../Widget/TutorPost.module.css';
+import axios from "axios";
 
 export interface AdminPostProps {
+    id: string;
     username: string;
     subject: string[];
     district: string[];
@@ -13,20 +15,38 @@ export interface AdminPostProps {
     specificReason: string;
 }
 
-function AdminPost(props: AdminPostProps) {
-    const HandleRemovePost = async () => {
+function AdminPost(props: AdminPostProps, onPostChange: () => void) {
+    const [reportId, setReportId] = useState("")
+    const HandleRemovePost = async (reportId: string) => {
         // TODO(mario):
-        console.log("remove post")
+        try{
+            console.log("remove post")
+
+        } catch (error){
+            console.log(error);
+        }
     }
 
-    const HandleRemoveUser = async () => {
+    const HandleRemoveUser = async (reportId: string) => {
         // TODO(mario)
-        console.log("remove user")
+        try{
+            console.log("remove user")
+
+        } catch (error){
+            console.log(error);
+        }
     }
 
-    const HandleIgnore = async () => {
-        // TODO(mario)
-        console.log("ignore")
+    const HandleIgnore = async (reportId: string) => {
+        try{
+            console.log("ignore")
+            const response = await axios.post('http://localhost:3000/api/ignore', {
+                id: reportId,
+            });
+            onPostChange();
+        } catch (error){
+            console.log(error);
+        }
     }
 
     return (
@@ -45,9 +65,9 @@ function AdminPost(props: AdminPostProps) {
                     <ListGroup.Item>Specific Reason: {props.specificReason}</ListGroup.Item>
                 </ListGroup>
                 <Row>
-                    <Col md="3"><Button variant="danger" onClick={HandleRemovePost}>Remove Post</Button></Col>
-                    <Col md="3"><Button variant="danger" onClick={HandleRemoveUser}>Remove User</Button></Col>
-                    <Col md="3"><Button variant="secondary" onClick={HandleIgnore}>Ignore</Button></Col>
+                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemovePost(props.id)}}>Remove Feedback</Button></Col>
+                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemoveUser(props.id)}}>Remove User</Button></Col>
+                    <Col md="4"><Button variant="secondary" onClick={() => {HandleIgnore(props.id)}}>Ignore</Button></Col>
                 </Row>
             </Card>
             <br/>

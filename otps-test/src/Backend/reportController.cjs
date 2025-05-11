@@ -7,7 +7,8 @@ const reportController = {
             const { reportReason } = req.body;
             const { reportSpecialReason } = req.body;
             const { id } = req.body;
-            await db.collection('report record').add({ "target": target, "id": id, "report reason": reportReason, "report special reason": reportSpecialReason});
+            const record = await db.collection('report record').add({ "target": target, "id": id, "report reason": reportReason, "report special reason": reportSpecialReason});
+            await record.update({ 'reportId': record.id});  
             res.status(201).json({ success: true });
         } 
         catch (error) {
@@ -19,6 +20,7 @@ const reportController = {
         try {
             const rePostRef = await db.collection('report record').where('target', '==', 'Post').get();
             const rePosts = rePostRef.docs.map(rePost => ({
+                reportId: rePost.data().reportId,
                 id: rePost.data().id,
                 reportReason: rePost.data()["report reason"],
                 reportSpecialReason: rePost.data()["report special reason"],
@@ -47,6 +49,7 @@ const reportController = {
         try {
             const reFeedbackRef = await db.collection('report record').where('target', '==', 'Feedback').get();
             const reFeedbacks = reFeedbackRef.docs.map(reFeedback => ({
+                reportId: reFeedback.data().reportId,
                 id: reFeedback.data().id,
                 reportReason: reFeedback.data()["report reason"],
                 reportSpecialReason: reFeedback.data()["report special reason"],

@@ -8,6 +8,7 @@ const searchController = require('./searchController.cjs');
 const commentController = require('./commentController.cjs');
 const reportController = require('./reportController.cjs');
 const updateController = require('./updateController.cjs');
+const adminController = require('./adminController.cjs');
 
 router.post('/register', registerController.registerAccount);
 router.post('/verify-username', registerController.verifyUsername);
@@ -19,8 +20,10 @@ router.post('/get-comment', commentController.getComment);
 router.post('/search', searchController.searchRelevantName);
 router.post('/report', reportController.report);
 router.post('/update-info', updateController.updateInfo);
-
 router.post('/get-report-post', reportController.fetchPostReport);
 router.post('/get-report-feedback', reportController.fetchFeedbackReport);
+router.post('/remove-post', adminController.removePost);
+router.post('/remove-user', adminController.removeUser);
+router.post('/ignore', adminController.ignore);
 
 module.exports = router;

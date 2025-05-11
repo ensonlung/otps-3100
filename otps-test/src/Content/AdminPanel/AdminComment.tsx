@@ -1,26 +1,47 @@
+import { useState } from "react";
 import { Card, ListGroup, Button, Modal, Col, Row } from "react-bootstrap"
+import axios from "axios";
 
 export interface AdminFeedbackProps {
+    id: string;
     comment: string;
     rating: string;
     reportReason: string[];
     specificReason: string;
 }
 
-function AdminComment(props: AdminFeedbackProps) {
-    const HandleRemovePost = async () => {
+function AdminComment(props: AdminFeedbackProps, onFeedbackChange: () => void) {    
+    const [reportId, setReportId] = useState("")
+    const HandleRemoveFeedback = async (reportId: string) => {
         // TODO(mario):
-        console.log("remove report")
+        try{
+            console.log("remove feedback")
+
+        } catch (error){
+            console.log(error);
+        }
     }
 
-    const HandleRemoveUser = async () => {
+    const HandleRemoveUser = async (reportId: string) => {
         // TODO(mario)
-        console.log("remove user")
+        try{
+            console.log("remove user")
+
+        } catch (error){
+            console.log(error);
+        }
     }
 
-    const HandleIgnore = async () => {
-        // TODO(mario)
-        console.log("ignore")
+    const HandleIgnore = async (reportId: string) => {
+        try{
+            console.log("ignore", reportId);
+            const response = await axios.post('http://localhost:3000/api/ignore', {
+                id: reportId,
+            });
+            onFeedbackChange();
+        } catch (error){
+            console.log(error);
+        }
     }
     return (
         <>
@@ -32,9 +53,9 @@ function AdminComment(props: AdminFeedbackProps) {
                     <ListGroup.Item>Specific Reason: {props.specificReason}</ListGroup.Item>
                 </ListGroup>
                 <Row>
-                    <Col md="4"><Button variant="danger" onClick={HandleRemovePost}>Remove Post</Button></Col>
-                    <Col md="4"><Button variant="danger" onClick={HandleRemoveUser}>Remove User</Button></Col>
-                    <Col md="4"><Button variant="secondary" onClick={HandleIgnore}>Ignore</Button></Col>
+                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemoveFeedback(props.id)}}>Remove Feedback</Button></Col>
+                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemoveUser(props.id)}}>Remove User</Button></Col>
+                    <Col md="4"><Button variant="secondary" onClick={() => {HandleIgnore(props.id)}}>Ignore</Button></Col>
                 </Row>
             </Card>
         </>
