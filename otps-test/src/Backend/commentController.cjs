@@ -7,7 +7,8 @@ const commentController = {
           const { rating } = req.body;
           const { tutorName } = req.body;
           console.log(comment, rating);
-          await db.collection('comment').add({"comment": comment, "rating": rating, "tutor name": tutorName});
+          const docRef = await db.collection('comment').add({"comment": comment, "rating": rating, "tutor name": tutorName});
+          await docRef.update({ 'id': docRef.id });           
           res.status(201).json({ message: 'comment added' });
         } 
         catch (error) {
