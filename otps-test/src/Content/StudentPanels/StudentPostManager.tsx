@@ -50,6 +50,7 @@ const StudentPostManager: React.FC<StudentPostManagerProps> = ({ username }) => 
           availableDays: post.day || [],
           contact: post.contact || 'Not Spec',
           selfIntro: post.selfIntro || "None",
+          isHide: post.isHide,
         }));
         setDisplayPosts(formattedPosts);
       } catch (error) {

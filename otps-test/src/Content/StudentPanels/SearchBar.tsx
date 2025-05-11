@@ -28,7 +28,8 @@ const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
                 selfIntro: post.selfIntro || "None",
-                getHide: false,  
+                getHide: false, 
+                isHide: post.isHide, 
             }));
 
             setDisplayPosts(formattedPost);

@@ -88,6 +88,7 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                 contact: post.contact || 'Not Spec',
                 selfIntro: post.selfIntro,
                 time: post.time,
+                isHide: post.isHide,
             }));
             setDisplayPosts(formattedPosts);
           } catch (error) {

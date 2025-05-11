@@ -43,6 +43,7 @@ function CommentPage() {
           availableDays: post.day || [],
           contact: post.contact || 'Not Spec',
           selfIntro: post.selfIntro || "None",
+          isHide: post.isHide,
         }));
         setDisplayPosts(formattedPosts);
       } catch (error) {

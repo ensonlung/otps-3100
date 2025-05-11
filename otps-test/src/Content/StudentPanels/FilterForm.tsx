@@ -48,6 +48,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
                 selfIntro: post.selfIntro || "None",
+                isHide: post.isHide,
             }));
             setDisplayPosts(formattedPost);
         }

@@ -46,7 +46,6 @@ const filterController = {
       let posts = [];
       const postRef = getHide ? await db.collection('post') : await db.collection('post').where('postContent.isHide', '==', false);
 
-      // Gender filter
       let names = [];
       if (gender && gender !== 'Any') {
         const userSnapshot = await db.collection('account').where('userInfo.gender', '==', gender).get();
@@ -129,7 +128,6 @@ const filterController = {
       } else if (subject === 'Any' && district === 'Any' && day === 'Any') {
         allPosts = subjectResults;
       }
-
       posts = Array.from(allPosts.values());
 
       if (posts.length === 0) {
@@ -185,6 +183,7 @@ const filterController = {
             time: formattedStartTime && formattedEndTime ? `${formattedStartTime} - ${formattedEndTime}` : 'Not specified',            fee: post.fee || 'Not specified',
             contact: record?.["phone number"] || "Not Spec",
             selfIntro: post.selfIntro || "None",
+            isHide: post.isHide,
           };
         })
       );

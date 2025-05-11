@@ -13,6 +13,7 @@ export interface TutorPostProps {
   tuitionFee: string;
   contact: string;
   selfIntro: string;
+  isHide: string;
 }
 
 function TutorPost(props: TutorPostProps, onComment: (username: string) => void) {

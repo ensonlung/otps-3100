@@ -12,6 +12,7 @@ function TutorPostSelf(props: TutorPostProps) {
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
     const [showHide, setShowHide] = useState(false)
+    const [isHide, setIsHide] = useState("");
 
     const [username, setUserName] = useState<string[]>([])
     const [subject, setSubject] = useState<string[]>([])
@@ -44,8 +45,8 @@ function TutorPostSelf(props: TutorPostProps) {
                 tuitionFee: post.tuitionFee,
                 contact: post.contact,
                 selfIntro: post.selfIntro,
+                isHide: post.isHide,
             }));
-            formattedPosts.reverse();
             setPosts(formattedPosts);
             } catch (error) {
                 console.error('Error fetching initial posts:', error);
@@ -67,7 +68,7 @@ function TutorPostSelf(props: TutorPostProps) {
 
     const HandleHide = async() => {
         try {
-            const response = await axios.post('http://localhost:3000/api/delete-post', {
+            const response = await axios.post('http://localhost:3000/api/hide-post', {
                 id: postId,
             });
         } catch (error){
@@ -89,7 +90,7 @@ function TutorPostSelf(props: TutorPostProps) {
                 </ListGroup>
                 <Row>
                     <Col md="2"><Button variant="danger" onClick={() => {setPostId(props.id), setShowDelete(true)}}>Delete</Button></Col>
-                    <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id), setShowHide(true)}}>Hide</Button></Col>
+                    <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id),  setIsHide(props.isHide), setShowHide(true)}}>{props.isHide.toString() == "false" ? "Hide" : "Show"}</Button></Col>
                     <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true)}}>Edit</Button></Col>
                 </Row>
                 
@@ -155,11 +156,11 @@ function TutorPostSelf(props: TutorPostProps) {
 
             <Modal show={showHide} backdrop="static" onHide={() => {setShowHide(false)}}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Confirm Hide?</Modal.Title>
+                    <Modal.Title>Confirm {isHide.toString() == "false" ? "Hide" : "Show"}?</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => {setShowHide(false)}}>Cancel</Button>
-                    <Button variant="success" onClick={HandleHide}>Hide</Button>
+                    <Button variant="success" onClick={HandleHide}>{isHide.toString() == "false" ? "Hide" : "Show"}</Button>
                 </Modal.Footer>
             </Modal>
             <br/>
