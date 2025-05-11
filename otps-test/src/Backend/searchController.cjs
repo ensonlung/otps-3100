@@ -18,7 +18,7 @@ const searchController = {
             if (matchingRecords.length == 0){
               return res.json({ posts: [] });
             }
-            const postRef = db.collection('post').where('postContent.username', 'in', matchingRecords);
+            const postRef = db.collection('post').where('postContent.isHide', '==', false).where('postContent.username', 'in', matchingRecords);
             postRef.orderBy('postContent.createdAt', 'desc');
             const querySnapshot = await postRef.get();
             const filteredPosts = await Promise.all(

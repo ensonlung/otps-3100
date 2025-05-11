@@ -44,7 +44,7 @@ const filterController = {
     const { subject, gender, district, day, startTime, endTime, fee, uname } = req.body;
     try {
       let posts = [];
-      const postRef = db.collection('post');
+      const postRef = await db.collection('post').where('postContent.isHide', '==', false);
 
       // Gender filter
       let names = [];

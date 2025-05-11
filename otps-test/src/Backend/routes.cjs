@@ -15,6 +15,7 @@ router.post('/verify-username', registerController.verifyUsername);
 router.post('/verify-login', loginController.verifyLogin);
 router.post('/create-post', postController.createPost);
 router.post('/delete-post', postController.deletePost);
+router.post('/hide-post', postController.hidePost);
 router.post('/filter-post', filterController.filterPost);
 router.post('/comment', commentController.createComment);
 router.post('/get-comment', commentController.getComment);

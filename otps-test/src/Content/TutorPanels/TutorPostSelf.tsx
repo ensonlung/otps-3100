@@ -66,7 +66,13 @@ function TutorPostSelf(props: TutorPostProps) {
     }
 
     const HandleHide = async() => {
-        // TODO
+        try {
+            const response = await axios.post('http://localhost:3000/api/delete-post', {
+                id: postId,
+            });
+        } catch (error){
+            console.error('Error delete posts:', error);
+        }
         setShowHide(false)
     }
 

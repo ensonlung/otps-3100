@@ -1,5 +1,3 @@
-//import { usePatternFormat } from 'react-number-format';
-
 const { db } = require('./firebase.cjs');
 const admin = require('firebase-admin');
 
@@ -11,6 +9,7 @@ const postController = {
           const docRef = await db.collection('post').add({ postContent });
           await docRef.update({ 'postContent.id': docRef.id });       
           await docRef.update({ 'postContent.createdAt': admin.firestore.FieldValue.serverTimestamp() });  
+          await docRef.update({ 'postContent.isHide': false });  
           res.status(201).json({ id: docRef.id, message: 'Document added' });
         } 
         catch (error) {
@@ -55,7 +54,19 @@ const postController = {
         console.log(error);
         res.status(500).json({ error });
       }
-  },
+    },
+    hidePost: async (req, res) => {
+      try {
+        const { id } = req.body;
+        const docRef = await db.collection('post').doc(id);
+        await docRef.update('')
+        res.status(201).json({ success: true });
+      } 
+      catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+      }
+    },
 };
 
 module.exports = postController;
