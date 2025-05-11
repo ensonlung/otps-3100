@@ -7,6 +7,14 @@ import { TutorPostProps } from "../Widget/TutorPost";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"
 
+const TutorPostWrapper: React.FC<{
+    post: TutorPostProps;
+    onComment: (username: string) => void;
+    index: number;
+  }> = ({ post, onComment, index }) => {
+    return <>{TutorPost(post, onComment)}</>;
+  }
+  
 const StudentPostManager: React.FC = () => {
     const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
       useEffect(() => {
@@ -19,6 +27,7 @@ const StudentPostManager: React.FC = () => {
                 day: "All",
                 time: "All",
                 fee: "All",
+                uname: "All",
             });
             const rawPosts: any[] = response.data.posts;
 
@@ -50,13 +59,20 @@ const StudentPostManager: React.FC = () => {
             <Container fluid>
                 <Row>
                     <Col md="8">
-                        {displayPosts.length > 0 ? (
+                    {displayPosts.length > 0 ? (
                         <ul>
-                            {displayPosts.map((post) => TutorPost(post, HandleEnterCommentPage))}
+                            {displayPosts.map((post, index) => (
+                                <TutorPostWrapper
+                                key={index}
+                                post={post}
+                                onComment={HandleEnterCommentPage}
+                                index={index}
+                                />
+                            ))}
                         </ul>
-                        ) : (
-                            <p>No posts found.</p>                        
-                        )}
+                    ) : (
+                        <p>No posts found.</p>
+                    )}
                     </Col>
                     <Col className="bg-light" md="4">
                         <SearchBar />
