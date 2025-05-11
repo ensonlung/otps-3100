@@ -33,7 +33,7 @@ const searchController = {
                   day: postData.day,
                   district: postData.district,
                   fee: postData.fee,
-                  contact: "9824-3576",
+                  contact: record["phone number"],
                 };
               })
             );

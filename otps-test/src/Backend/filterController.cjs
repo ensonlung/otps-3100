@@ -55,11 +55,10 @@ const filterController = {
                 day: postData.day,
                 district: postData.district,
                 fee: postData.fee,
-                contact: "9824-3576",
+                contact: record["phone number"],
               };
             })
           );
-          console.log(filteredPosts);
           return res.status(201).json({ posts: filteredPosts });
         } 
         catch (error) {
