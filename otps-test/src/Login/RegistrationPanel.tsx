@@ -17,9 +17,22 @@ function RegistrationPanel() {
     const [rePassword, setRePassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate();
+    const NewDay = new Date("01-01-2020");
+    const OldDay = new Date("01-01-1900");
+    const Bday = new Date(bday);
     const HandleRegister = async () => { //add validation check
         setError('');
-        if (password != rePassword) {
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+            console.log("Invalid email");
+            setError('Invalid email. Register Failed.');
+            return;
+        }
+        else if (Bday>=NewDay || Bday<=OldDay) {
+            console.log("Invalid Birth Day");
+            setError('Invalid birth date. Register Failed.');
+            return;
+        }
+        else if (password != rePassword) {
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match. Register Failed.');
             return;
@@ -54,6 +67,12 @@ function RegistrationPanel() {
             setError('Password cannot contain username. Register Failed.');
             return;
         }
+        else if (lastName.length==0 ||firstName.length==0 || userName.length==0 || email.length==0 
+            || gender.length==0 || bday.length==0 || phoneNumber.length==0) {
+                console.log("Please fill in all data");
+                setError('Please fill in all data. Register Failed.');
+                return;
+            }
         try {
             const checkRegisterUsername = await axios.post('http://localhost:3000/api/verify-username', {
                 username: userName,
