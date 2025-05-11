@@ -32,6 +32,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 endTime: (endTimeOption === "Any" ? "Any" : endTime),
                 fee: fee,
                 uname: 'Any',
+                getHide: false,  
             });
             const rawPosts: any[] = filteredPost.data.posts;
 

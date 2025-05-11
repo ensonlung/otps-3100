@@ -26,7 +26,8 @@ function CommentPage() {
           fee: "Any",
           startTime: "Any",
           endTime: "Any",
-          uname: tutorUsername, // Use tutorUsername for filtering posts
+          uname: tutorUsername, 
+          getHide: false,  
         });
         const rawPosts: any[] = response.data.posts;
 

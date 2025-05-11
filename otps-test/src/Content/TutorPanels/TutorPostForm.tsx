@@ -70,7 +70,8 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                 time: "Any",
                 fee: "Any",
                 startTime: "Any",
-                endTime: "Any",     
+                endTime: "Any",   
+                getHide: true,  
                 uname: username,
             });
             const rawPosts: any[] = response.data.posts;

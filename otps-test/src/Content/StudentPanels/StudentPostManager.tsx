@@ -34,6 +34,7 @@ const StudentPostManager: React.FC<StudentPostManagerProps> = ({ username }) => 
           uname: "Any",
           startTime: "Any",
           endTime: "Any",
+          getHide: false,  
         });
         const rawPosts: any[] = response.data.posts;
 

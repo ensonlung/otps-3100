@@ -41,10 +41,10 @@ const isRangeOverlap = (postStart, postEnd, startTime, endTime) => {
 
 const filterController = {
   filterPost: async (req, res) => {
-    const { subject, gender, district, day, startTime, endTime, fee, uname } = req.body;
+    const { subject, gender, district, day, startTime, endTime, fee, uname, getHide } = req.body;
     try {
       let posts = [];
-      const postRef = await db.collection('post').where('postContent.isHide', '==', false);
+      const postRef = getHide ? await db.collection('post') : await db.collection('post').where('postContent.isHide', '==', false);
 
       // Gender filter
       let names = [];

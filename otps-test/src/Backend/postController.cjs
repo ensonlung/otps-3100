@@ -59,7 +59,8 @@ const postController = {
       try {
         const { id } = req.body;
         const docRef = await db.collection('post').doc(id);
-        await docRef.update('')
+        const hide = (await docRef.get()).data().postContent.isHide;
+        await docRef.update('postContent.isHide', !hide);
         res.status(201).json({ success: true });
       } 
       catch (error) {
