@@ -73,7 +73,7 @@ function RegistrationPanel() {
             return;
         }
         else if (lastName.length==0 ||firstName.length==0 || userName.length==0 || email.length==0 
-            || gender.length==0 || bday.length==0 || phoneNumber.length==0) {
+            || gender.length==0 || bday.length==0) {
                 console.log("Please fill in all data");
                 setError('Please fill in all data. Register Failed.');
                 return;

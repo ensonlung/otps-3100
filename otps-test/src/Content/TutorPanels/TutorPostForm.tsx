@@ -59,7 +59,6 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
             console.error("Error Post Creation");
         }
     }
-
     useEffect(() => {
         const fetchInitialPosts = async () => {
           try {

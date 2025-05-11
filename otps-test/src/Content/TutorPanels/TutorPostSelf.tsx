@@ -3,8 +3,10 @@ import Select from "react-select"
 import { useState } from "react"
 import styles from '../Widget/TutorPost.module.css';
 import { subjects, districts, days } from "../../TutorPostInfo.cjs";
+import axios from "axios"
 
 export interface TutorPostProps {
+    id: string
     name: string;
     username: string;
     gender: 'Male' | 'Female';
@@ -15,6 +17,7 @@ export interface TutorPostProps {
     contact: string;
 }
 
+
 function TutorPostSelf(props: TutorPostProps) {
 
     // useStates for report
@@ -22,6 +25,7 @@ function TutorPostSelf(props: TutorPostProps) {
     const [showDelete, setShowDelete] = useState(false)
     const [showHide, setShowHide] = useState(false)
 
+    const [username, setUserName] = useState<string[]>([])
     const [subject, setSubject] = useState<string[]>([])
     const [district, setDistrict] = useState<string[]>([])
     const [day, setDay] = useState<string[]>([])
@@ -29,11 +33,35 @@ function TutorPostSelf(props: TutorPostProps) {
     const [endTime, setEndTime] = useState("")
     const [fee, setFee] = useState("")
     const [selfIntro, setSelfIntro] = useState("")
+    const [posts, setPosts] = useState<TutorPostProps[]>([])
     
 
     const HandleEdit = async () => {
         // TODO
-        setShowEdit(false)
+        try { //Fetch-buggy
+            const response = await axios.post('http://localhost:3000/api/get-post', {
+                tutorName: username,
+            });
+            const rawPosts: any[] = response.data.posts;
+
+            const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                id: post.id,
+                name: post.name,
+                username: post.username,
+                gender: post.gender,
+                subject: post.subject,
+                district: post.district,
+                availableDays: post.availableDays,
+                tuitionFee: post.tuitionFee,
+                contact: post.contact,
+            }));
+            formattedPosts.reverse();
+            setPosts(formattedPosts);
+            } catch (error) {
+                console.error('Error fetching initial posts:', error);
+                setPosts([]);
+            }
+        setShowEdit(true)
     }
 
     const HandleDelete = async() => {
