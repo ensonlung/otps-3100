@@ -14,6 +14,8 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
     const [district, setDistrict] = useState("All")
     const [day, setDay] = useState("All")
     const [time, setTime] = useState("All")
+    const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
     const [fee, setFee] = useState("All")
 
     // On Filter Button Click
@@ -44,7 +46,6 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 contact: post.contact || 'Not Spec',
                 selfIntro: post.selfIntro || "None",
             }));
-            formattedPost.reverse();
             setDisplayPosts(formattedPost);
         }
         catch (error) {
@@ -90,14 +91,14 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                         }
                     </Form.Select>
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>Time:</Form.Label>
-                    <Form.Select onChange={(e) => setTime(e.target.value)}>
-                        {
-                            times.map((time, index) => (<option key={index}>{time}</option>))
-                        }
-                    </Form.Select>
-                </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Start Time:</Form.Label>
+                            <Form.Control type="time" onChange={(e) => setStartTime(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>End Time:</Form.Label>
+                            <Form.Control type="time" onChange={(e) => setEndTime(e.target.value)}/>
+                        </Form.Group>
                 <Form.Group>
                     <Form.Label>Expected Fee:</Form.Label>
                     <Form.Select onChange={(e) => setFee(e.target.value)}>
