@@ -24,10 +24,6 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
 
     // Handle Create Psot
     const HandleCreatePost = async() => {
-        // starttime < endtime
-        // fee > 0
-        // everything != ""
-        //console.log(subject, district, day, startTime, endTime, fee, selfIntro); return;
         if (subject.length == 0 || district.length == 0 || day.length == 0 || startTime == "" || endTime == "" || selfIntro == ""){
             console.log("Please fill in all fields.");
             setError("Please fill in all fields.");
