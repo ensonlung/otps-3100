@@ -51,7 +51,7 @@ function AdminPage() {
             <Container fluid>
                 <Row>
                     <Col className="bg-light" md="2">
-                        <AdminLeftPanel username={username} password={password}/>
+                        <AdminLeftPanel username={username}/>
                     </Col>
                     <Col md="6">
                         <h3>Post Reports</h3>
