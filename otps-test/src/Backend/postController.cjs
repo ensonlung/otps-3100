@@ -6,6 +6,7 @@ const postController = {
           const { postContent } = req.body;
           console.log("post", postContent);
           const docRef = await db.collection('post').add({ postContent });
+          await docRef.update({ 'postContent.id': docRef.id });           
           res.status(201).json({ id: docRef.id, message: 'Document added' });
         } 
         catch (error) {
