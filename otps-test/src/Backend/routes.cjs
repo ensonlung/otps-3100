@@ -7,6 +7,7 @@ const filterController = require('./filterController.cjs');
 const searchController = require('./searchController.cjs');
 const commentController = require('./commentController.cjs');
 const reportController = require('./reportController.cjs');
+const updateController = require('./updateController.cjs');
 
 router.post('/register', registerController.registerAccount);
 router.post('/verify-username', registerController.verifyUsername);
@@ -17,6 +18,7 @@ router.post('/comment', commentController.createComment);
 router.post('/get-comment', commentController.getComment);
 router.post('/search', searchController.searchRelevantName);
 router.post('/report', reportController.report);
+router.post('/update-info', updateController.updateInfo);
 
 
 module.exports = router;

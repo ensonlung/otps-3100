@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import axios from "axios";
 
 export interface StudentLeftPanelProp {
     username: string;
@@ -26,6 +27,17 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
 
     const HandleInfoUpdate = async () => {
         // TODO:
+        try {
+            const updatedInfo = {"last name": lastName, "first name": firstName, "gender": gender,
+                "email": email, "bday": bday, "phone number": phoneNumber};
+            const response = await axios.post("http://localhost:3000/api/update-info", {
+                username: username,
+                updatedInfo: updatedInfo,
+            });
+            alert("User information updated");
+        } catch (error) {
+            alert("Failed to update user information");
+        }
         setShowUpdate(false);
     }
 
