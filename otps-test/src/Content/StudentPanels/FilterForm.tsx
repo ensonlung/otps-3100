@@ -42,7 +42,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
             }));
-
+            formattedPost.reverse();
             setDisplayPosts(formattedPost);
         }
         catch (error) {

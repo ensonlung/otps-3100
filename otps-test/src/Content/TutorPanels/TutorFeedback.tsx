@@ -55,7 +55,7 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                     comment: feedback.comment,
                     rating: feedback.rating,
                 }));
-                console.log(formattedFeedbacks.length);
+                formattedFeedbacks.reverse();
                 setFeedbacks(formattedFeedbacks);
                 } catch (error) {
                     console.error('Error fetching initial posts:', error);

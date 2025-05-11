@@ -42,6 +42,7 @@ const StudentPostManager: React.FC = () => {
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
             }));
+            formattedPosts.reverse();
             setDisplayPosts(formattedPosts);
           } catch (error) {
             console.error('Error fetching initial posts:', error);
