@@ -73,8 +73,6 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
             <h3>My Posts</h3>
             <Button variant="success" onClick={() => {setShowModal(true)}}>Create Post</Button>
 
-            
-
             <Modal show={showModal} backdrop="static" onHide={() => {setShowModal(false)}}>
                 <Modal.Header closeButton>
                     <Modal.Title>Create New Post</Modal.Title>

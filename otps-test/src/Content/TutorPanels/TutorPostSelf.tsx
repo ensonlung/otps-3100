@@ -1,6 +1,8 @@
 import { Form, Card, ListGroup, Button, Modal, Row, Col } from "react-bootstrap"
+import Select from "react-select"
 import { useState } from "react"
 import styles from '../Widget/TutorPost.module.css';
+import { subjects, districts, days } from "../../TutorPostInfo.cjs";
 
 export interface TutorPostProps {
     name: string;
@@ -19,6 +21,15 @@ function TutorPostSelf(props: TutorPostProps) {
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
     const [showHide, setShowHide] = useState(false)
+
+    const [subject, setSubject] = useState<string[]>([])
+    const [district, setDistrict] = useState<string[]>([])
+    const [day, setDay] = useState<string[]>([])
+    const [startTime, setStartTime] = useState("")
+    const [endTime, setEndTime] = useState("")
+    const [fee, setFee] = useState("")
+    const [selfIntro, setSelfIntro] = useState("")
+    
 
     const HandleEdit = async () => {
         // TODO
@@ -72,7 +83,42 @@ function TutorPostSelf(props: TutorPostProps) {
                     <Modal.Title>Edit Post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Subject</Form.Label>
+                            <Select isMulti options={subjects.slice(1)} onChange={(e) => {setSubject(Array.from(e, (subject) => subject.label))}}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>District</Form.Label>
+                            <Select isMulti options={districts.slice(1)} onChange={(e) => {setDistrict(Array.from(e, (district) => district.label))}}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Day</Form.Label>
+                            <Select isMulti options={days.slice(1)} onChange={(e) => {setDay(Array.from(e, (day) => day.label))}}/>
+                        </Form.Group>
+                        <Row>
+                            <Col md="6">
+                                <Form.Group as={Row} className="mb-3">
+                                    <Form.Label>Start Time:</Form.Label>
+                                    <Col sm="12"><Form.Control type="time" onChange={(e) => setStartTime(e.target.value)}/></Col>
+                                </Form.Group>
+                            </Col>
+                            <Col md="6">
+                                <Form.Group as={Row} className="mb-3">
+                                    <Form.Label>End Time:</Form.Label>
+                                    <Col sm="12"><Form.Control type="time" onChange={(e) => setEndTime(e.target.value)}/></Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Form.Group>
+                            <Form.Label>Per Hour Tuition Fee (in HKD)</Form.Label>
+                            <Form.Control type="int" placeholder="0" onChange={(e) => setFee(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Self Description</Form.Label>
+                            <Form.Control as="textarea" rows={4} placeholder="Describe Yourself" onChange={(e) => setSelfIntro(e.target.value)}/>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => {setShowEdit(false)}}>Cancel</Button>
@@ -84,9 +130,6 @@ function TutorPostSelf(props: TutorPostProps) {
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Hide?</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    
-                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => {setShowHide(false)}}>Cancel</Button>
                     <Button variant="success" onClick={HandleHide}>Hide</Button>
