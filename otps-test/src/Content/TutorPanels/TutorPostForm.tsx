@@ -18,11 +18,40 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
     const [day, setDay] = useState<string[]>([])
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
-    const [fee, setFee] = useState("0")
+    const [fee, setFee] = useState<number>(0)
     const [selfIntro, setSelfIntro] = useState("")
+    const [error, setError] = useState("")
 
     // Handle Create Psot
     const HandleCreatePost = async() => {
+        // starttime < endtime
+        // fee > 0
+        // everything != ""
+        //console.log(subject, district, day, startTime, endTime, fee, selfIntro); return;
+        if (subject.length == 0 || district.length == 0 || day.length == 0 || startTime == "" || endTime == "" || selfIntro == ""){
+            console.log("Please fill in all fields.");
+            setError("Please fill in all fields.");
+            alert("Please fill in all fields.");
+            return;
+        }
+        else if (startTime >= endTime){
+            console.log("Start time should be earlier than end time.");
+            setError("Start time should be earlier than end time.");
+            alert("Start time should be earlier than end time.");
+            return;
+        }
+        else if (fee <= 0){
+            console.log("Fee should be greater than 0.");
+            setError("Fee should be greater than 0.");
+            alert("Fee should be greater than 0.");
+            return;
+        }
+        else if (selfIntro.length > 500){
+            console.log("Self Introduction too long.");
+            setError("Self Introduction too long.");
+            alert("Self Introduction too long.");
+            return;
+        }
         try{
             const createPost = await axios.post('http://localhost:3000/api/create-post', {
                 postContent: {username, subject, district, day, startTime, endTime, fee, selfIntro}
@@ -107,7 +136,7 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                         </Row>
                         <Form.Group>
                             <Form.Label>Per Hour Tuition Fee (in HKD)</Form.Label>
-                            <Form.Control type="int" placeholder="0" onChange={(e) => setFee(e.target.value)}/>
+                            <Form.Control type="int" placeholder="0" onChange={(e) => setFee(parseInt(e.target.value))}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Self Description</Form.Label>
