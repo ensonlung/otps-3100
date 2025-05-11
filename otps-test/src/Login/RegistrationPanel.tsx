@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function RegistrationPanel() {
+    const minLength = 8;
     const [userType, setUserType] = useState('Student');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -16,11 +17,41 @@ function RegistrationPanel() {
     const [rePassword, setRePassword] = useState('')
     const [error, setError] = useState('')
     const navigate = useNavigate();
-    const HandleRegister = async () => {
+    const HandleRegister = async () => { //add validation check
         setError('');
         if (password != rePassword) {
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match. Register Failed.');
+            return;
+        }
+        else if (password.length < minLength){
+            console.log("Password too short.");
+            setError('Password should at least 8 digit. Register Failed.');
+            return;
+        }
+        else if (!/[A-Z]/.test(password)){
+            console.log("Password must contain at least one uppercase letter.");
+            setError('Password must contain at least one uppercase letter. Register Failed.');
+            return;
+        }
+        else if (!/[a-z]/.test(password)){
+            console.log("Password must contain at least one lowercase letter.");
+            setError('Password must contain at least one lowercase letter. Register Failed.');
+            return;
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)){
+            console.log("Password must contain at least one special character.");
+            setError('Password must contain at least one special character. Register Failed.');
+            return;
+        }
+        else if (!/[0-9]/.test(password)){
+            console.log("Password must contain at least one digit.");
+            setError('Password must contain at least one digit. Register Failed.');
+            return;
+        }
+        else if (/[${userName}]/.test(password)){
+            console.log("Password cannot contain username.");
+            setError('Password cannot contain username. Register Failed.');
             return;
         }
         try {
