@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom"
 
 function TutorPage() {
     const location = useLocation();
-    const {username, password} = location.state || {};
+    const {username} = location.state || {};
     return (
         <>
             <Container fluid>
@@ -19,7 +19,7 @@ function TutorPage() {
                     </Col>
                     <Col className="bg-light" md="3">
                         <h3>Feedback</h3>
-                        <TutorFeedBack/>
+                        <TutorFeedBack username={username}/>
                     </Col>
                 </Row>
             </Container>
