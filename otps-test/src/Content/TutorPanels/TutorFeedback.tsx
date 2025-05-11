@@ -9,6 +9,7 @@ interface TutorFeedbackProps {
 }
 
 interface Feedback{
+    id: string,
     comment: string,
     rating: string,
 }
@@ -16,17 +17,29 @@ interface Feedback{
 
 const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {   
     const [showReport, setShowReport] = useState(false)
+    const [reportFeedbackID, setReportFeedbackID] = useState("");
     const [reason, setReason] = useState<string[]>([])
     const [specialReason, setSpecialReason] = useState("")
     const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
 
-    const HandleReport = () => {
-        // TODO(mario):
+    const HandleReport = async () => {
         if (reason.length == 0) alert("Failed. Please choose a reason.");
         else {
-            console.log(reason, specialReason);
-            setShowReport(false);
-            alert("Report received. Thank you!");
+            try{
+                const response = await axios.post('http://localhost:3000/api/report', {
+                    reportReason: reason,
+                    reportSpecialReason: specialReason,
+                    target: "Feedback", 
+                    id: reportFeedbackID,
+                });
+                console.log(reportFeedbackID, reason, specialReason);
+
+                setShowReport(false);
+                alert("Report received. Thank you!");
+            } catch (error){
+                setShowReport(false);
+                console.error("Error Report");
+            }
         }
     }
     useEffect(() => {
@@ -36,8 +49,9 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                     tutorName: username,
                 });
                 const rawFeedbacks: any[] = response.data.feedbacks;
-                console.log("HO ", rawFeedbacks);
+
                 const formattedFeedbacks: Feedback[] = rawFeedbacks.map((feedback: any) => ({
+                    id: feedback.id,
                     comment: feedback.comment,
                     rating: feedback.rating,
                 }));
@@ -60,7 +74,7 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                             <ListGroup.Item>Comment: {feedback.comment}</ListGroup.Item>
                             <ListGroup.Item>Rating: {feedback.rating}</ListGroup.Item>
                         </ListGroup>
-                        <Button variant="danger" onClick={() => setShowReport(true)}>Report</Button>
+                        <Button variant="danger" onClick={() => {setShowReport(true), setReportFeedbackID(feedback.id)}}>Report</Button>
                     </Card>
                 ))
                 ) : (

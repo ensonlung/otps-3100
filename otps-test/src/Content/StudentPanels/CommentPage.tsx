@@ -2,7 +2,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import TutorPostNoComment from "../Widget/TutorPostNoComment";
-import { TutorPostProps } from "../Widget/TutorPostNoComment";
+import { TutorPostProps } from "../Widget/TutorPost";
 import axios from "axios";
 import TutorFeedback from "../TutorPanels/TutorFeedback";
 
@@ -29,6 +29,7 @@ function CommentPage() {
             const rawPosts: any[] = response.data.posts;
 
             const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                id: post.id,
                 username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',

@@ -32,6 +32,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
             const rawPosts: any[] = filteredPost.data.posts;
 
             const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
+                id: post.id,
                 username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',

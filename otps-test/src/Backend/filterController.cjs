@@ -48,6 +48,7 @@ const filterController = {
               const record = await getRecordByName(postData.username);
 
               return {
+                id: postData.id,
                 username: postData.username,
                 name: record["last name"] + record["first name"],
                 subject: postData.subject,

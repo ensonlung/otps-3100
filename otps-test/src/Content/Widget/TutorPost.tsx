@@ -1,11 +1,8 @@
 import { Form, Card, ListGroup, Row, Col, Button, Modal } from "react-bootstrap"
-import { useState } from "react"
-import Select from "react-select"
-import { reportReason } from "../../TutorPostInfo.cjs"
 import styles from './TutorPost.module.css';
-import { useNavigate } from "react-router-dom"
 
 export interface TutorPostProps {
+    id: string,
     name: string;
     username: string;
     gender: 'Male' | 'Female';
@@ -14,7 +11,7 @@ export interface TutorPostProps {
     availableDays: string[];
     tuitionFee: string;
     contact: string;
-  }
+}
 
 function TutorPost(props: TutorPostProps, onComment: (username: string) => void) {
     // const [rate, setRate] = useState("1")
