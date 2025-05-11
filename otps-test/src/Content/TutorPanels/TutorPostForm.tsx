@@ -5,7 +5,7 @@ import { subjects, districts, days } from "../../TutorPostInfo.cjs"
 import axios from "axios";
 import { StudentLeftPanelProp } from "../StudentPanels/StudentLeftPanel";
 import TutorPostSelf from "./TutorPostSelf";
-import { TutorPostProps } from "./TutorPostSelf";
+import { TutorPostProps } from "../Widget/TutorPost";
 
 function TutorPostForm({username}: StudentLeftPanelProp) {
     // useStates
@@ -83,6 +83,8 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                 tuitionFee: post.fee || 'Not specified',
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
+                selfIntro: post.selfIntro,
+                time: post.time,
             }));
             setDisplayPosts(formattedPosts);
           } catch (error) {

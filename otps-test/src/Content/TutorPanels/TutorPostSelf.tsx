@@ -1,22 +1,9 @@
 import { Form, Card, ListGroup, Button, Modal, Row, Col } from "react-bootstrap"
 import Select from "react-select"
 import { useState } from "react"
-import styles from '../Widget/TutorPost.module.css';
 import { subjects, districts, days } from "../../TutorPostInfo.cjs";
 import axios from "axios"
-
-export interface TutorPostProps {
-    id: string
-    name: string;
-    username: string;
-    gender: 'Male' | 'Female';
-    subject: string[];
-    district: string[];
-    availableDays: string[];
-    tuitionFee: string;
-    contact: string;
-}
-
+import {TutorPostProps} from "../Widget/TutorPost"
 
 function TutorPostSelf(props: TutorPostProps) {
 
@@ -46,6 +33,7 @@ function TutorPostSelf(props: TutorPostProps) {
 
             const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
                 id: post.id,
+                time: post.time,
                 name: post.name,
                 username: post.username,
                 gender: post.gender,
@@ -54,6 +42,7 @@ function TutorPostSelf(props: TutorPostProps) {
                 availableDays: post.availableDays,
                 tuitionFee: post.tuitionFee,
                 contact: post.contact,
+                selfIntro: post.selfIntro,
             }));
             formattedPosts.reverse();
             setPosts(formattedPosts);
@@ -77,16 +66,13 @@ function TutorPostSelf(props: TutorPostProps) {
     return (
         <>
             <Card>
-                <Card.Body>
-                    <Card.Title> {props.name} <span className={styles.username}>@{props.username}</span></Card.Title>
-                    <Card.Text> {props.gender} </Card.Text>
-                </Card.Body>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
                     <ListGroup.Item>Available Days: {props.availableDays.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Available Time: {props.time}</ListGroup.Item>
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
-                    <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
+                    <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
                 <Row>
                     <Col md="2"><Button variant="danger" onClick={() => setShowDelete(true)}>Delete</Button></Col>

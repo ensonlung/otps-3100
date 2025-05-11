@@ -39,14 +39,11 @@ function TutorPostNoComment(props: TutorPostProps) {
     return (
         <>
             <Card>
-                <Card.Body>
-                    <Card.Title> {props.name} <span className={styles.username}>@{props.username}</span></Card.Title>
-                    <Card.Text> {props.gender} </Card.Text>
-                </Card.Body>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
-                    <ListGroup.Item>Available Days: {props.availableDays.join(', ')}</ListGroup.Item>
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Available Days: {props.availableDays.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Available Time: {props.time}</ListGroup.Item>
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
                     <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>

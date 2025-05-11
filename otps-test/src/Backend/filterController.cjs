@@ -77,7 +77,6 @@ const filterController = {
             intersectedDocs.map(async (doc) => {
               const postData = doc;
               const record = await getRecordByName(postData.username);
-
               return {
                 id: postData.id,
                 username: postData.username,
@@ -86,6 +85,7 @@ const filterController = {
                 gender: record.gender,
                 day: postData.day,
                 district: postData.district,
+                time: postData.startTime + ' - ' + postData.endTime,
                 fee: postData.fee,
                 contact: record["phone number"],
                 selfIntro: postData.selfIntro,

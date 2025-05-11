@@ -37,6 +37,7 @@ const StudentPostManager: React.FC<StudentPostManagerProps> = ({ username }) => 
 
         const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
           id: post.id,
+          time: post.time, 
           username: post.username || 'Unknown',
           name: post.name || 'Unknown',
           gender: post.gender || 'Unknown',
