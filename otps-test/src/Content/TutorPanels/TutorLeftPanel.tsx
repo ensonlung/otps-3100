@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 interface TutorLeftPanelProp {
     username: string;
-    password: string;
 }
 
-function TutorLeftPanel({username, password}: TutorLeftPanelProp) {
+function TutorLeftPanel({username}: TutorLeftPanelProp) {
     const navigate = useNavigate();
     return (
         <>
@@ -21,8 +20,7 @@ function TutorLeftPanel({username, password}: TutorLeftPanelProp) {
                     <Card>
                         <Card.Header>User Profile</Card.Header>
                         <Card.Body>
-                            Username: {username} <br/>
-                            Password: {password}
+                            Username: {username}
                         </Card.Body>
                     </Card>
                 </Row>

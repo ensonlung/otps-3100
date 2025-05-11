@@ -12,7 +12,7 @@ function TutorPage() {
             <Container fluid>
                 <Row>
                     <Col className="bg-light" md="3">
-                        <TutorLeftPanel username={username} password={password}/>
+                        <TutorLeftPanel username={username}/>
                     </Col>
                     <Col md="6">
                         <TutorPostForm username={username} password={password}/>

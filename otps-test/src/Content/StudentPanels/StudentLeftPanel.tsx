@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 export interface StudentLeftPanelProp {
     username: string;
-    password: string;
 }
 
-function StudentLeftPanel({username, password}: StudentLeftPanelProp) {
+function StudentLeftPanel({username}: StudentLeftPanelProp) {
     const navigate = useNavigate();
     return (
         <>
@@ -21,8 +20,7 @@ function StudentLeftPanel({username, password}: StudentLeftPanelProp) {
                     <Card>
                         <Card.Header>User Profile</Card.Header>
                         <Card.Body>
-                            Username: {username} <br/>
-                            Password: {password}
+                            Username: {username}
                         </Card.Body>
                     </Card>
                 </Row>

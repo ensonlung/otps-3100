@@ -5,7 +5,7 @@ import { subjects, districts, days } from "../../TutorPostInfo.cjs"
 import axios from "axios";
 import { StudentLeftPanelProp } from "../StudentPanels/StudentLeftPanel";
 
-function TutorPostForm({username, password}: StudentLeftPanelProp) {
+function TutorPostForm({username}: StudentLeftPanelProp) {
     // useStates
     const [showModal, setShowModal] = useState(false)
 

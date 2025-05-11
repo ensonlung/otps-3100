@@ -1,12 +1,11 @@
 import { Container, Row, Card, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
-interface TutorLeftPanelProp {
+interface AdminLeftPanelProp {
     username: string;
-    password: string;
 }
 
-function AdminLeftPanel({username, password}: TutorLeftPanelProp) {
+function AdminLeftPanel({username}: AdminLeftPanelProp) {
     const navigate = useNavigate();
     return (
         <>
@@ -21,8 +20,7 @@ function AdminLeftPanel({username, password}: TutorLeftPanelProp) {
                     <Card>
                         <Card.Header>User Profile</Card.Header>
                         <Card.Body>
-                            Username: {username} <br/>
-                            Password: {password}
+                            Username: {username}
                         </Card.Body>
                     </Card>
                 </Row>
