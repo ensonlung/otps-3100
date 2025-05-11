@@ -1,116 +1,195 @@
+
 const { db } = require('./firebase.cjs');
 
+const timeToMinutes = (time) => {
+  if (!time || time === 'Any') return null;
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
+};
+
+const isRangeOverlap = (postStart, postEnd, startTime, endTime) => {
+  const postStartMinutes = timeToMinutes(postStart);
+  const postEndMinutes = timeToMinutes(postEnd);
+  const startMinutes = timeToMinutes(startTime);
+  const endMinutes = timeToMinutes(endTime);
+
+  if (startMinutes === null && endMinutes !== null) {
+    return postEndMinutes >= endMinutes && postStartMinutes <= endMinutes;
+  }
+
+  if (startMinutes !== null && endMinutes === null) {
+    return postStartMinutes <= startMinutes && postEndMinutes >= startMinutes;
+  }
+
+  return postEndMinutes >= endMinutes && postStartMinutes <= startMinutes;
+};
+
 const filterController = {
-    filterPost: async (req, res) => {
-      const { subject } = req.body;
-      const { gender } = req.body;
-      const { district } = req.body;
-      const { day } = req.body;
-      const { startTime } = req.body;
-      const { endTime } = req.body;
-      const { fee } = req.body;
-      const { uname } = req.body;
-        try {
-          let postRef = db.collection('post');
-          if (gender != 'Any'){
-            const userSnapshot = await db.collection('account').where(gender, '==', gender).get();
-            const names = [];
-            userSnapshot.forEach(user => {
-                names.push(user);
-            });
-            postRef = postRef.where('postContent.username', 'in', names);
-          }
-          if (uname !== 'Any')
-            postRef = postRef.where('postContent.username', '==', uname);
-          switch (fee){
-            case "<$150":
-              postRef = postRef.where('postContent.fee', '<', 150);
-              break;
-            case "$150-$249":
-              postRef = postRef.where('postContent.fee', '>=', 150).where('postContent.fee', '<', 250);
-              break;
-            case "$250-$349":
-              postRef = postRef.where('postContent.fee', '>=', 250).where('postContent.fee', '<', 350);
-              break;
-            case ">=$350":
-              postRef = postRef.where('postContent.fee','>=', 350);
-              break;
-          }
+  filterPost: async (req, res) => {
+    const { subject, gender, district, day, startTime, endTime, fee, uname } = req.body;
+    try {
+      let posts = [];
+      const postRef = db.collection('post');
 
-          let subjectRef = postRef;
-          if (subject !== 'Any')
-            subjectRef = postRef.where('postContent.subject', 'array-contains', subject);
-          let districtRef = postRef;
-          if (district !== 'Any')
-            districtRef = postRef.where('postContent.district', 'array-contains', district);
-          let dayRef = postRef;
-          if (day !== 'Any')
-            dayRef = postRef.where('postContent.day', 'array-contains', day);
-          subjectRef.orderBy('postContent.createdAt', 'desc');
-          districtRef.orderBy('postContent.createdAt', 'desc');
-          dayRef.orderBy('postContent.createdAt', 'desc');
-          const [subjectDocs, districtDocs, dayDocs] = await Promise.all([
-            subjectRef.get(),
-            districtRef.get(),
-            dayRef.get(),
-          ]);
-          const subjectData = subjectDocs.docs.map(doc => ({
-            id: doc.data().postContent.id,
-            ...doc.data().postContent,
-          }));
-          const districtData = districtDocs.docs.map(doc => ({
-            id: doc.data().postContent.id,
-            ...doc.data().postContent,
-          }));
-          const dayData = dayDocs.docs.map(doc => ({
-            id: doc.data().postContent.id,
-            ...doc.data().postContent,
-          }));
-          const subjectIds = new Set(subjectData.map(doc => doc.id));
-          const districtIds = new Set(districtData.map(doc => doc.id));
-          const dayIds = new Set(dayData.map(doc => doc.id));
-
-          const intersectedIds = [...subjectIds].filter(
-            id => districtIds.has(id) && dayIds.has(id)
-          );
-          const intersectedDocs = subjectData.filter(doc => intersectedIds.includes(doc.id));
-
-          const filteredPosts = await Promise.all(
-            intersectedDocs.map(async (doc) => {
-              const postData = doc;
-              const record = await getRecordByName(postData.username);
-              return {
-                id: postData.id,
-                username: postData.username,
-                name: record["last name"] + record["first name"],
-                subject: postData.subject,
-                gender: record.gender,
-                day: postData.day,
-                district: postData.district,
-                time: postData.startTime + ' - ' + postData.endTime,
-                fee: postData.fee,
-                contact: record["phone number"],
-                selfIntro: postData.selfIntro,
-              };
-            })
-          );
-          return res.status(201).json({ posts: filteredPosts });
-        } 
-        catch (error) {
-          console.log(error);
-          res.status(500).json({ error });
+      // Gender filter
+      let names = [];
+      if (gender && gender !== 'Any') {
+        const userSnapshot = await db.collection('account').where('userInfo.gender', '==', gender).get();
+        names = userSnapshot.docs.map(doc => doc.data().userInfo.username).filter(name => name);
+        if (names.length === 0) {
+          return res.status(200).json({ posts: [] });
         }
-    },
+      }
+
+      const subjectResults = new Map();
+      const districtResults = new Map();
+      const dayResults = new Map();
+
+      let baseQuery = postRef;
+      if (names.length > 0) {
+        const batches = [];
+        for (let i = 0; i < names.length; i += 10) {
+          const batchNames = names.slice(i, i + 10);
+          let q = postRef.where('postContent.username', 'in', batchNames);
+          if (uname && uname !== 'Any') {
+            q = q.where('postContent.username', '==', uname);
+          }
+          batches.push(q.get());
+        }
+        const snapshots = await Promise.all(batches);
+        snapshots.forEach(snapshot => {
+          snapshot.docs.forEach(doc => {
+            const docData = { id: doc.id, ...doc.data().postContent };
+            if (subject && subject !== 'Any' && docData.subject?.includes(subject)) {
+              subjectResults.set(doc.id, docData);
+            }
+            if (district && district !== 'Any' && docData.district?.includes(district)) {
+              districtResults.set(doc.id, docData);
+            }
+            if (day && day !== 'Any' && docData.day?.includes(day)) {
+              dayResults.set(doc.id, docData);
+            }
+            if (subject === 'Any' && district === 'Any' && day === 'Any') {
+              subjectResults.set(doc.id, docData);
+            }
+          });
+        });
+      } else {
+        if (uname && uname !== 'Any') {
+          baseQuery = baseQuery.where('postContent.username', '==', uname);
+        }
+        const snapshot = await baseQuery.get();
+        snapshot.docs.forEach(doc => {
+          const docData = { id: doc.id, ...doc.data().postContent };
+          if (subject && subject !== 'Any' && docData.subject?.includes(subject)) {
+            subjectResults.set(doc.id, docData);
+          }
+          if (district && district !== 'Any' && docData.district?.includes(district)) {
+            districtResults.set(doc.id, docData);
+          }
+          if (day && day !== 'Any' && docData.day?.includes(day)) {
+            dayResults.set(doc.id, docData);
+          }
+          if (subject === 'Any' && district === 'Any' && day === 'Any') {
+            subjectResults.set(doc.id, docData);
+          }
+        });
+      }
+
+      let allPosts = new Map();
+      const resultSets = [];
+      if (subject && subject !== 'Any') resultSets.push(subjectResults);
+      if (district && district !== 'Any') resultSets.push(districtResults);
+      if (day && day !== 'Any') resultSets.push(dayResults);
+
+      if (resultSets.length > 0) {
+        let intersectingIds = new Set(resultSets[0].keys());
+        for (let i = 1; i < resultSets.length; i++) {
+          const currentIds = new Set(resultSets[i].keys());
+          intersectingIds = new Set([...intersectingIds].filter(id => currentIds.has(id)));
+        }
+        intersectingIds.forEach(id => {
+          allPosts.set(id, resultSets[0].get(id));
+        });
+      } else if (subject === 'Any' && district === 'Any' && day === 'Any') {
+        allPosts = subjectResults;
+      }
+
+      posts = Array.from(allPosts.values());
+
+      if (posts.length === 0) {
+        return res.status(200).json({ posts: [] });
+      }
+
+      posts.sort((a, b) => {
+        const timeA = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+        const timeB = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+        return timeB - timeA;
+      });
+
+      if (startTime !== 'Any' || endTime !== 'Any') {
+        posts = posts.filter(post => {
+          const postStartTime = post.startTime; 
+          const postEndTime = post.endTime; 
+          return isRangeOverlap(postStartTime, postEndTime, startTime, endTime);
+        });
+      }
+
+      if (fee && fee !== 'Any') {
+        posts = posts.filter(post => {
+          const feeValue = parseInt(post.fee, 10);
+          if (isNaN(feeValue)) return false;
+          switch (fee) {
+            case "<$150":
+              return feeValue < 150;
+            case "$150-$249":
+              return feeValue >= 150 && feeValue < 250;
+            case "$250-$349":
+              return feeValue >= 250 && feeValue < 350;
+            case ">=$350":
+              return feeValue >= 350;
+            default:
+              return true;
+          }
+        });
+      }
+
+      const finalPosts = await Promise.all(
+        posts.map(async (post) => {
+          const record = await getRecordByName(post.username);
+          return {
+            id: post.id,
+            username: post.username,
+            name: record ? `${record["last name"]}${record["first name"]}` : 'Unknown',
+            subject: post.subject || [],
+            gender: record?.gender || 'Unknown',
+            day: post.day || [],
+            district: post.district || [],
+            time: post.startTime && post.endTime ? `${post.startTime} - ${post.endTime}` : 'Not specified',
+            fee: post.fee || 'Not specified',
+            contact: record?.["phone number"] || "Not Spec",
+            selfIntro: post.selfIntro || "None",
+          };
+        })
+      );
+
+      return res.status(200).json({ posts: finalPosts });
+    } catch (error) {
+      console.error('Error filtering posts:', error);
+      res.status(500).json({ error: 'Failed to filter posts' });
+    }
+  },
 };
 
 async function getRecordByName(name) {
   try {
     const userQuery = await db.collection('account').where('userInfo.username', '==', name).get();
+    if (userQuery.empty) return null;
     const userData = userQuery.docs[0].data();
     return userData.userInfo;
   } catch (error) {
-    console.error('Error fetching gender for name', name, ':', error);
-    return undefined;
+    console.error('Error fetching record for name', name, ':', error);
+    return null;
   }
 }
 

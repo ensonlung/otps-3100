@@ -63,12 +63,14 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
         const fetchInitialPosts = async () => {
           try {
             const response = await axios.post('http://localhost:3000/api/filter-post', {
-                subject: "All",
-                gender: "All",
-                district: "All",
-                day: "All",
-                time: "All",
-                fee: "All",
+                subject: "Any",
+                gender: "Any",
+                district: "Any",
+                day: "Any",
+                time: "Any",
+                fee: "Any",
+                startTime: "Any",
+                endTime: "Any",     
                 uname: username,
             });
             const rawPosts: any[] = response.data.posts;

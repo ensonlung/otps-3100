@@ -28,10 +28,10 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 gender: gender,
                 district: district,
                 day: day,
-                startTime: startTime,
-                endTime: endTime,
+                startTime: (startTimeOption === "Any" ? "Any" : startTime),
+                endTime: (endTimeOption === "Any" ? "Any" : endTime),
                 fee: fee,
-                uname: 'All',
+                uname: 'Any',
             });
             const rawPosts: any[] = filteredPost.data.posts;
 

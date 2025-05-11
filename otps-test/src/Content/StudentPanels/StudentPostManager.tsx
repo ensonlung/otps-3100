@@ -25,13 +25,15 @@ const StudentPostManager: React.FC<StudentPostManagerProps> = ({ username }) => 
     const fetchInitialPosts = async () => {
       try {
         const response = await axios.post('http://localhost:3000/api/filter-post', {
-          subject: "All",
-          gender: "All",
-          district: "All",
-          day: "All",
-          time: "All",
-          fee: "All",
-          uname: "All",
+          subject: "Any",
+          gender: "Any",
+          district: "Any",
+          day: "Any",
+          time: "Any",
+          fee: "Any",
+          uname: "Any",
+          startTime: "Any",
+          endTime: "Any",
         });
         const rawPosts: any[] = response.data.posts;
 
