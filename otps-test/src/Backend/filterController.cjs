@@ -10,7 +10,7 @@ const filterController = {
       const { fee } = req.body;
       const { uname } = req.body;
         try {
-          const postRef = db.collection('post').orderBy('postContent.createdAt', 'desc');
+          let postRef = db.collection('post');
           if (gender != 'All'){
             const userSnapshot = await db.collection('account').where(gender, '==', gender).get();
             const names = [];
@@ -19,7 +19,7 @@ const filterController = {
             });
             postRef = postRef.where('postContent.username', 'in', names);
           }
-          if (uname != 'All')
+          if (uname !== 'All')
             postRef = postRef.where('postContent.username', '==', uname);
           switch (fee){
             case "<$150":
@@ -37,13 +37,14 @@ const filterController = {
           }
           let subjectRef = postRef;
           if (subject !== 'All')
-            subjectRef = postRef.where('postContent.subject', 'array-contains', subject);
+            subjectRef = postRef.where('postContent.subject', 'array-contains', subject).orderBy('postContent.createdAt', 'desc');
           let districtRef = postRef;
           if (district !== 'All')
-            districtRef = postRef.where('postContent.district', 'array-contains', district);
+            districtRef = postRef.where('postContent.district', 'array-contains', district).orderBy('postContent.createdAt', 'desc');
           let dayRef = postRef;
           if (day !== 'All')
-            dayRef = postRef.where('postContent.day', 'array-contains', day);
+            dayRef = postRef.where('postContent.day', 'array-contains', day).orderBy('postContent.createdAt', 'desc');
+          postRef.orderBy('postContent.createdAt', 'desc');
 
           const [subjectDocs, districtDocs, dayDocs] = await Promise.all([
             subjectRef.get(),

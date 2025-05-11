@@ -4,7 +4,7 @@ const searchController = {
     searchRelevantName: async (req, res) => {
         const { anyName } = req.body;
         try {
-            const userRef = db.collection('account').orderBy('postContent.createdAt', 'desc');
+            const userRef = db.collection('account');
             const snapshot = await userRef.get(); 
             const matchingRecords = [];
 
@@ -19,6 +19,7 @@ const searchController = {
               return res.json({ posts: [] });
             }
             const postRef = db.collection('post').where('postContent.username', 'in', matchingRecords);
+            postRef.orderBy('postContent.createdAt', 'desc');
             const querySnapshot = await postRef.get();
             const filteredPosts = await Promise.all(
               querySnapshot.docs.map(async (doc) => {
