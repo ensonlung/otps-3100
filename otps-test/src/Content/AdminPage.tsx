@@ -15,7 +15,6 @@ function AdminPage() {
     const [reportedFeedbacks, setReportedFeedbacks] = useState<AdminFeedbackProps[]>([]);
 
         useEffect(() => {
-            // TODO: after search controller is done, search with username for posts
             const fetchInitialReportedPosts = async () => {
                 try {
                     const response = await axios.post('http://localhost:3000/api/get-report-post', {
@@ -43,7 +42,6 @@ function AdminPage() {
         }, []);
 
         useEffect(() => {
-            // TODO: after search controller is done, search with username for posts
             const fetchInitialReportedFeedbacks = async () => {
                 try {
                     const response = await axios.post('http://localhost:3000/api/get-report-feedback', {
