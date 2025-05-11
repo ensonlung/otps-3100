@@ -1,6 +1,7 @@
 import { Form, Card, ListGroup, Button, Modal } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import Select from "react-select"
+import styles from '../Widget/TutorPost.module.css';
 import { tutorReportReason } from "../../TutorPostInfo.cjs"
 import axios from "axios"
 
@@ -10,6 +11,7 @@ interface TutorFeedbackProps {
 
 interface Feedback{
     id: string,
+    commentor: string,
     comment: string,
     rating: string,
 }
@@ -53,6 +55,7 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                 const formattedFeedbacks: Feedback[] = rawFeedbacks.map((feedback: any) => ({
                     id: feedback.id,
                     comment: feedback.comment,
+                    commentor: feedback.commentor,
                     rating: feedback.rating,
                 }));
                 formattedFeedbacks.reverse();
@@ -70,6 +73,11 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
             {feedbacks.length > 0 ? (
                 feedbacks.map((feedback, index) => (
                     <Card key = {index} className="mb-3">
+                        
+                        <Card.Body>
+                            <Card.Title> From {feedback.commentor} </Card.Title>
+                        </Card.Body>
+                        
                         <ListGroup>
                             <ListGroup.Item>Comment: {feedback.comment}</ListGroup.Item>
                             <ListGroup.Item>Rating: {feedback.rating}</ListGroup.Item>
