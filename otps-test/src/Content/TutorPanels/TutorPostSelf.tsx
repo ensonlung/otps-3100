@@ -1,4 +1,4 @@
-import { Form, Card, ListGroup, Button, Modal } from "react-bootstrap"
+import { Form, Card, ListGroup, Button, Modal, Row, Col } from "react-bootstrap"
 import { useState } from "react"
 import styles from '../Widget/TutorPost.module.css';
 
@@ -49,9 +49,12 @@ function TutorPostSelf(props: TutorPostProps) {
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
                 </ListGroup>
-                <Button variant="danger" onClick={() => setShowDelete(true)}>Delete</Button>
-                <Button variant="warning" onClick={() => setShowHide(true)}>Hide</Button>
-                <Button variant="secondary" onClick={() => setShowEdit(true)}>Edit</Button>
+                <Row>
+                    <Col md="2"><Button variant="danger" onClick={() => setShowDelete(true)}>Delete</Button></Col>
+                    <Col md="2"><Button variant="primary" onClick={() => setShowHide(true)}>Hide</Button></Col>
+                    <Col md="2"><Button variant="secondary" onClick={() => setShowEdit(true)}>Edit</Button></Col>
+                </Row>
+                
             </Card>
 
             <Modal show={showDelete} backdrop="static" onHide={() => {setShowDelete(false)}}>
