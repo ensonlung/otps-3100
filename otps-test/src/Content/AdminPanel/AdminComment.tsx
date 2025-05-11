@@ -22,6 +22,8 @@ function AdminComment() {
                 <ListGroup>
                     <ListGroup.Item>Comment: It is not very attracting, especially the high price.</ListGroup.Item>
                     <ListGroup.Item>Rating: 2</ListGroup.Item>
+                    <ListGroup.Item>Reason: Hate Speech</ListGroup.Item>
+                    <ListGroup.Item>Specific Reason: </ListGroup.Item>
                 </ListGroup>
                 <Row>
                     <Col md="4"><Button variant="danger" onClick={HandleRemovePost}>Remove Post</Button></Col>

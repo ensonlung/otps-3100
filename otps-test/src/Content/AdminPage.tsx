@@ -34,6 +34,8 @@ function AdminPage() {
                     tuitionFee: post.fee || 'Not specified',
                     availableDays: post.day || [],
                     contact: post.contact || 'Not Spec',
+                    reportReason: ["Improper Fee"],
+                    specificReason: "",
                 }));
                 setDisplayPosts(formattedPosts);
                 } catch (error) {

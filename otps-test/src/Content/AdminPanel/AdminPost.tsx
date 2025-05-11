@@ -11,6 +11,8 @@ export interface AdminPostProps {
     availableDays: string[];
     tuitionFee: string;
     contact: string;
+    reportReason: string[];
+    specificReason: string;
 }
 
 function AdminPost(props: AdminPostProps) {
@@ -42,6 +44,8 @@ function AdminPost(props: AdminPostProps) {
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
+                    <ListGroup.Item>Reason: {props.reportReason.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Specific Reason: {props.specificReason}</ListGroup.Item>
                 </ListGroup>
                 <Row>
                     <Col md="3"><Button variant="danger" onClick={HandleRemovePost}>Remove Post</Button></Col>
