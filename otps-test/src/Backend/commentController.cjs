@@ -8,9 +8,9 @@ const commentController = {
           const { rating } = req.body;
           const { tutorName } = req.body;
           console.log(comment, rating);
-          const docRef = await db.collection('comment').add({"comment": comment, "rating": rating, "tutor name": tutorName});
-          await docRef.update({ 'id': docRef.id });           
-          await docRef.update({ 'createdAt': admin.firestore.FieldValue.serverTimestamp() });  
+          const docRef = await db.collection('comment').add({"commentInfo" :{"comment": comment, "rating": rating, "tutorName": tutorName}});
+          await docRef.update({ 'commentInfo.id': docRef.id });           
+          await docRef.update({ 'commentInfo.createdAt': admin.firestore.FieldValue.serverTimestamp() });  
           
           res.status(201).json({ message: 'comment added' });
         } 
@@ -22,11 +22,12 @@ const commentController = {
     getComment: async (req, res) => {
       try {
         const { tutorName } = req.body;
-        const commentRef = await db.collection('comment').where('tutor name', '==', tutorName).orderBy('createdAt', 'desc');
+        const commentRef = await db.collection('comment').where('commentInfo.tutorName', '==', tutorName);
+        commentRef.orderBy('commentInfo.createdAt', 'desc');
         const querySnapshot = await commentRef.get();
         const tutorFeedbacks = await Promise.all(
-          querySnapshot.docs.map(async (doc) => {
-            const data = doc.data();
+          querySnapshot.docs.map((doc) => {
+            const data = doc.data().commentInfo;
             return {
                 id: data.id,
                 rating: data.rating,
