@@ -101,7 +101,7 @@ function CommentPage() {
                         <h3>Posts of @{username}</h3>
                         {displayPosts.length > 0 ? (
                         <ul>
-                            {displayPosts.map((post) => <TutorPostNoComment {...post}/>)}
+                            {displayPosts.map((post, index) => <TutorPostNoComment key = {index} {...post}/>)}
                         </ul>
                         ) : (
                             <p>No posts found.</p>                        
@@ -109,7 +109,7 @@ function CommentPage() {
                     </Col>
                     <Col className="bg-light" md="3">
                         <h3>Others' Feedback</h3>
-                        <TutorFeedback/>
+                        <TutorFeedback username = {username}/>
                     </Col>
                 </Row>
             </Container>

@@ -1,13 +1,24 @@
 import { Form, Card, ListGroup, Button, Modal } from "react-bootstrap"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Select from "react-select"
 import { tutorReportReason } from "../../TutorPostInfo.cjs"
+import axios from "axios"
 
-function TutorFeedback() {
-    // useStates for report
+interface TutorFeedbackProps {
+    username: string,
+}
+
+interface Feedback{
+    comment: string,
+    rating: string,
+}
+
+
+const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {   
     const [showReport, setShowReport] = useState(false)
     const [reason, setReason] = useState<string[]>([])
     const [specialReason, setSpecialReason] = useState("")
+    const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
 
     const HandleReport = () => {
         // TODO(mario):
@@ -18,17 +29,45 @@ function TutorFeedback() {
             alert("Report received. Thank you!");
         }
     }
+    useEffect(() => {
+            const fetchFeedbacks = async () => {
+                try {
+                const response = await axios.post('http://localhost:3000/api/get-comment', {
+                    tutorName: username,
+                });
+                const rawFeedbacks: any[] = response.data.feedbacks;
+                console.log("HO ", rawFeedbacks);
+                const formattedFeedbacks: Feedback[] = rawFeedbacks.map((feedback: any) => ({
+                    comment: feedback.comment,
+                    rating: feedback.rating,
+                }));
+                console.log(formattedFeedbacks.length);
+                setFeedbacks(formattedFeedbacks);
+                } catch (error) {
+                    console.error('Error fetching initial posts:', error);
+                    setFeedbacks([]);
+                }
+            };
+            fetchFeedbacks();
+        }, []);
 
     return (
         <>
-            <Card>
-                <ListGroup>
-                    <ListGroup.Item>Comment: It is not very attracting, especially the high price.</ListGroup.Item>
-                    <ListGroup.Item>Rating: 2</ListGroup.Item>
-                </ListGroup>
-                <Button variant="danger" onClick={() => setShowReport(true)}>Report</Button>
-            </Card>
-
+            {feedbacks.length > 0 ? (
+                feedbacks.map((feedback, index) => (
+                    <Card key = {index} className="mb-3">
+                        <ListGroup>
+                            <ListGroup.Item>Comment: {feedback.comment}</ListGroup.Item>
+                            <ListGroup.Item>Rating: {feedback.rating}</ListGroup.Item>
+                        </ListGroup>
+                        <Button variant="danger" onClick={() => setShowReport(true)}>Report</Button>
+                    </Card>
+                ))
+                ) : (
+                    <Card className="mb-3">
+                    <Card.Body>No feedback available.</Card.Body>
+                    </Card>                       
+                )}
             <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}>
                 <Modal.Header closeButton>
                     <Modal.Title>Report Comment</Modal.Title>

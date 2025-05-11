@@ -14,6 +14,7 @@ router.post('/verify-login', loginController.verifyLogin);
 router.post('/create-post', postController.createPost);
 router.post('/filter-post', filterController.filterPost);
 router.post('/comment', commentController.createComment);
+router.post('/get-comment', commentController.getComment);
 
 
 module.exports = router;
