@@ -13,5 +13,7 @@ router.post('/verify-username', registerController.verifyUsername);
 router.post('/verify-login', loginController.verifyLogin);
 router.post('/create-post', postController.createPost);
 router.post('/filter-post', filterController.filterPost);
+router.post('/comment', commentController.createComment);
+
 
 module.exports = router;

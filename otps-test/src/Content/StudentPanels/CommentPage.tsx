@@ -15,7 +15,6 @@ function CommentPage() {
 
     const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
     useEffect(() => {
-        // TODO: after search controller is done, search with username for posts
         const fetchInitialPosts = async () => {
             try {
             const response = await axios.post('http://localhost:3000/api/filter-post', {
@@ -50,10 +49,20 @@ function CommentPage() {
 
 
     const HandleComment = async () => {
-        // TODO(mario):
         console.log(rate, comment);
         if (comment == "") alert("Failed. Comment cannot be empty.");
-        else alert("Completed. Thank you for your comment");
+        else {
+            try{
+                const response = await axios.post('http://localhost:3000/api/comment', {
+                    comment: comment,
+                    rating: rate,
+                    tutorName: username,
+                });
+                alert("Completed. Thank you for your comment");
+            } catch (error){
+                alert("Failed. Please Try Again.");
+            }
+        }
         setComment("")
         setRate("1")
     }
