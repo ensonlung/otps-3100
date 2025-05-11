@@ -1,4 +1,5 @@
 const { db } = require('./firebase.cjs');
+const admin = require('firebase-admin');
 
 const commentController = {
     createComment: async (req, res) => {
@@ -9,6 +10,8 @@ const commentController = {
           console.log(comment, rating);
           const docRef = await db.collection('comment').add({"comment": comment, "rating": rating, "tutor name": tutorName});
           await docRef.update({ 'id': docRef.id });           
+          await docRef.update({ 'createdAt': admin.firestore.FieldValue.serverTimestamp() });  
+          
           res.status(201).json({ message: 'comment added' });
         } 
         catch (error) {
@@ -19,7 +22,7 @@ const commentController = {
     getComment: async (req, res) => {
       try {
         const { tutorName } = req.body;
-        const commentRef = await db.collection('comment').where('tutor name', '==', tutorName);
+        const commentRef = await db.collection('comment').where('tutor name', '==', tutorName).orderBy('createdAt', 'desc');
         const querySnapshot = await commentRef.get();
         const tutorFeedbacks = await Promise.all(
           querySnapshot.docs.map(async (doc) => {
@@ -28,6 +31,7 @@ const commentController = {
                 id: data.id,
                 rating: data.rating,
                 comment: data.comment,
+                createdAt: data.createdAt,
             };
           })
         );

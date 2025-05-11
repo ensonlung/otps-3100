@@ -4,7 +4,7 @@ const searchController = {
     searchRelevantName: async (req, res) => {
         const { anyName } = req.body;
         try {
-            const userRef = db.collection('account');
+            const userRef = db.collection('account').orderBy('postContent.createdAt', 'desc');
             const snapshot = await userRef.get(); 
             const matchingRecords = [];
 
