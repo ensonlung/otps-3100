@@ -20,5 +20,6 @@ router.post('/search', searchController.searchRelevantName);
 router.post('/report', reportController.report);
 router.post('/update-info', updateController.updateInfo);
 
+router.post('/get-report-post', reportController.fetchPostReport);
 
 module.exports = router;

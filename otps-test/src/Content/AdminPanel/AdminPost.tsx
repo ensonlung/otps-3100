@@ -5,7 +5,6 @@ import styles from '../Widget/TutorPost.module.css';
 export interface AdminPostProps {
     name: string;
     username: string;
-    gender: 'Male' | 'Female';
     subject: string[];
     district: string[];
     availableDays: string[];
@@ -36,7 +35,6 @@ function AdminPost(props: AdminPostProps) {
             <Card>
                 <Card.Body>
                     <Card.Title> {props.name} <span className={styles.username}>@{props.username}</span></Card.Title>
-                    <Card.Text> {props.gender} </Card.Text>
                 </Card.Body>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
