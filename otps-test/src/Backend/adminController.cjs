@@ -1,5 +1,3 @@
-import { post } from './routes.cjs';
-
 const { db } = require('./firebase.cjs');
 
 const filterController = {
