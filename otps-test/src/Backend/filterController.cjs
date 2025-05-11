@@ -37,15 +37,16 @@ const filterController = {
           }
           let subjectRef = postRef;
           if (subject !== 'All')
-            subjectRef = postRef.where('postContent.subject', 'array-contains', subject).orderBy('postContent.createdAt', 'desc');
+            subjectRef = postRef.where('postContent.subject', 'array-contains', subject);
           let districtRef = postRef;
           if (district !== 'All')
-            districtRef = postRef.where('postContent.district', 'array-contains', district).orderBy('postContent.createdAt', 'desc');
+            districtRef = postRef.where('postContent.district', 'array-contains', district);
           let dayRef = postRef;
           if (day !== 'All')
-            dayRef = postRef.where('postContent.day', 'array-contains', day).orderBy('postContent.createdAt', 'desc');
-          postRef.orderBy('postContent.createdAt', 'desc');
-
+            dayRef = postRef.where('postContent.day', 'array-contains', day);
+          subjectRef.orderBy('postContent.createdAt', 'desc');
+          districtRef.orderBy('postContent.createdAt', 'desc');
+          dayRef.orderBy('postContent.createdAt', 'desc');
           const [subjectDocs, districtDocs, dayDocs] = await Promise.all([
             subjectRef.get(),
             districtRef.get(),
@@ -71,7 +72,7 @@ const filterController = {
             id => districtIds.has(id) && dayIds.has(id)
           );
           const intersectedDocs = subjectData.filter(doc => intersectedIds.includes(doc.id));
-          
+
           const filteredPosts = await Promise.all(
             intersectedDocs.map(async (doc) => {
               const postData = doc;
