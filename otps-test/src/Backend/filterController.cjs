@@ -8,6 +8,7 @@ const filterController = {
       const { day } = req.body;
       const { time } = req.body;
       const { fee } = req.body;
+      const { uname } = req.body;
         try {
           let postRef = db.collection('post');
           if (gender != 'All'){
@@ -18,6 +19,8 @@ const filterController = {
             });
             postRef = postRef.where('postContent.username', 'in', names);
           }
+          if (uname != 'All')
+              postRef = postRef.where('postContent.username', '==', uname);
           if (subject !== 'All')
             postRef = postRef.where('postContent.subject', 'array-contains', subject);
           if (district !== 'All')

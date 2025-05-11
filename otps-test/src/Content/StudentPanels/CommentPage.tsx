@@ -25,6 +25,7 @@ function CommentPage() {
                 day: "All",
                 time: "All",
                 fee: "All",
+                uname: username,
             });
             const rawPosts: any[] = response.data.posts;
 

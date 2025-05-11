@@ -27,6 +27,7 @@ interface FilterFormProps {
                 day: day,
                 time: time,
                 fee: fee,
+                uname: 'All',
             });
             const rawPosts: any[] = filteredPost.data.posts;
 
