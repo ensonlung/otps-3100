@@ -7,8 +7,9 @@ const commentController = {
           const { comment } = req.body;
           const { rating } = req.body;
           const { tutorName } = req.body;
-          console.log(comment, rating);
-          const docRef = await db.collection('comment').add({"commentInfo" :{"comment": comment, "rating": rating, "tutorName": tutorName}});
+          const { username } = req.body;
+          console.log(comment, rating, tutorName, username);
+          const docRef = await db.collection('comment').add({"commentInfo" :{"comment": comment, "rating": rating, "tutorName": tutorName, "commentor": username}});
           await docRef.update({ 'commentInfo.id': docRef.id });           
           await docRef.update({ 'commentInfo.createdAt': admin.firestore.FieldValue.serverTimestamp() });  
           
@@ -33,6 +34,7 @@ const commentController = {
                 rating: data.rating,
                 comment: data.comment,
                 createdAt: data.createdAt,
+                commentor: data.commentor,
             };
           })
         );
