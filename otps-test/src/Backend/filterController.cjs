@@ -20,13 +20,7 @@ const filterController = {
             postRef = postRef.where('postContent.username', 'in', names);
           }
           if (uname != 'All')
-              postRef = postRef.where('postContent.username', '==', uname);
-          if (subject !== 'All')
-            postRef = postRef.where('postContent.subject', 'array-contains', subject);
-          if (district !== 'All')
-            postRef = postRef.where('postContent.district', 'array-contains', district);
-          if (day !== 'All')
-            postRef = postRef.where('postContent.', 'array-contains', day);
+            postRef = postRef.where('postContent.username', '==', uname);
           switch (fee){
             case "<$150":
               postRef = postRef.where('postContent.fee', '<', 150);
@@ -41,10 +35,45 @@ const filterController = {
               postRef = postRef.where('postContent.fee','>=', 350);
               break;
           }
-          const querySnapshot = await postRef.get();
+          let subjectRef = postRef;
+          if (subject !== 'All')
+            subjectRef = postRef.where('postContent.subject', 'array-contains', subject);
+          let districtRef = postRef;
+          if (district !== 'All')
+            districtRef = postRef.where('postContent.district', 'array-contains', district);
+          let dayRef = postRef;
+          if (day !== 'All')
+            dayRef = postRef.where('postContent.day', 'array-contains', day);
+
+          const [subjectDocs, districtDocs, dayDocs] = await Promise.all([
+            subjectRef.get(),
+            districtRef.get(),
+            dayRef.get(),
+          ]);
+          const subjectData = subjectDocs.docs.map(doc => ({
+            id: doc.data().postContent.id,
+            ...doc.data().postContent,
+          }));
+          const districtData = districtDocs.docs.map(doc => ({
+            id: doc.data().postContent.id,
+            ...doc.data().postContent,
+          }));
+          const dayData = dayDocs.docs.map(doc => ({
+            id: doc.data().postContent.id,
+            ...doc.data().postContent,
+          }));
+          const subjectIds = new Set(subjectData.map(doc => doc.id));
+          const districtIds = new Set(districtData.map(doc => doc.id));
+          const dayIds = new Set(dayData.map(doc => doc.id));
+
+          const intersectedIds = [...subjectIds].filter(
+            id => districtIds.has(id) && dayIds.has(id)
+          );
+          const intersectedDocs = subjectData.filter(doc => intersectedIds.includes(doc.id));
+          
           const filteredPosts = await Promise.all(
-            querySnapshot.docs.map(async (doc) => {
-              const postData = doc.data().postContent;
+            intersectedDocs.map(async (doc) => {
+              const postData = doc;
               const record = await getRecordByName(postData.username);
 
               return {
