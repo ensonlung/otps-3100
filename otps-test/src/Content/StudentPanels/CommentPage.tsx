@@ -15,6 +15,7 @@ function CommentPage() {
 
     const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
     useEffect(() => {
+        // TODO: after search controller is done, search with username for posts
         const fetchInitialPosts = async () => {
             try {
             const response = await axios.post('http://localhost:3000/api/filter-post', {
