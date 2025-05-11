@@ -23,6 +23,7 @@ router.post('/update-info', updateController.updateInfo);
 router.post('/get-report-post', reportController.fetchPostReport);
 router.post('/get-report-feedback', reportController.fetchFeedbackReport);
 router.post('/remove-post', adminController.removePost);
+router.post('/remove-feedback', adminController.removeFeedback);
 router.post('/remove-user', adminController.removeUser);
 router.post('/ignore', adminController.ignore);
 

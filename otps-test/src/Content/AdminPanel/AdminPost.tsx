@@ -16,22 +16,26 @@ export interface AdminPostProps {
 }
 
 function AdminPost(props: AdminPostProps, onPostChange: () => void) {
-    const [reportId, setReportId] = useState("")
+
     const HandleRemovePost = async (reportId: string) => {
-        // TODO(mario):
         try{
             console.log("remove post")
-
+            const response = await axios.post('http://localhost:3000/api/remove-post', {
+                id: reportId,
+            });
+            onPostChange();
         } catch (error){
             console.log(error);
         }
     }
 
     const HandleRemoveUser = async (reportId: string) => {
-        // TODO(mario)
         try{
             console.log("remove user")
-
+            const response = await axios.post('http://localhost:3000/api/remove-user', {
+                id: reportId,
+            });
+            onPostChange();
         } catch (error){
             console.log(error);
         }

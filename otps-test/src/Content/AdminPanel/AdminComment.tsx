@@ -11,22 +11,26 @@ export interface AdminFeedbackProps {
 }
 
 function AdminComment(props: AdminFeedbackProps, onFeedbackChange: () => void) {    
-    const [reportId, setReportId] = useState("")
+
     const HandleRemoveFeedback = async (reportId: string) => {
-        // TODO(mario):
         try{
             console.log("remove feedback")
-
+            const response = await axios.post('http://localhost:3000/api/remove-feedback', {
+                id: reportId,
+            });
+            onFeedbackChange();
         } catch (error){
             console.log(error);
         }
     }
 
     const HandleRemoveUser = async (reportId: string) => {
-        // TODO(mario)
         try{
             console.log("remove user")
-
+            const response = await axios.post('http://localhost:3000/api/remove-user', {
+                id: reportId,
+            });
+            onFeedbackChange();
         } catch (error){
             console.log(error);
         }
