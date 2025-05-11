@@ -9,8 +9,9 @@ export interface StudentLeftPanelProp {
 
 function StudentLeftPanel({username}: StudentLeftPanelProp) {
     const navigate = useNavigate();
-
+    const minLength = 8;
     // Update useState
+    const [error, setError] = useState('')
     const [showUpdate, setShowUpdate] = useState(false)
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -60,7 +61,59 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
     }
 
     const HandlePasswordUpdate = async () => {
-        // TODO:
+        const response = await axios.post("http://localhost:3000/api/get-password", {
+            username: username,
+        });
+        setError('');
+        const realOldPassword = response.data.password;
+        if (realOldPassword != oldPassword){
+            console.log("Old password is wrong.");
+            setError('Old password is wrong.');
+            return;
+        } else if (newPassword != rePassword) {
+            console.log("Two passwords are not the same.");
+            setError('Two passwords do not match.');
+            return;
+        }
+        else if (newPassword.length < minLength){
+            console.log("Password too short.");
+            setError('Password should at least 8 digit.');
+            return;
+        }
+        else if (!/[A-Z]/.test(newPassword)){
+            console.log("Password must contain at least one uppercase letter.");
+            setError('Password must contain at least one uppercase letter.');
+            return;
+        }
+        else if (!/[a-z]/.test(newPassword)){
+            console.log("Password must contain at least one lowercase letter.");
+            setError('Password must contain at least one lowercase letter.');
+            return;
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
+            console.log("Password must contain at least one special character.");
+            setError('Password must contain at least one special character.');
+            return;
+        }
+        else if (!/[0-9]/.test(newPassword)){
+            console.log("Password must contain at least one digit.");
+            setError('Password must contain at least one digit.');
+            return;
+        }
+        else if (/[${userName}]/.test(newPassword)){
+            console.log("Password cannot contain username.");
+            setError('Password cannot contain username.');
+            return;
+        }
+        try {
+            const response = await axios.post("http://localhost:3000/api/update-password", {
+                username: username,
+                newPw: newPassword,
+            });
+            alert("User information updated");
+        } catch (error) {
+            alert("Failed to update user information");
+        }
         setShowPw(false);
     }
 
@@ -159,6 +212,7 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
                                 </Form.Group>
                             </Col>
                         </Row>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

@@ -24,6 +24,8 @@ router.post('/get-comment', commentController.getComment);
 router.post('/search', searchController.searchRelevantName);
 router.post('/update-info', updateController.updateInfo);
 router.post('/get-info', updateController.getInfo);
+router.post('/get-password', updateController.getOldPassword);
+router.post('/update-password', updateController.updatePassword);
 router.post('/report', reportController.report);
 router.post('/get-report-post', reportController.fetchPostReport);
 router.post('/get-report-feedback', reportController.fetchFeedbackReport);

@@ -36,7 +36,35 @@ const updateController = {
         console.log(error);
         res.status(500).json({ error });
       }
-    }
+    },
+    getOldPassword: async (req, res) => {
+      try {
+        const { username } = req.body;
+        
+        const docRef = await db.collection('account').where('userInfo.username', '==', username).get();
+        const userid = docRef.docs[0].id;
+        
+        const userRef = await db.collection('account').doc(userid).get();
+        res.status(201).json({ password: userRef.data().userInfo.password });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+      }
+    },
+    updatePassword: async (req, res) => {
+      try {
+        const { username, newPw } = req.body;
+        
+        const docRef = await db.collection('account').where('userInfo.username', '==', username).get();
+        const userid = docRef.docs[0].id;
+        const ref = await db.collection('account').doc(userid);
+        await ref.update({'userInfo.password': newPw});
+        res.status(201).json({ success: true });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+      }
+    },
 };
 
 module.exports = updateController;
