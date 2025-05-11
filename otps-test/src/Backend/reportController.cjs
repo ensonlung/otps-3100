@@ -27,7 +27,6 @@ const reportController = {
             const dbRecords = postSnapshot.docs.map(doc => ({
                 ...doc.data().postContent,
             }));
-            // console.log(rePosts);
             const joinRePost = rePosts.map(rePost => {
                 const post = dbRecords.find(dbRecord => dbRecord.id == rePost.id);
                 if (post){
@@ -39,6 +38,35 @@ const reportController = {
                 return null;
             }).filter(record => record !== null);
             res.status(201).json({ posts: joinRePost });
+        } catch (error){
+            console.log(error);
+            res.status(500).json({ error });
+        }
+    },
+    fetchFeedbackReport: async (req, res) => {
+        try {
+            const reFeedbackRef = await db.collection('report record').where('target', '==', 'Feedback').get();
+            const reFeedbacks = reFeedbackRef.docs.map(reFeedback => ({
+                id: reFeedback.data().id,
+                reportReason: reFeedback.data()["report reason"],
+                reportSpecialReason: reFeedback.data()["report special reason"],
+            }));
+            const feedbackSnapshot = await db.collection('comment').get();
+            const dbRecords = feedbackSnapshot.docs.map(doc => ({
+                ...doc.data().commentInfo,
+            }));
+            
+            const joinReFeedback = reFeedbacks.map(reFeedback => {
+                const feedback = dbRecords.find(dbRecord => dbRecord.id == reFeedback.id);
+                if (feedback){
+                    return {
+                        feedbackCon: feedback,
+                        reportDetails: reFeedback,
+                    };
+                }
+                return null;
+            }).filter(record => record !== null);
+            res.status(201).json({ feedbacks: joinReFeedback });
         } catch (error){
             console.log(error);
             res.status(500).json({ error });

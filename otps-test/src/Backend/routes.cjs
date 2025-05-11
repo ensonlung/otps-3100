@@ -21,5 +21,6 @@ router.post('/report', reportController.report);
 router.post('/update-info', updateController.updateInfo);
 
 router.post('/get-report-post', reportController.fetchPostReport);
+router.post('/get-report-feedback', reportController.fetchFeedbackReport);
 
 module.exports = router;

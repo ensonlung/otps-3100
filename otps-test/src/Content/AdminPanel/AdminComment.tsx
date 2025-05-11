@@ -1,7 +1,13 @@
 import { Card, ListGroup, Button, Modal, Col, Row } from "react-bootstrap"
 
+export interface AdminFeedbackProps {
+    comment: string;
+    rating: string;
+    reportReason: string[];
+    specificReason: string;
+}
 
-function AdminComment() {
+function AdminComment(props: AdminFeedbackProps) {
     const HandleRemovePost = async () => {
         // TODO(mario):
         console.log("remove report")
@@ -20,10 +26,10 @@ function AdminComment() {
         <>
             <Card>
                 <ListGroup>
-                    <ListGroup.Item>Comment: It is not very attracting, especially the high price.</ListGroup.Item>
-                    <ListGroup.Item>Rating: 2</ListGroup.Item>
-                    <ListGroup.Item>Reason: Hate Speech</ListGroup.Item>
-                    <ListGroup.Item>Specific Reason: </ListGroup.Item>
+                    <ListGroup.Item>Comment: {props.comment}</ListGroup.Item>
+                    <ListGroup.Item>Rating: {props.rating}</ListGroup.Item>
+                    <ListGroup.Item>Reason: {props.reportReason.join(', ')}</ListGroup.Item>
+                    <ListGroup.Item>Specific Reason: {props.specificReason}</ListGroup.Item>
                 </ListGroup>
                 <Row>
                     <Col md="4"><Button variant="danger" onClick={HandleRemovePost}>Remove Post</Button></Col>

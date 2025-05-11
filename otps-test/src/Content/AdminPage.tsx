@@ -5,13 +5,15 @@ import AdminComment from "./AdminPanel/AdminComment";
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios";
-import { report } from "../Backend/reportController.cjs";
+import { AdminFeedbackProps } from "./AdminPanel/AdminComment";
 
 function AdminPage() {
     const location = useLocation();
     const {username, password} = location.state || {};
 
     const [reportedPosts, setReportedPosts] = useState<AdminPostProps[]>([]);
+    const [reportedFeedbacks, setReportedFeedbacks] = useState<AdminFeedbackProps[]>([]);
+
         useEffect(() => {
             // TODO: after search controller is done, search with username for posts
             const fetchInitialReportedPosts = async () => {
@@ -31,7 +33,6 @@ function AdminPage() {
                         reportReason: post.reportDetails.reportReason || '',
                         specificReason: post.reportDetails.specialReportReason || '',
                     }));
-                    console.log(formattedPosts);
                     setReportedPosts(formattedPosts);
                 } catch (error) {
                     console.error('Error fetching initial posts:', error);
@@ -39,6 +40,29 @@ function AdminPage() {
                 }
             };
             fetchInitialReportedPosts();
+        }, []);
+
+        useEffect(() => {
+            // TODO: after search controller is done, search with username for posts
+            const fetchInitialReportedFeedbacks = async () => {
+                try {
+                    const response = await axios.post('http://localhost:3000/api/get-report-feedback', {
+                    });
+                    const rawFeedbacks: any[] = response.data.feedbacks;
+        
+                    const formattedFeedbacks: AdminFeedbackProps[] = rawFeedbacks.map((feedback: any) => ({
+                        comment: feedback.feedbackCon.comment || '',
+                        rating: feedback.feedbackCon.rating || '',
+                        reportReason: feedback.reportDetails.reportReason || '',
+                        specificReason: feedback.reportDetails.specialReportReason || '',
+                    }));
+                    setReportedFeedbacks(formattedFeedbacks);
+                } catch (error) {
+                    console.error('Error fetching initial posts:', error);
+                    setReportedFeedbacks([]);
+                }
+            };
+            fetchInitialReportedFeedbacks();
         }, []);
 
     return (
@@ -55,12 +79,18 @@ function AdminPage() {
                             {reportedPosts.map((post) => <AdminPost {...post}/>)}
                         </ul>
                         ) : (
-                            <p>No posts found.</p>                        
+                            <p>No feedback posts found.</p>                        
                         )}
                     </Col>
                     <Col className="bg-light" md="4">
                         <h3>Feedback Reports</h3>
-                        <AdminComment/>
+                        {reportedFeedbacks.length > 0 ? (
+                        <ul>
+                            {reportedFeedbacks.map((feedback) => <AdminComment {...feedback}/>)}
+                        </ul>
+                        ) : (
+                            <p>No feedback reports found.</p>                        
+                        )}
                     </Col>
                 </Row>
             </Container>
