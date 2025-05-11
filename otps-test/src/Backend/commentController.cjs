@@ -25,6 +25,7 @@ const commentController = {
           querySnapshot.docs.map(async (doc) => {
             const data = doc.data();
             return {
+                id: data.id,
                 rating: data.rating,
                 comment: data.comment,
             };

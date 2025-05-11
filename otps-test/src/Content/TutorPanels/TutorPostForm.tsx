@@ -1,13 +1,16 @@
 import { Row, Col, Modal, Button, Form } from "react-bootstrap"
 import Select from "react-select"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { subjects, districts, days } from "../../TutorPostInfo.cjs"
 import axios from "axios";
 import { StudentLeftPanelProp } from "../StudentPanels/StudentLeftPanel";
+import TutorPostSelf from "./TutorPostSelf";
+import { TutorPostProps } from "./TutorPostSelf";
 
 function TutorPostForm({username}: StudentLeftPanelProp) {
     // useStates
     const [showModal, setShowModal] = useState(false)
+    const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
 
     // new post useStates
     const [subject, setSubject] = useState<string[]>([])
@@ -32,10 +35,46 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
         }
     }
 
+    useEffect(() => {
+        const fetchInitialPosts = async () => {
+          try {
+            const response = await axios.post('http://localhost:3000/api/filter-post', {
+                subject: "All",
+                gender: "All",
+                district: "All",
+                day: "All",
+                time: "All",
+                fee: "All",
+                uname: username,
+            });
+            const rawPosts: any[] = response.data.posts;
+
+            const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                username: post.username || 'Unknown',
+                name: post.name || 'Unknown',
+                gender: post.gender || 'Unknown',
+                subject: post.subject || [],
+                district: post.district || [],
+                tuitionFee: post.fee || 'Not specified',
+                availableDays: post.day || [],
+                contact: post.contact || 'Not Spec',
+            }));
+            setDisplayPosts(formattedPosts);
+          } catch (error) {
+            console.error('Error fetching initial posts:', error);
+            setDisplayPosts([]);
+          }
+        };
+        fetchInitialPosts();
+      }, []);
+
     return (
         <>
             <h3>My Posts</h3>
             <Button variant="success" onClick={() => {setShowModal(true)}}>Create Post</Button>
+
+            
+
             <Modal show={showModal} backdrop="static" onHide={() => {setShowModal(false)}}>
                 <Modal.Header closeButton>
                     <Modal.Title>Create New Post</Modal.Title>
@@ -83,6 +122,17 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                     <Button variant="success" onClick={HandleCreatePost}>Post</Button>
                 </Modal.Footer>
             </Modal>
+
+            {displayPosts.length > 0 ? (
+                <ul>
+                    {displayPosts.map((post, index) => (
+                        <TutorPostSelf {...post}/>
+                    ))}
+                </ul>
+            ) : (
+                <p>No posts found.</p>
+            )}
+
         </>
     );
 }

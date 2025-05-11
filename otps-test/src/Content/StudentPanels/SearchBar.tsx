@@ -17,6 +17,7 @@ const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
             const rawPosts: any[] = response.data.posts;
             
             const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
+                id: post.id,
                 username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',

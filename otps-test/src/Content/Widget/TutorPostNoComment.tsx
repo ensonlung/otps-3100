@@ -3,17 +3,9 @@ import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
 import styles from './TutorPost.module.css';
+import axios from "axios";
+import { TutorPostProps } from "./TutorPost";
 
-export interface TutorPostProps {
-    name: string;
-    username: string;
-    gender: 'Male' | 'Female';
-    subject: string[];
-    district: string[];
-    availableDays: string[];
-    tuitionFee: string;
-    contact: string;
-}
 
 function TutorPostNoComment(props: TutorPostProps) {
 
@@ -21,14 +13,26 @@ function TutorPostNoComment(props: TutorPostProps) {
     const [showReport, setShowReport] = useState(false)
     const [reason, setReason] = useState<string[]>([])
     const [specialReason, setSpecialReason] = useState("")
+    const [reportPostID, setReportPostID] = useState("")
 
-    const HandleReport = () => {
-        // TODO(mario):
+    const HandleReport = async () => {
         if (reason.length == 0) alert("Failed. Please choose a reason.");
         else {
-            console.log(reason, specialReason);
-            setShowReport(false);
-            alert("Report received. Thank you!");
+            try {
+                console.log(reason, specialReason);
+                const response = await axios.post('http://localhost:3000/api/report', {
+                    reportReason: reason,
+                    reportSpecialReason: specialReason,
+                    target: "Post", 
+                    id: reportPostID,
+                });
+                setShowReport(false);
+                alert("Report received. Thank you!");
+            } catch (error){
+    
+                setShowReport(false);
+                console.error("Error Report");
+            }
         }
     }
 
@@ -46,7 +50,7 @@ function TutorPostNoComment(props: TutorPostProps) {
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
                 </ListGroup>
-                <Button variant="danger" onClick={() => setShowReport(true)}>Report</Button>
+                <Button variant="danger" onClick={() => {setShowReport(true), setReportPostID(props.id)}}>Report</Button>
             </Card>
 
             <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}>
