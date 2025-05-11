@@ -15,7 +15,7 @@ export const subjects = [
 export const districts = [
   { label: 'All', value: 0 },
   { label: 'Island', value: 1 },
-  { label: 'kwaiTsing', value: 2 },
+  { label: 'Kwai Tsing', value: 2 },
   { label: 'North', value: 3 },
   { label: 'Sai Kung', value: 4 },
   { label: 'Sha Tin', value: 5 },
