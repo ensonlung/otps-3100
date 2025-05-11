@@ -1,5 +1,5 @@
 export const subjects = [
-  { label: "All", value: 0 },
+  { label: "Any", value: 0 },
   { label: "Chinese", value: 1 },
   { label: "English", value: 2 },
   { label: "Mathematics", value: 3 },
@@ -13,7 +13,7 @@ export const subjects = [
 ]
 
 export const districts = [
-  { label: 'All', value: 0 },
+  { label: 'Any', value: 0 },
   { label: 'Island', value: 1 },
   { label: 'Kwai Tsing', value: 2 },
   { label: 'North', value: 3 },
@@ -35,7 +35,7 @@ export const districts = [
 ]
 
 export const days = [
-  { label: 'All', value: 0 },
+  { label: 'Any', value: 0 },
   { label: 'Monday', value: 1 },
   { label: 'Tuesday', value: 2 },
   { label: 'Wednesday', value: 3 },
@@ -46,10 +46,10 @@ export const days = [
 ]
 
 export const times = [
-    "All", "9:00-12:00", "12:00-15:00", "15:00-18:00", "18:00-21:00"
+    "Any", "9:00-12:00", "12:00-15:00", "15:00-18:00", "18:00-21:00"
 ]
 export const fees = [
-    "All", "<$150", "$150-$249", "$250-$349", ">=$350"
+    "Any", "<$150", "$150-$249", "$250-$349", ">=$350"
 ]
 
 export const reportReason = [
