@@ -5,45 +5,40 @@ import AdminComment from "./AdminPanel/AdminComment";
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios";
+import { report } from "../Backend/reportController.cjs";
 
 function AdminPage() {
     const location = useLocation();
     const {username, password} = location.state || {};
 
-    const [displayPosts, setDisplayPosts] = useState<AdminPostProps[]>([]);
+    const [reportedPosts, setReportedPosts] = useState<AdminPostProps[]>([]);
         useEffect(() => {
             // TODO: after search controller is done, search with username for posts
-            const fetchInitialPosts = async () => {
+            const fetchInitialReportedPosts = async () => {
                 try {
-                const response = await axios.post('http://localhost:3000/api/filter-post', {
-                    subject: "All",
-                    gender: "All",
-                    district: "All",
-                    day: "All",
-                    time: "All",
-                    fee: "All",
-                });
-                const rawPosts: any[] = response.data.posts;
-    
-                const formattedPosts: AdminPostProps[] = rawPosts.map((post: any) => ({
-                    username: post.username || 'Unknown',
-                    name: post.name || 'Unknown',
-                    gender: post.gender || 'Unknown',
-                    subject: post.subject || [],
-                    district: post.district || [],
-                    tuitionFee: post.fee || 'Not specified',
-                    availableDays: post.day || [],
-                    contact: post.contact || 'Not Spec',
-                    reportReason: ["Improper Fee"],
-                    specificReason: "",
-                }));
-                setDisplayPosts(formattedPosts);
+                    const response = await axios.post('http://localhost:3000/api/get-report-post', {
+                    });
+                    const rawPosts: any[] = response.data.posts;
+        
+                    const formattedPosts: AdminPostProps[] = rawPosts.map((post: any) => ({
+                        username: post.postCon.username || 'Unknown',
+                        name: post.postCon.name || 'Unknown',
+                        subject: post.postCon.subject || [],
+                        district: post.postCon.district || [],
+                        tuitionFee: post.postCon.fee || 'Not specified',
+                        availableDays: post.postCon.day || [],
+                        contact: post.postCon.contact || 'Not Spec',
+                        reportReason: post.reportDetails.reportReason || '',
+                        specificReason: post.reportDetails.specialReportReason || '',
+                    }));
+                    console.log(formattedPosts);
+                    setReportedPosts(formattedPosts);
                 } catch (error) {
-                console.error('Error fetching initial posts:', error);
-                setDisplayPosts([]);
+                    console.error('Error fetching initial posts:', error);
+                    setReportedPosts([]);
                 }
             };
-            fetchInitialPosts();
+            fetchInitialReportedPosts();
         }, []);
 
     return (
@@ -55,9 +50,9 @@ function AdminPage() {
                     </Col>
                     <Col md="6">
                         <h3>Post Reports</h3>
-                        {displayPosts.length > 0 ? (
+                        {reportedPosts.length > 0 ? (
                         <ul>
-                            {displayPosts.map((post) => <AdminPost {...post}/>)}
+                            {reportedPosts.map((post) => <AdminPost {...post}/>)}
                         </ul>
                         ) : (
                             <p>No posts found.</p>                        

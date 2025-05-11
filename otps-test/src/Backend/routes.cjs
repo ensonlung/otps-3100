@@ -17,6 +17,6 @@ router.post('/comment', commentController.createComment);
 router.post('/get-comment', commentController.getComment);
 router.post('/search', searchController.searchRelevantName);
 router.post('/report', reportController.report);
-
+router.post('/get-report-post', reportController.fetchPostReport);
 
 module.exports = router;
