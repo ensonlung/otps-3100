@@ -49,6 +49,7 @@ function TutorPostNoComment(props: TutorPostProps) {
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
+                    <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
                 <Button variant="danger" onClick={() => {setShowReport(true), setReportPostID(props.id)}}>Report</Button>
             </Card>

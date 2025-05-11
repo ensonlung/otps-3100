@@ -11,6 +11,7 @@ export interface TutorPostProps {
     availableDays: string[];
     tuitionFee: string;
     contact: string;
+    selfIntro: string;
 }
 
 function TutorPost(props: TutorPostProps, onComment: (username: string) => void) {
@@ -54,6 +55,7 @@ function TutorPost(props: TutorPostProps, onComment: (username: string) => void)
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
+                    <ListGroup.Item>Desciprtion: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
                 
                 <Button variant="secondary" onClick={() => onComment(props.username)}>Check out more about {props.name}</Button>

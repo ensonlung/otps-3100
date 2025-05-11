@@ -88,6 +88,7 @@ const filterController = {
                 district: postData.district,
                 fee: postData.fee,
                 contact: record["phone number"],
+                selfIntro: postData.selfIntro,
               };
             })
           );

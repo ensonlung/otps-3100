@@ -41,8 +41,8 @@ const StudentPostManager: React.FC = () => {
                 tuitionFee: post.fee || 'Not specified',
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
+                selfIntro: post.selfIntro || "None",
             }));
-            formattedPosts.reverse();
             setDisplayPosts(formattedPosts);
           } catch (error) {
             console.error('Error fetching initial posts:', error);

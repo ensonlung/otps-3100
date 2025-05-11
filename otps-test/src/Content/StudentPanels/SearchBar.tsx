@@ -26,6 +26,7 @@ const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 tuitionFee: post.fee || 'Not specified',
                 availableDays: post.day || [],
                 contact: post.contact || 'Not Spec',
+                selfIntro: post.selfIntro || "None",
             }));
 
             setDisplayPosts(formattedPost);

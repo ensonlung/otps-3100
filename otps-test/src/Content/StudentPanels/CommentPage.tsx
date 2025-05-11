@@ -17,32 +17,33 @@ function CommentPage() {
     useEffect(() => {
         const fetchInitialPosts = async () => {
             try {
-            const response = await axios.post('http://localhost:3000/api/filter-post', {
-                subject: "All",
-                gender: "All",
-                district: "All",
-                day: "All",
-                time: "All",
-                fee: "All",
-                uname: username,
-            });
-            const rawPosts: any[] = response.data.posts;
+                const response = await axios.post('http://localhost:3000/api/filter-post', {
+                    subject: "All",
+                    gender: "All",
+                    district: "All",
+                    day: "All",
+                    time: "All",
+                    fee: "All",
+                    uname: username,
+                });
+                const rawPosts: any[] = response.data.posts;
 
-            const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
-                id: post.id,
-                username: post.username || 'Unknown',
-                name: post.name || 'Unknown',
-                gender: post.gender || 'Unknown',
-                subject: post.subject || [],
-                district: post.district || [],
-                tuitionFee: post.fee || 'Not specified',
-                availableDays: post.day || [],
-                contact: post.contact || 'Not Spec',
-            }));
-            setDisplayPosts(formattedPosts);
+                const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                    id: post.id,
+                    username: post.username || 'Unknown',
+                    name: post.name || 'Unknown',
+                    gender: post.gender || 'Unknown',
+                    subject: post.subject || [],
+                    district: post.district || [],
+                    tuitionFee: post.fee || 'Not specified',
+                    availableDays: post.day || [],
+                    contact: post.contact || 'Not Spec',
+                    selfIntro: post.selfIntro || "None",
+                }));
+                setDisplayPosts(formattedPosts);
             } catch (error) {
-            console.error('Error fetching initial posts:', error);
-            setDisplayPosts([]);
+                console.error('Error fetching initial posts:', error);
+                setDisplayPosts([]);
             }
         };
         fetchInitialPosts();
