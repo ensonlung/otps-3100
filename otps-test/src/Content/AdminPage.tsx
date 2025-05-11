@@ -23,7 +23,6 @@ function AdminPage() {
         
                     const formattedPosts: AdminPostProps[] = rawPosts.map((post: any) => ({
                         username: post.postCon.username || 'Unknown',
-                        name: post.postCon.name || 'Unknown',
                         subject: post.postCon.subject || [],
                         district: post.postCon.district || [],
                         tuitionFee: post.postCon.fee || 'Not specified',

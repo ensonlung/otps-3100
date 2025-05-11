@@ -3,7 +3,6 @@ import { useState } from "react"
 import styles from '../Widget/TutorPost.module.css';
 
 export interface AdminPostProps {
-    name: string;
     username: string;
     subject: string[];
     district: string[];
@@ -34,7 +33,7 @@ function AdminPost(props: AdminPostProps) {
         <>
             <Card>
                 <Card.Body>
-                    <Card.Title> {props.name} <span className={styles.username}>@{props.username}</span></Card.Title>
+                    <Card.Title> <span className={styles.username}>@{props.username}</span></Card.Title>
                 </Card.Body>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
