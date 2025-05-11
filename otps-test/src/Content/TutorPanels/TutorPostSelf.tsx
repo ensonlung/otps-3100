@@ -8,6 +8,7 @@ import {TutorPostProps} from "../Widget/TutorPost"
 function TutorPostSelf(props: TutorPostProps) {
 
     // useStates for report
+    const [postId, setPostId] = useState("")
     const [showEdit, setShowEdit] = useState(false)
     const [showDelete, setShowDelete] = useState(false)
     const [showHide, setShowHide] = useState(false)
@@ -54,7 +55,13 @@ function TutorPostSelf(props: TutorPostProps) {
     }
 
     const HandleDelete = async() => {
-        // TODO
+        try {
+            const response = await axios.post('http://localhost:3000/api/delete-post', {
+                id: postId,
+            });
+        } catch (error){
+            console.error('Error delete posts:', error);
+        }
         setShowDelete(false)
     }
 
@@ -75,9 +82,9 @@ function TutorPostSelf(props: TutorPostProps) {
                     <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
                 <Row>
-                    <Col md="2"><Button variant="danger" onClick={() => setShowDelete(true)}>Delete</Button></Col>
-                    <Col md="2"><Button variant="primary" onClick={() => setShowHide(true)}>Hide</Button></Col>
-                    <Col md="2"><Button variant="secondary" onClick={() => setShowEdit(true)}>Edit</Button></Col>
+                    <Col md="2"><Button variant="danger" onClick={() => {setPostId(props.id), setShowDelete(true)}}>Delete</Button></Col>
+                    <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id), setShowHide(true)}}>Hide</Button></Col>
+                    <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true)}}>Edit</Button></Col>
                 </Row>
                 
             </Card>

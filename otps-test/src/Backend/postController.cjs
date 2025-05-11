@@ -45,6 +45,17 @@ const postController = {
         res.status(500).json({ error });
       }
     },
+    deletePost: async (req, res) => {
+      try {
+        const { id } = req.body;
+        const docRef = await db.collection('post').doc(id).delete(); 
+        res.status(201).json({ success: true });
+      } 
+      catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+      }
+  },
 };
 
 module.exports = postController;
