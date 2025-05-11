@@ -5,6 +5,7 @@ import TutorPost from "../Widget/TutorPost"
 import { useState, useEffect } from "react";
 import { TutorPostProps } from "../Widget/TutorPost";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"
 
 const StudentPostManager: React.FC = () => {
     const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
@@ -40,6 +41,10 @@ const StudentPostManager: React.FC = () => {
         fetchInitialPosts();
       }, []);
 
+    const navigate = useNavigate()
+    const HandleEnterCommentPage = (username: string) => {
+        navigate("./Comment", { state: {username} });
+    }
     return (
         <>
             <Container fluid>
@@ -47,7 +52,7 @@ const StudentPostManager: React.FC = () => {
                     <Col md="8">
                         {displayPosts.length > 0 ? (
                         <ul>
-                            {displayPosts.map((post) => TutorPost(post))}
+                            {displayPosts.map((post) => TutorPost(post, HandleEnterCommentPage))}
                         </ul>
                         ) : (
                             <p>No posts found.</p>                        

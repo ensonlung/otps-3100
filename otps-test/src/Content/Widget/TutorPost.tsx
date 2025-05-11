@@ -3,6 +3,7 @@ import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
 import styles from './TutorPost.module.css';
+import { useNavigate } from "react-router-dom"
 
 export interface TutorPostProps {
     name: string;
@@ -15,7 +16,7 @@ export interface TutorPostProps {
     contact: string;
   }
 
-function TutorPost(props: TutorPostProps) {
+function TutorPost(props: TutorPostProps, onComment: (username: string) => void) {
     // const [rate, setRate] = useState("1")
     // const [comment, setComment] = useState("")
 
@@ -57,6 +58,8 @@ function TutorPost(props: TutorPostProps) {
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
                 </ListGroup>
+                
+                <Button variant="secondary" onClick={() => onComment(props.username)}>Check out more about {props.name}</Button>
                 <Form>
                     <Form.Group>
                     {/* <Form.Label>Leave your comments here:</Form.Label> */}
@@ -79,24 +82,24 @@ function TutorPost(props: TutorPostProps) {
                 </Form>
             </Card>
 
-                {/* <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}> */}
+            {/* <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}> */}
                 {/* <Modal.Header closeButton> */}
                     {/* <Modal.Title>Report Post</Modal.Title> */}
                 {/* </Modal.Header> */}
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
+                {/* <Modal.Body> */}
+                    {/* <Form> */}
+                        {/* <Form.Group> */}
                             {/* <Form.Label>Reason:</Form.Label> */}
                             {/* <Select isMulti options={reportReason} onChange={(e) => {setReason(Array.from(e, (reason) => reason.label))}}/> */}
-                            <br/>
+                            {/* <br/> */}
                             {/* <Form.Control as="textarea" placeholder="Specify reasons if needed" onChange={(e) => setSpecialReason(e.target.value)}/> */}
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
+                        {/* </Form.Group> */}
+                    {/* </Form> */}
+                {/* </Modal.Body> */}
+                {/* <Modal.Footer> */}
                     {/* <Button variant="secondary" onClick={() => {setShowReport(false)}}>Cancel</Button> */}
                     {/* <Button variant="danger" onClick={HandleReport}>Report</Button> */}
-                </Modal.Footer>
+                {/* </Modal.Footer> */}
             {/* </Modal> */}
         </>
     );
