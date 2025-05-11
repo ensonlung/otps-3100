@@ -4,11 +4,11 @@ import { subjects, districts, days, times, fees } from "../../TutorPostInfo.cjs"
 import axios from "axios";
 import { TutorPostProps } from "../Widget/TutorPost";
 
-interface FilterFormProps {
+export interface FilterFormProps {
     setDisplayPosts: (posts: TutorPostProps[]) => void;
-  }
+}
 
-  const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {   
+const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {   
     const [subject, setSubject] = useState("All")
     const [gender, setGender] = useState("All")
     const [district, setDistrict] = useState("All")

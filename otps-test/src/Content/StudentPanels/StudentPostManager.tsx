@@ -14,7 +14,7 @@ const TutorPostWrapper: React.FC<{
   }> = ({ post, onComment, index }) => {
     return <>{TutorPost(post, onComment)}</>;
   }
-  
+
 const StudentPostManager: React.FC = () => {
     const [displayPosts, setDisplayPosts] = useState<TutorPostProps[]>([]);
       useEffect(() => {
@@ -75,7 +75,7 @@ const StudentPostManager: React.FC = () => {
                     )}
                     </Col>
                     <Col className="bg-light" md="4">
-                        <SearchBar />
+                        <SearchBar setDisplayPosts={ setDisplayPosts }/>
                         <br/>
                         <FilterForm setDisplayPosts={ setDisplayPosts }/>
                     </Col>

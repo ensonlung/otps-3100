@@ -1,13 +1,37 @@
 import { Row, Col, Card, Form, Button } from "react-bootstrap"
 import { useState } from "react"
+import { FilterFormProps } from "./FilterForm"
+import { TutorPostProps } from "../Widget/TutorPost"
+import axios from "axios"
 
-function SearchBar() {
+const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {   
     // useStates
     const [name, setName] = useState("")
 
     // On Filter Button Click
     const HandleSearch = async() => {
-        // TODO(Mario)
+        try{
+            const response = await axios.post('http://localhost:3000/api/search', {
+                anyName: name,
+            });
+            const rawPosts: any[] = response.data.posts;
+            
+            const formattedPost: TutorPostProps[] = rawPosts.map((post: any) => ({
+                username: post.username || 'Unknown',
+                name: post.name || 'Unknown',
+                gender: post.gender || 'Unknown',
+                subject: post.subject || [],
+                district: post.district || [],
+                tuitionFee: post.fee || 'Not specified',
+                availableDays: post.day || [],
+                contact: post.contact || 'Not Spec',
+            }));
+
+            setDisplayPosts(formattedPost);
+        } catch (error){
+            console.error("Error Search");
+            setDisplayPosts([]);
+        }
         console.log(name);
     }
 
