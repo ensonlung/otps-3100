@@ -7,6 +7,21 @@ const timeToMinutes = (time) => {
   return hours * 60 + minutes;
 };
 
+const formatTimeTo12Hour = (time) => {
+  if (!time || time === 'All') return null;
+
+  const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+  if (!timeRegex.test(time)) {
+    console.warn(`Invalid time format: ${time}, expected HH:MM`);
+    return null;
+  }
+
+  const [hours, minutes] = time.split(':').map(Number);
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const adjustedHours = hours % 12 || 12; 
+  return `${adjustedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+};
+
 const isRangeOverlap = (postStart, postEnd, startTime, endTime) => {
   const postStartMinutes = timeToMinutes(postStart);
   const postEndMinutes = timeToMinutes(postEnd);
@@ -157,6 +172,8 @@ const filterController = {
       const finalPosts = await Promise.all(
         posts.map(async (post) => {
           const record = await getRecordByName(post.username);
+          const formattedStartTime = formatTimeTo12Hour(post.startTime);
+          const formattedEndTime = formatTimeTo12Hour(post.endTime);
           return {
             id: post.id,
             username: post.username,
@@ -165,8 +182,7 @@ const filterController = {
             gender: record?.gender || 'Unknown',
             day: post.day || [],
             district: post.district || [],
-            time: post.startTime && post.endTime ? `${post.startTime} - ${post.endTime}` : 'Not specified',
-            fee: post.fee || 'Not specified',
+            time: formattedStartTime && formattedEndTime ? `${formattedStartTime} - ${formattedEndTime}` : 'Not specified',            fee: post.fee || 'Not specified',
             contact: record?.["phone number"] || "Not Spec",
             selfIntro: post.selfIntro || "None",
           };
