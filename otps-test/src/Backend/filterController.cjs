@@ -10,7 +10,7 @@ const filterController = {
       const { fee } = req.body;
       const { uname } = req.body;
         try {
-          let postRef = db.collection('post');
+          const postRef = db.collection('post').orderBy('postContent.createdAt', 'desc');
           if (gender != 'All'){
             const userSnapshot = await db.collection('account').where(gender, '==', gender).get();
             const names = [];
