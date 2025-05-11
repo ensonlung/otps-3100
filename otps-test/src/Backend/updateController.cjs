@@ -23,6 +23,20 @@ const updateController = {
           res.status(500).json({ error });
         }
     },
+    getInfo: async (req, res) => {
+      try {
+        const { username } = req.body;
+        
+        const docRef = await db.collection('account').where('userInfo.username', '==', username).get();
+        const userid = docRef.docs[0].id;
+        
+        const userRef = await db.collection('account').doc(userid).get();
+        res.status(201).json({ account: userRef.data().userInfo });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error });
+      }
+    }
 };
 
 module.exports = updateController;

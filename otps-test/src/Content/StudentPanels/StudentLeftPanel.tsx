@@ -25,6 +25,24 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
     const [newPassword, setNewPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
 
+    const HandleShowInfo = async () => {
+        try {
+            const response = await axios.post("http://localhost:3000/api/get-info", {
+                username: username,
+            });
+            const post = response.data.account;
+            console.log(post);
+            setFirstName(post["first name"]);
+            setLastName(post["last name"]);
+            setGender(post.gender);
+            setEmail(post.email);
+            setBday(post.bday);
+            setPhoneNumber(post["phone number"]);
+        } catch (error) {
+            alert("Failed to get user information");
+        }
+    }
+
     const HandleInfoUpdate = async () => {
         // TODO:
         try {
@@ -61,7 +79,7 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
                         <Card.Body>
                             Username: {username}
                         </Card.Body>
-                        <Button variant="primary" onClick={() => setShowUpdate(true)}>Update Profile</Button>    
+                        <Button variant="primary" onClick={() => {HandleShowInfo() ,setShowUpdate(true)}}>Update Profile</Button>    
                         <Button variant="secondary" onClick={() => setShowPw(true)}>Change Password</Button>
                     </Card>
                 </Row>
@@ -78,13 +96,13 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
                             <Col md="6">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>First Name:</Form.Label>
-                                    <Col sm="12"><Form.Control type="text" placeholder="first name" onChange={(e) => setFirstName(e.target.value)}></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="text" value = {firstName} onChange={(e) => setFirstName(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                             <Col md="4">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>Last Name:</Form.Label>
-                                    <Col sm="12"><Form.Control type="text" placeholder="last name" onChange={(e) => setLastName(e.target.value)}></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="text" value = {lastName} onChange={(e) => setLastName(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -92,22 +110,22 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
                         <div key="inline-radio" className="mb-3">
                             <Form.Label>Gender:</Form.Label>
                             <Col>
-                            <Form.Check inline label="Male" name="gender" type={"radio"} defaultChecked onClick={() => setGender("Male")}/>
-                            <Form.Check inline label="Female" name="gender" type={"radio"} onClick={() => setGender("Female")}/>
+                            <Form.Check inline label="Male" name="gender" type={"radio"} checked={gender==="Male"} onClick={() => setGender("Male")}/>
+                            <Form.Check inline label="Female" name="gender" type={"radio"} checked={gender==="Female"} onClick={() => setGender("Female")}/>
                             </Col>
                         </div>
                         </Row>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Email:</Form.Label>
-                            <Col sm="10"><Form.Control type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="email" value = {email} onChange={(e) => setEmail(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Birth Date:</Form.Label>
-                            <Col sm="10"><Form.Control type="date" onChange={(e) => setBday(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="date" value = {bday} onChange={(e) => setBday(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Phone Number:</Form.Label>
-                            <Col sm="10"><Form.Control type="phone" placeholder="phone number" onChange={(e) => setPhoneNumber(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="phone" value = {phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
