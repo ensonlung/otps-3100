@@ -61,6 +61,8 @@ function AdminPage() {
           const rawFeedbacks: any[] = response.data.feedbacks;
     
           const formattedFeedbacks: AdminFeedbackProps[] = rawFeedbacks.map((feedback: any) => ({
+            commentor: feedback.feedbackCon.commentor,
+            tutor: feedback.feedbackCon.tutorName,
             id: feedback.reportDetails.reportId,
             comment: feedback.feedbackCon.comment || '',
             rating: feedback.feedbackCon.rating || '',

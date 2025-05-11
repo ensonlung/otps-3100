@@ -4,6 +4,8 @@ import axios from "axios";
 
 export interface AdminFeedbackProps {
     id: string;
+    commentor: string;
+    tutor: string;
     comment: string;
     rating: string;
     reportReason: string[];
@@ -51,6 +53,7 @@ function AdminComment(props: AdminFeedbackProps, onFeedbackChange: () => void) {
         <>
             <Card>
                 <ListGroup>
+                    <ListGroup.Item>{props.commentor}'s comment to {props.tutor}</ListGroup.Item>
                     <ListGroup.Item>Comment: {props.comment}</ListGroup.Item>
                     <ListGroup.Item>Rating: {props.rating}</ListGroup.Item>
                     <ListGroup.Item>Reason: {props.reportReason.join(', ')}</ListGroup.Item>

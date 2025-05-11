@@ -16,7 +16,7 @@ const TutorPostWrapper: React.FC<{
 };
 
 interface StudentPostManagerProps {
-  username?: string; // Add username as an optional prop
+  username?: string; 
 }
 
 const StudentPostManager: React.FC<StudentPostManagerProps> = ({ username }) => {
