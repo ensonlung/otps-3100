@@ -74,6 +74,7 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
             const rawPosts: any[] = response.data.posts;
 
             const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
+                id: post.id,
                 username: post.username || 'Unknown',
                 name: post.name || 'Unknown',
                 gender: post.gender || 'Unknown',
