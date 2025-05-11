@@ -19,26 +19,26 @@ const postController = {
     },
     getPost: async (req, res) => {
       try {
-        const { userName } = req.body;
-        const PostRef = await db.collection('post').where('username', '==', userName).orderBy('createdAt', 'desc');
-        const querySnapshot = await PostRef.get();
-        const tutorPosts = await Promise.all(
-          querySnapshot.docs.map(async (doc) => {
-            const data = doc.data();
-            return {
-                id: data.postContent.id,
-                //name: data.postContent.name,
-                username: data.postContent.username,
-                gender: data.postContent.gender,
-                subject: data.postContent.subject,
-                district: data.postContent.district,
-                availableDays: data.postContent.availableDays,
-                tuitionFee: data.postContent.tuitionFee,
-                contact: data.postContent.contact,
-            };
-          })
-        );
-        res.status(201).json({ posts: tutorPosts });
+        const { id } = req.body;
+        const postRef = await db.collection('post').doc(id).get();
+        res.status(201).json({ post: postRef.data().postContent });
+      } catch (error){
+        console.log(error);
+        res.status(500).json({ error });
+      }
+    },
+    updatePost: async (req, res) => {
+      try {
+        const { id, subject, district, day, startTime, endTime, fee, selfIntro } = req.body;
+        const postRef = await db.collection('post').doc(id);
+        postRef.update({"postContent.subject": subject});
+        postRef.update({"postContent.district": district});
+        postRef.update({"postContent.day": day});
+        postRef.update({"postContent.startTime": startTime});
+        postRef.update({"postContent.endTime": endTime});
+        postRef.update({"postContent.fee": fee});
+        postRef.update({"postContent.selfIntro": selfIntro});
+        res.status(201).json({ success: true });
       } catch (error){
         console.log(error);
         res.status(500).json({ error });

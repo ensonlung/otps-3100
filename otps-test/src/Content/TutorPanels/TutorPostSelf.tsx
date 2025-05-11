@@ -22,37 +22,45 @@ function TutorPostSelf(props: TutorPostProps) {
     const [endTime, setEndTime] = useState("")
     const [fee, setFee] = useState("")
     const [selfIntro, setSelfIntro] = useState("")
-    const [posts, setPosts] = useState<TutorPostProps[]>([])
     
-
+    const HandleShowEdit = async () => {
+        try {
+          const response = await axios.post('http://localhost:3000/api/get-post', {
+            id: postId,
+          });
+          const post = response.data.post;
+          console.log(post);
+    
+          // Set all form fields with the fetched data
+          setSubject(post.subject || []);
+          setDistrict(post.district || []);
+          setDay(post.day || []);
+          setStartTime(post.startTime || "");
+          setEndTime(post.endTime || "");
+          setFee(post.fee || "");
+          setSelfIntro(post.selfIntro || "");
+    
+        } catch (error) {
+          console.error('Error fetching post for editing:', error);
+          alert('Failed to load post data for editing.');
+        }
+      };
     const HandleEdit = async () => {
-        // TODO
-        try { //Fetch-buggy
-            const response = await axios.post('http://localhost:3000/api/get-post', {
-                tutorName: username,
+        try { 
+            const response = await axios.post('http://localhost:3000/api/update-post', {
+                id: postId,
+                subject: subject,
+                district: district,
+                day: day,
+                startTime: startTime,
+                endTime: endTime,
+                fee: fee,
+                selfIntro: selfIntro,
             });
-            const rawPosts: any[] = response.data.posts;
-
-            const formattedPosts: TutorPostProps[] = rawPosts.map((post: any) => ({
-                id: post.id,
-                time: post.time,
-                name: post.name,
-                username: post.username,
-                gender: post.gender,
-                subject: post.subject,
-                district: post.district,
-                availableDays: post.availableDays,
-                tuitionFee: post.tuitionFee,
-                contact: post.contact,
-                selfIntro: post.selfIntro,
-                isHide: post.isHide,
-            }));
-            setPosts(formattedPosts);
-            } catch (error) {
-                console.error('Error fetching initial posts:', error);
-                setPosts([]);
-            }
-        setShowEdit(true)
+        } catch (error) {
+            console.error('Error fetching initial posts:', error);
+        }
+        setShowEdit(false);
     }
 
     const HandleDelete = async() => {
@@ -91,7 +99,7 @@ function TutorPostSelf(props: TutorPostProps) {
                 <Row>
                     <Col md="2"><Button variant="danger" onClick={() => {setPostId(props.id), setShowDelete(true)}}>Delete</Button></Col>
                     <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id),  setIsHide(props.isHide), setShowHide(true)}}>{props.isHide.toString() == "false" ? "Hide" : "Show"}</Button></Col>
-                    <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true)}}>Edit</Button></Col>
+                    <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true), HandleShowEdit()}}>Edit</Button></Col>
                 </Row>
                 
             </Card>
@@ -114,37 +122,37 @@ function TutorPostSelf(props: TutorPostProps) {
                     <Form>
                         <Form.Group>
                             <Form.Label>Subject</Form.Label>
-                            <Select isMulti options={subjects.slice(1)} onChange={(e) => {setSubject(Array.from(e, (subject) => subject.label))}}/>
+                            <Select isMulti options={subjects.slice(1)} value={subjects.slice(1).filter(option => subject.includes(option.label))} onChange={(e) => {setSubject(Array.from(e, (subject) => subject.label))}}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>District</Form.Label>
-                            <Select isMulti options={districts.slice(1)} onChange={(e) => {setDistrict(Array.from(e, (district) => district.label))}}/>
+                            <Select isMulti options={districts.slice(1)} value={districts.slice(1).filter(option => district.includes(option.label))} onChange={(e) => {setDistrict(Array.from(e, (district) => district.label))}}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Day</Form.Label>
-                            <Select isMulti options={days.slice(1)} onChange={(e) => {setDay(Array.from(e, (day) => day.label))}}/>
+                            <Select isMulti options={days.slice(1)} value={days.slice(1).filter(option => day.includes(option.label))} onChange={(e) => {setDay(Array.from(e, (day) => day.label))}}/>
                         </Form.Group>
                         <Row>
                             <Col md="6">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>Start Time:</Form.Label>
-                                    <Col sm="12"><Form.Control type="time" onChange={(e) => setStartTime(e.target.value)}/></Col>
+                                    <Col sm="12"><Form.Control type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)}/></Col>
                                 </Form.Group>
                             </Col>
                             <Col md="6">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>End Time:</Form.Label>
-                                    <Col sm="12"><Form.Control type="time" onChange={(e) => setEndTime(e.target.value)}/></Col>
+                                    <Col sm="12"><Form.Control type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)}/></Col>
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Form.Group>
                             <Form.Label>Per Hour Tuition Fee (in HKD)</Form.Label>
-                            <Form.Control type="int" placeholder="0" onChange={(e) => setFee(e.target.value)}/>
+                            <Form.Control type="int" value={fee} onChange={(e) => setFee(e.target.value)}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Self Description</Form.Label>
-                            <Form.Control as="textarea" rows={4} placeholder="Describe Yourself" onChange={(e) => setSelfIntro(e.target.value)}/>
+                            <Form.Control as="textarea" rows={4} value={selfIntro} onChange={(e) => setSelfIntro(e.target.value)}/>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
