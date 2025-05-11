@@ -32,6 +32,11 @@ function RegistrationPanel() {
             setError('Invalid birth date. Register Failed.');
             return;
         }
+        else if (phoneNumber.length!=8){
+            console.log("Invalid Phone Number");
+            setError('Invalid Phone Number. Register Failed.');
+            return;
+        }
         else if (password != rePassword) {
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match. Register Failed.');
