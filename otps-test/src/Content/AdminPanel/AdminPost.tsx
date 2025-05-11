@@ -69,7 +69,7 @@ function AdminPost(props: AdminPostProps, onPostChange: () => void) {
                     <ListGroup.Item>Specific Reason: {props.specificReason}</ListGroup.Item>
                 </ListGroup>
                 <Row>
-                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemovePost(props.id)}}>Remove Feedback</Button></Col>
+                    <Col md="4"><Button variant="danger" onClick={() => {HandleRemovePost(props.id)}}>Remove Post</Button></Col>
                     <Col md="4"><Button variant="danger" onClick={() => {HandleRemoveUser(props.id)}}>Remove User</Button></Col>
                     <Col md="4"><Button variant="secondary" onClick={() => {HandleIgnore(props.id)}}>Ignore</Button></Col>
                 </Row>
