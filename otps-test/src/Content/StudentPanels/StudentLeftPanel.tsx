@@ -57,7 +57,7 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
             alert('Invalid birth date. Register Failed.');
             return;
         }
-        else if (phoneNumber.length!=8){
+        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){
             console.log("Invalid Phone Number");
             alert('Invalid Phone Number. Register Failed.');
             return;

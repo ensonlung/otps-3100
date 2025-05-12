@@ -59,7 +59,7 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
             alert('Invalid birth date. Register Failed.');
             return;
         }
-        else if (phoneNumber.length!=8){
+        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){
             console.log("Invalid Phone Number");
             alert('Invalid Phone Number. Register Failed.');
             return;
@@ -96,31 +96,31 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
         const realOldPassword = response.data.password;
         if (realOldPassword != oldPassword){
             console.log("Old password is wrong.");
-            alert('Old password is wrong.');
+            setError('Old password is wrong.');
             return;
         } else if (newPassword != rePassword) {
             console.log("Two passwords are not the same.");
-            alert('Two passwords do not match.');
+            setError('Two passwords do not match.');
             return;
         }
         else if (newPassword.length < minLength){
             console.log("Password too short.");
-            alert('Password should at least 8 digit.');
+            setError('Password should at least 8 digit.');
             return;
         }
         else if (!/[A-Z]/.test(newPassword)){
             console.log("Password must contain at least one uppercase letter.");
-            alert('Password must contain at least one uppercase letter.');
+            setError('Password must contain at least one uppercase letter.');
             return;
         }
         else if (!/[a-z]/.test(newPassword)){
             console.log("Password must contain at least one lowercase letter.");
-            alert('Password must contain at least one lowercase letter.');
+            setError('Password must contain at least one lowercase letter.');
             return;
         }
         else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
             console.log("Password must contain at least one special character.");
-            alert('Password must contain at least one special character.');
+            setError('Password must contain at least one special character.');
             return;
         }
         else if (!/[0-9]/.test(newPassword)){
