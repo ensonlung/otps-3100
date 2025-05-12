@@ -44,9 +44,36 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
             alert("Failed to get user information");
         }
     }
-
+    const NewDay = new Date("01-01-2020");
+    const OldDay = new Date("01-01-1900");
+    const Bday = new Date(bday);
     const HandleInfoUpdate = async () => {
         // TODO:
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+            console.log("Invalid email");
+            alert('Invalid email. Register Failed.');
+            return;
+        }
+        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
+            console.log("Invalid Birth Day");
+            alert('Invalid birth date. Register Failed.');
+            return;
+        }
+        else if (phoneNumber.length!=8){
+            console.log("Invalid Phone Number");
+            alert('Invalid Phone Number. Register Failed.');
+            return;
+        }
+        else if (username.length<5){ //newly added
+             console.log("User name is too short");
+            alert('User name is too short. Register Failed.');
+            return;
+        }
+        else if (lastName.length==0 ||firstName.length==0) { 
+                console.log("Please fill in all data");
+                alert("Please fill in all data. Register Failed.");
+                return;
+        }
         try {
             const updatedInfo = {"last name": lastName, "first name": firstName, "gender": gender,
                 "email": email, "bday": bday, "phone number": phoneNumber};
@@ -69,31 +96,31 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
         const realOldPassword = response.data.password;
         if (realOldPassword != oldPassword){
             console.log("Old password is wrong.");
-            setError('Old password is wrong.');
+            alert('Old password is wrong.');
             return;
         } else if (newPassword != rePassword) {
             console.log("Two passwords are not the same.");
-            setError('Two passwords do not match.');
+            alert('Two passwords do not match.');
             return;
         }
         else if (newPassword.length < minLength){
             console.log("Password too short.");
-            setError('Password should at least 8 digit.');
+            alert('Password should at least 8 digit.');
             return;
         }
         else if (!/[A-Z]/.test(newPassword)){
             console.log("Password must contain at least one uppercase letter.");
-            setError('Password must contain at least one uppercase letter.');
+            alert('Password must contain at least one uppercase letter.');
             return;
         }
         else if (!/[a-z]/.test(newPassword)){
             console.log("Password must contain at least one lowercase letter.");
-            setError('Password must contain at least one lowercase letter.');
+            alert('Password must contain at least one lowercase letter.');
             return;
         }
         else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
             console.log("Password must contain at least one special character.");
-            setError('Password must contain at least one special character.');
+            alert('Password must contain at least one special character.');
             return;
         }
         else if (!/[0-9]/.test(newPassword)){
@@ -101,7 +128,7 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
             setError('Password must contain at least one digit.');
             return;
         }
-        else if (/[${userName}]/.test(newPassword)){
+        else if (newPassword.includes(username)){
             console.log("Password cannot contain username.", username, newPassword);
             setError('Password cannot contain username.');
             return;

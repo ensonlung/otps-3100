@@ -42,14 +42,14 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
             alert("Failed to get user information");
         }
     }
-     const NewDay = new Date("01-01-2020");
+    const NewDay = new Date("01-01-2020");
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
     const HandleInfoUpdate = async () => {
         // TODO:
         if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
             console.log("Invalid email");
-            setError('Invalid email. Register Failed.');
+            alert('Invalid email. Register Failed.');
             return;
         }
         else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
