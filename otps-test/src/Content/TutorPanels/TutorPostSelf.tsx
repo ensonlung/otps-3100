@@ -1,4 +1,4 @@
-import { Form, Card, ListGroup, Button, Modal, Row, Col } from "react-bootstrap"
+import { Form, Card, ListGroup, Button, Modal, Row, Col, Dropdown } from "react-bootstrap"
 import Select from "react-select"
 import { useState } from "react"
 import { subjects, districts, days } from "../../TutorPostInfo.cjs";
@@ -88,6 +88,44 @@ function TutorPostSelf(props: TutorPostProps) {
     return (
         <>
             <Card>
+                <div className="d-flex justify-content-end">
+                    <Dropdown>
+                    <Dropdown.Toggle
+                        variant="link"
+                        style={{ textDecoration: 'none', color: '#000', fontSize: '1.5rem', padding: '0' }}
+                    >
+                        ⋮
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item
+                        onClick={() => {
+                            setPostId(props.id);
+                            setShowDelete(true);
+                        }}
+                        >
+                        Delete
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                        onClick={() => {
+                            setPostId(props.id);
+                            setIsHide(props.isHide);
+                            setShowHide(true);
+                        }}
+                        >
+                        {props.isHide.toString() == "false" ? "Hide" : "Show"}
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                        onClick={() => {
+                            setPostId(props.id);
+                            setShowEdit(true);
+                            HandleShowEdit();
+                        }}
+                        >
+                        Edit
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                    </Dropdown>
+                </div>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
                     <ListGroup.Item>Available Days: {props.availableDays.join(', ')}</ListGroup.Item>
@@ -96,11 +134,11 @@ function TutorPostSelf(props: TutorPostProps) {
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
-                <Row>
+                {/* <Row>
                     <Col md="2"><Button variant="danger" onClick={() => {setPostId(props.id), setShowDelete(true)}}>Delete</Button></Col>
                     <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id),  setIsHide(props.isHide), setShowHide(true)}}>{props.isHide.toString() == "false" ? "Hide" : "Show"}</Button></Col>
                     <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true), HandleShowEdit()}}>Edit</Button></Col>
-                </Row>
+                </Row> */}
                 
             </Card>
 

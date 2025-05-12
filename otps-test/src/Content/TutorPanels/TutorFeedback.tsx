@@ -1,4 +1,4 @@
-import { Form, Card, ListGroup, Button, Modal } from "react-bootstrap"
+import { Form, Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import Select from "react-select"
 import styles from '../Widget/TutorPost.module.css';
@@ -75,14 +75,35 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                     <Card key = {index} className="mb-3">
                         
                         <Card.Body>
-                            <Card.Title> From {feedback.commentor} </Card.Title>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <Card.Title>From {feedback.commentor}</Card.Title>
+                            <Dropdown>
+                            <Dropdown.Toggle
+                                variant="link"
+                                id={`dropdown-${index}`}
+                                style={{ textDecoration: 'none', color: '#000', fontSize: '1.5rem', padding: '0' }}
+                            >
+                                ⋮
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item
+                                onClick={() => {
+                                    setShowReport(true);
+                                    setReportFeedbackID(feedback.id);
+                                }}
+                                >
+                                Report
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
                         </Card.Body>
                         
                         <ListGroup>
                             <ListGroup.Item>Comment: {feedback.comment}</ListGroup.Item>
                             <ListGroup.Item>Rating: {feedback.rating}</ListGroup.Item>
                         </ListGroup>
-                        <Button variant="danger" onClick={() => {setShowReport(true), setReportFeedbackID(feedback.id)}}>Report</Button>
+                        {/* <Button variant="danger" onClick={() => {setShowReport(true), setReportFeedbackID(feedback.id)}}>Report</Button> */}
                     </Card>
                 ))
                 ) : (

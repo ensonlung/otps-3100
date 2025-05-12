@@ -1,4 +1,4 @@
-import { Form, Card, ListGroup, Button, Modal } from "react-bootstrap"
+import { Form, Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap"
 import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
@@ -39,6 +39,22 @@ function TutorPostNoComment(props: TutorPostProps) {
     return (
         <>
             <Card>
+                <div className="d-flex justify-content-end">
+                    <Dropdown>
+                        <Dropdown.Toggle
+                        variant="link"
+                        id="dropdown-basic"
+                        style={{ textDecoration: 'none', color: '#000', fontSize: '1.5rem', padding: '0' }}
+                        >
+                        ⋮
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => { setShowReport(true); setReportPostID(props.id); }}>
+                            Report
+                        </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
                 <ListGroup>
                     <ListGroup.Item>Subject Offered: {props.subject.join(', ')} </ListGroup.Item>
                     <ListGroup.Item>District: {props.district.join(', ')}</ListGroup.Item>
@@ -48,7 +64,6 @@ function TutorPostNoComment(props: TutorPostProps) {
                     <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
                     <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
-                <Button variant="danger" onClick={() => {setShowReport(true), setReportPostID(props.id)}}>Report</Button>
             </Card>
 
             <Modal show={showReport} backdrop="static" onHide={() => {setShowReport(false)}}>
