@@ -21,7 +21,19 @@ function TutorPost(props: TutorPostProps, onComment: (username: string) => void)
     <Card>
       <Card.Body>
         <Card.Title>
-          {props.name} <span className={styles.username}>@{props.username}</span>
+          <Button variant="link" onClick={() => onComment(props.username)} style={{
+              padding: 0,
+              margin: 0,
+              fontSize: 'inherit', 
+              fontWeight: 'inherit', 
+              color: 'inherit', 
+              background: 'none',
+              border: 'none', 
+              verticalAlign: 'baseline',
+            }}>
+              {props.name}
+          </Button>
+          <span className={styles.username}>@{props.username}</span>
         </Card.Title>
         <Card.Text>{props.gender}</Card.Text>
       </Card.Body>
@@ -34,9 +46,6 @@ function TutorPost(props: TutorPostProps, onComment: (username: string) => void)
         <ListGroup.Item>Contact: {props.contact}</ListGroup.Item>
         <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
       </ListGroup>
-      <Button variant="secondary" onClick={() => onComment(props.username)}>
-        Check out more about {props.name}
-      </Button>
       <Form>
         <Form.Group>
           <Row></Row>
