@@ -23,10 +23,10 @@ function TutorPostSelf(props: TutorPostProps) {
     const [fee, setFee] = useState("")
     const [selfIntro, setSelfIntro] = useState("")
     
-    const HandleShowEdit = async () => {
+    const HandleShowEdit = async (pid: string) => {
         try {
           const response = await axios.post('http://localhost:3000/api/get-post', {
-            id: postId,
+            id: pid,
           });
           const post = response.data.post;
           console.log(post);
@@ -118,7 +118,7 @@ function TutorPostSelf(props: TutorPostProps) {
                         onClick={() => {
                             setPostId(props.id);
                             setShowEdit(true);
-                            HandleShowEdit();
+                            HandleShowEdit(props.id);
                         }}
                         >
                         Edit
