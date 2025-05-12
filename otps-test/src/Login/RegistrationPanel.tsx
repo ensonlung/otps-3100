@@ -8,7 +8,7 @@ function RegistrationPanel() {
     const [userType, setUserType] = useState('Student');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('Male'); //Preset Male
     const [email, setEmail] = useState('');
     const [bday, setBday] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -27,7 +27,7 @@ function RegistrationPanel() {
             setError('Invalid email. Register Failed.');
             return;
         }
-        else if (Bday>=NewDay || Bday<=OldDay) {
+        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
             console.log("Invalid Birth Day");
             setError('Invalid birth date. Register Failed.');
             return;
@@ -37,6 +37,11 @@ function RegistrationPanel() {
             setError('Invalid Phone Number. Register Failed.');
             return;
         }
+        else if (userName.length<5){ //newly added
+             console.log("User name is too short");
+            setError('User name is too short. Register Failed.'+lastName.length+firstName.length+userName.length+gender.length);
+            return;
+        }
         else if (password != rePassword) {
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match. Register Failed.');
@@ -44,7 +49,7 @@ function RegistrationPanel() {
         }
         else if (password.length < minLength){
             console.log("Password too short.");
-            setError('Password should at least 8 digit. Register Failed.');
+            setError('Password should at least '+ minLength +' digit. Register Failed.');
             return;
         }
         else if (!/[A-Z]/.test(password)){
@@ -57,7 +62,7 @@ function RegistrationPanel() {
             setError('Password must contain at least one lowercase letter. Register Failed.');
             return;
         }
-        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)){
+        else if (!/[!@#$%^&*(),.?":{}|<>_-]/.test(password)){
             console.log("Password must contain at least one special character.");
             setError('Password must contain at least one special character. Register Failed.');
             return;
@@ -67,17 +72,16 @@ function RegistrationPanel() {
             setError('Password must contain at least one digit. Register Failed.');
             return;
         }
-        else if (/[${userName}]/.test(password)){
+        else if (password.includes(userName)){ //fixed
             console.log("Password cannot contain username.");
             setError('Password cannot contain username. Register Failed.');
             return;
         }
-        else if (lastName.length==0 ||firstName.length==0 || userName.length==0 || email.length==0 
-            || gender.length==0 || bday.length==0) {
+        else if (lastName.length==0 ||firstName.length==0) { 
                 console.log("Please fill in all data");
                 setError('Please fill in all data. Register Failed.');
                 return;
-            }
+        }
         try {
             const checkRegisterUsername = await axios.post('http://localhost:3000/api/verify-username', {
                 username: userName,
