@@ -1,7 +1,7 @@
 # Online Tutorial Pairing System
 
 ## Overview
-A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. 
+A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. \\
 Features include tutor post creation, search, filter, feedback, and reporting.
 
 ## Project Structure
