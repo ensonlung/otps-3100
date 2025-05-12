@@ -46,7 +46,7 @@ const searchController = {
                 return {
                   id: postData.id,
                   username: postData.username,
-                  name: record["last name"] + record["first name"],
+                  name: record["first name"] + " " + record["last name"] ,
                   subject: postData.subject,
                   gender: record.gender,
                   day: postData.day,
