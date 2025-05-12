@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import axios from "axios"
 
 interface TutorLeftPanelProp {
     username: string;
@@ -8,8 +9,9 @@ interface TutorLeftPanelProp {
 
 function TutorLeftPanel({username}: TutorLeftPanelProp) {
     const navigate = useNavigate();
-
+    const minLength = 8;
     // Update useState
+    const [error, setError] = useState('')
     const [showUpdate, setShowUpdate] = useState(false)
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -24,13 +26,95 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
     const [newPassword, setNewPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
 
+    
+    const HandleShowInfo = async () => {
+        try {
+            const response = await axios.post("http://localhost:3000/api/get-info", {
+                username: username,
+            });
+            const post = response.data.account;
+            console.log(post);
+            setFirstName(post["first name"]);
+            setLastName(post["last name"]);
+            setGender(post.gender);
+            setEmail(post.email);
+            setBday(post.bday);
+            setPhoneNumber(post["phone number"]);
+        } catch (error) {
+            alert("Failed to get user information");
+        }
+    }
+
     const HandleInfoUpdate = async () => {
         // TODO:
+        try {
+            const updatedInfo = {"last name": lastName, "first name": firstName, "gender": gender,
+                "email": email, "bday": bday, "phone number": phoneNumber};
+            const response = await axios.post("http://localhost:3000/api/update-info", {
+                username: username,
+                updatedInfo: updatedInfo,
+            });
+            alert("User information updated");
+        } catch (error) {
+            alert("Failed to update user information");
+        }
         setShowUpdate(false);
     }
 
     const HandlePasswordUpdate = async () => {
-        // TODO:
+        const response = await axios.post("http://localhost:3000/api/get-password", {
+            username: username,
+        });
+        setError('');
+        const realOldPassword = response.data.password;
+        if (realOldPassword != oldPassword){
+            console.log("Old password is wrong.");
+            setError('Old password is wrong.');
+            return;
+        } else if (newPassword != rePassword) {
+            console.log("Two passwords are not the same.");
+            setError('Two passwords do not match.');
+            return;
+        }
+        else if (newPassword.length < minLength){
+            console.log("Password too short.");
+            setError('Password should at least 8 digit.');
+            return;
+        }
+        else if (!/[A-Z]/.test(newPassword)){
+            console.log("Password must contain at least one uppercase letter.");
+            setError('Password must contain at least one uppercase letter.');
+            return;
+        }
+        else if (!/[a-z]/.test(newPassword)){
+            console.log("Password must contain at least one lowercase letter.");
+            setError('Password must contain at least one lowercase letter.');
+            return;
+        }
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(newPassword)){
+            console.log("Password must contain at least one special character.");
+            setError('Password must contain at least one special character.');
+            return;
+        }
+        else if (!/[0-9]/.test(newPassword)){
+            console.log("Password must contain at least one digit.");
+            setError('Password must contain at least one digit.');
+            return;
+        }
+        else if (/[${userName}]/.test(newPassword)){
+            console.log("Password cannot contain username.", username, newPassword);
+            setError('Password cannot contain username.');
+            return;
+        }
+        try {
+            const response = await axios.post("http://localhost:3000/api/update-password", {
+                username: username,
+                newPw: newPassword,
+            });
+            alert("User information updated");
+        } catch (error) {
+            alert("Failed to update user information");
+        }
         setShowPw(false);
     }
 
@@ -49,7 +133,7 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
                         <Card.Body>
                             Username: {username}
                         </Card.Body>
-                        <Button variant="primary" onClick={() => setShowUpdate(true)}>Update Profile</Button>    
+                        <Button variant="primary" onClick={() => {HandleShowInfo(), setShowUpdate(true)}}>Update Profile</Button>    
                         <Button variant="secondary" onClick={() => setShowPw(true)}>Change Password</Button>
                     </Card>
                 </Row>
@@ -68,13 +152,13 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
                             <Col md="6">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>First Name:</Form.Label>
-                                    <Col sm="12"><Form.Control type="text" placeholder="first name" onChange={(e) => setFirstName(e.target.value)}></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                             <Col md="4">
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label>Last Name:</Form.Label>
-                                    <Col sm="12"><Form.Control type="text" placeholder="last name" onChange={(e) => setLastName(e.target.value)}></Form.Control></Col>
+                                    <Col sm="12"><Form.Control type="text" value={lastName} onChange={(e) => setLastName(e.target.value)}></Form.Control></Col>
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -82,22 +166,22 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
                         <div key="inline-radio" className="mb-3">
                             <Form.Label>Gender:</Form.Label>
                             <Col>
-                            <Form.Check inline label="Male" name="gender" type={"radio"} defaultChecked onClick={() => setGender("Male")}/>
-                            <Form.Check inline label="Female" name="gender" type={"radio"} onClick={() => setGender("Female")}/>
+                            <Form.Check inline label="Male" name="gender" type={"radio"} checked={gender==="Male"} onClick={() => setGender("Male")}/>
+                            <Form.Check inline label="Female" name="gender" type={"radio"} checked={gender==="Female"} onClick={() => setGender("Female")}/>
                             </Col>
                         </div>
                         </Row>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Email:</Form.Label>
-                            <Col sm="10"><Form.Control type="email" placeholder="email" onChange={(e) => setEmail(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Birth Date:</Form.Label>
-                            <Col sm="10"><Form.Control type="date" onChange={(e) => setBday(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="date" value={bday} onChange={(e) => setBday(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Phone Number:</Form.Label>
-                            <Col sm="10"><Form.Control type="phone" placeholder="phone number" onChange={(e) => setPhoneNumber(e.target.value)}></Form.Control></Col>
+                            <Col sm="10"><Form.Control type="phone" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}></Form.Control></Col>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -131,6 +215,7 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
                                 </Form.Group>
                             </Col>
                         </Row>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
