@@ -44,7 +44,7 @@ function AdminPage() {
             availableDays: post.postCon.day || [],
             contact: post.postCon.contact || 'Not Spec',
             reportReason: post.reportDetails.reportReason || '',
-            specificReason: post.reportDetails.specialReportReason || '',
+            specificReason: post.reportDetails.reportSpecialReason || '',
           }));
           setReportedPosts(formattedPosts);
         } catch (error) {
@@ -67,8 +67,10 @@ function AdminPage() {
             comment: feedback.feedbackCon.comment || '',
             rating: feedback.feedbackCon.rating || '',
             reportReason: feedback.reportDetails.reportReason || '',
-            specificReason: feedback.reportDetails.specialReportReason || '',
+            specificReason: feedback.reportDetails.reportSpecialReason || '',
           }));
+          console.log(formattedFeedbacks);
+
           setReportedFeedbacks(formattedFeedbacks);
         } catch (error) {
           console.error('Error fetching initial feedbacks:', error);
