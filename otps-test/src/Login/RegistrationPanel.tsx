@@ -23,70 +23,67 @@ function RegistrationPanel() {
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
 
-    const HandleRegister = async () => { //add validation check
+    const HandleRegister = async () => { //Registration page validation check
         setError('');
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+        //Check email format sth@sth.com
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){ 
             console.log("Invalid email");
             setError('Invalid email. Register Failed.');
             return;
         }
+        //check Day of Birth
         else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
             console.log("Invalid Birth Day");
             setError('Invalid birth date. Register Failed.');
             return;
         }
-        else if (phoneNumber.length!=8){
-            console.log("Invalid Phone Number");
-            setError('Invalid Phone Number. Register Failed.');
-            return;
-        }
-        else if (userName.length<5){ //newly added
+        else if (userName.length<5){ //check user name length
              console.log("User name is too short");
             setError('User name is too short. Register Failed.');
             return;
         }
-        else if (password != rePassword) {
+        else if (password != rePassword) { //check repassword
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match. Register Failed.');
             return;
         }
-        else if (password.length < minLength){
+        else if (password.length < minLength){ //check password strength
             console.log("Password too short.");
             setError('Password should at least '+ minLength +' digit. Register Failed.');
             return;
         }
-        else if (!/^[0-9]{8}$/.test(phoneNumber)){
+        else if (!/^[0-9]{8}$/.test(phoneNumber)){ //Only digit in phone number
             console.log("Invalid Phone Number");
             setError('Invalid Phone Number. Register Failed.');
             return;
         }
-        else if (!/[a-z]/.test(password)){
+        else if (!/[a-z]/.test(password)){//check password strength
             console.log("Password must contain at least one lowercase letter.");
             setError('Password must contain at least one lowercase letter. Register Failed.');
             return;
         }
-        else if (!/[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(password)){
+        else if (!/[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(password)){//check password strength
             console.log("Password must contain at least one special character.");
             setError('Password must contain at least one special character. Register Failed.');
             return;
         }
-        else if (!/[0-9]/.test(password)){
+        else if (!/[0-9]/.test(password)){//check password strength
             console.log("Password must contain at least one digit.");
             setError('Password must contain at least one digit. Register Failed.');
             return;
         }
-        else if (password.includes(userName)){ //fixed
+        else if (password.includes(userName)){ //check password strength
             console.log("Password cannot contain username.");
             setError('Password cannot contain username. Register Failed.');
             return;
         }
-        else if (lastName.length==0 ||firstName.length==0) { 
+        else if (lastName.length==0 ||firstName.length==0) { //check no null
                 console.log("Please fill in all data");
                 setError('Please fill in all data. Register Failed.');
                 return;
         }
         try {
-            if (userType == "Tutor") {
+            if (userType == "Tutor") { //Tutor register need valid license
                 const checkLicense = await axios.post('http://localhost:3000/api/license-check', { 
                     license: license,
                 });
@@ -95,10 +92,11 @@ function RegistrationPanel() {
                     return;
                 }
             }
+            //get existed username
             const checkRegisterUsername = await axios.post('http://localhost:3000/api/verify-username', {
-                username: userName,
+                username: userName, 
             });
-    
+            //Confirm no duplicated username
             if (checkRegisterUsername.data.exists) {
                 setError('Username already taken! Please choose a different username.');
                 return;
