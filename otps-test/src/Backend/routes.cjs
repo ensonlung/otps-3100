@@ -9,6 +9,7 @@ const commentController = require('./commentController.cjs');
 const reportController = require('./reportController.cjs');
 const updateController = require('./updateController.cjs');
 const adminController = require('./adminController.cjs');
+const licenseController = require('./licenseController.cjs');
 
 router.post('/register', registerController.registerAccount);
 router.post('/verify-username', registerController.verifyUsername);
@@ -33,5 +34,6 @@ router.post('/remove-post', adminController.removePost);
 router.post('/remove-feedback', adminController.removeFeedback);
 router.post('/remove-user', adminController.removeUser);
 router.post('/ignore', adminController.ignore);
+router.post('/license-check', licenseController.checkLicense);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import { Row, Col, Card, Form, Button } from "react-bootstrap"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -15,11 +15,30 @@ function RegistrationPanel() {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
+    const [license, setLicense] = useState('')
+    const [allLicense, setAllLicense] = useState<string[]>([])
     const [error, setError] = useState('')
     const navigate = useNavigate();
     const NewDay = new Date("01-01-2020");
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
+
+    useEffect(() => {
+        console.log('fetching license');
+        const fetchLicenses = async () => {
+          try {
+            const response = await axios.post('http://localhost:3000/api/license-get');
+            console.log(response)
+            const licenses: any[] = response.data.licenses;
+            setAllLicense(licenses);
+          } catch (error) {
+            console.error('Error fetching licenses:', error);
+            setAllLicense([]);
+          }
+        };
+        fetchLicenses();
+      }, []);
+
     const HandleRegister = async () => { //add validation check
         setError('');
         if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
@@ -83,6 +102,15 @@ function RegistrationPanel() {
                 return;
         }
         try {
+            if (userType == "Tutor") {
+                const checkLicense = await axios.post('http://localhost:3000/api/license-check', { 
+                    license: license,
+                });
+                if (!checkLicense.data.exists) {
+                    setError('Please enter a correct license key.');
+                    return;
+                }
+            }
             const checkRegisterUsername = await axios.post('http://localhost:3000/api/verify-username', {
                 username: userName,
             });
@@ -171,7 +199,10 @@ function RegistrationPanel() {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label>License Key (only for tutor account):</Form.Label>
+                            <Col sm="10"><Form.Control type="text" placeholder="license key" onChange={(e) => setLicense(e.target.value)}></Form.Control></Col>
+                        </Form.Group>
                     </Form>
                     <Button variant="success" onClick={HandleRegister}>
                         Register
