@@ -1,43 +1,46 @@
-# Tutoring Platform Web App
+# Online Tutorial Pairing System
 
 ## Overview
-A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. Features include tutor post creation, search, feedback, and reporting.
+A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. 
+Features include tutor post creation, search, filter, feedback, and reporting.
 
 ## Project Structure
 - **Frontend** (React):
-  - `TutorPost.tsx`: Displays tutor post with clickable name to view feedback.
-  - `TutorPostSelf.tsx`: Displays tutor post for owner with edit/delete/hide options.
-  - `TutorPostNoComment.tsx`: Displays tutor post with report option (three-dot menu).
-  - `TutorFeedback.tsx`: Displays tutor feedback with average rating and report option.
-  - `TutorPost.module.css`: Styles for tutor post components.
-- **Backend** (Node.js/Express):
-  - `filterController.cjs`: Handles post filtering and feedback retrieval.
-  - `searchController.cjs`: Handles search by name.
+  - `Content/AdminPanel/`: All related UIs in admin's page
+  - `Content/StudentPanels/`: All related UIs in student's page
+  - `Content/TutorPanels/`: All related UI in tutor's page
+  - `Content/Widget/`: All related UI of the format of a post.
+  - `Login`: All related UI of login page and register page.
+- **Backend** (Node.js/Express):'
+  - `adminController.cjs`: Handles all admin features.
+  - `commentController.cjs`: Handles all comments feature.
+  - `filterController.cjs`: Handles filter post feature.
   - `firebase.cjs`: Initializes Firebase Admin SDK.
-  - `TutorPostInfo.cjs`: Static data (subjects, districts, etc.).
+  - `licenseController.cjs`: Handles all license feature.
+  - `loginController.cjs`: Handles login feature.
+  - `postController.cjs`: Handles all post feature.
+  - `registerController.cjs`: Handles register account feature.
+  - `reportController.cjs`: Handles report post/feedback feature..
+  - `searchController.cjs`: Handles search post feature..
+  - `server.cjs`: Initialize server.
+  - `updateController.cjs`: Handles database updates from user's edit.
 
-## Frontend Components
-- **TutorPost.tsx**:
-  - Features: Displays tutor details; name links to feedback; rating right-aligned.
-- **TutorPostSelf.tsx**:
-  - Features: Edit/delete/hide post; edit modal with multi-select and radio buttons.
-- **TutorPostNoComment.tsx**:
-  - Features: Displays post with report option in three-dot menu.
-- **TutorFeedback.tsx**:
-  - Features: Shows feedback with average rating; report option in three-dot menu.
+## Frontend Main Components
+- **TutorPostForm.tsx**:
+  - Features: Displays all posts when any filter/search is applied.
+- **CommentPage.tsx**:
+  - Features: Displays all posts of certain tutor with its feedback.
+- **AdminPost.tsx**:
+  - Features: Displays all report issues from the users.
 
 ## Backend Endpoints
-- **filterController.cjs**:
-  - `/api/filter-post`: Filters posts by criteria; sorts by `createdAt`.
-  - `/api/get-comment`: Fetches feedback and average rating for a tutor.
-- **searchController.cjs**:
-  - `/api/searchRelevantName`: Searches posts by name; sorts by `createdAt` in application code.
+- **routes.cjs**: stored all used endpoints
 
 ## Database (Firestore)
 - **Collections**:
-  - `account`: Stores user info (`username`, `first name`, `last name`, `gender`, `phone number`).
-  - `post`: Stores tutor posts (`username`, `subject`, `district`, `day`, `startTime`, `endTime`, `fee`, `selfIntro`, `isHide`, `createdAt`).
-  - `comment`: Stores feedback (`tutorName`, `username`, `comment`, `rating`, `createdAt`).
+  - `account`: Stores user info (`username`, `first name`, `last name`, `gender`, `phone number`, `bday`, `password`, `user type`, `email`).
+  - `post`: Stores tutor posts (`createdAt`, `district`, `day`, `subject`, `startTime`, `endTime`, `fee`, `selfIntro`, `isHide`, `id`).
+  - `comment`: Stores feedback (`tutorName`, `commentor`, `comment`, `rating`, `createdAt`, `id`).
 
 ## Setup
 1. Clone: `git clone https://github.com/ensonlung/otps-3100.git && cd otps-3100/otps-test`
