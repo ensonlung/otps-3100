@@ -20,7 +20,7 @@ function Login() {
                 <Row className="justify-content-md-center">
                     <Col md="auto">
                         <LoginPanel onSignIn={HandleSignIn} />
-                        <br/><label>If you don't have an account:</label> <a href="./Registration">Sign-up</a>
+                        <br/><label>If you don't have an account:</label> <a href="/Registration">Sign-up</a>
                     </Col>
                 </Row>
             </Container>
