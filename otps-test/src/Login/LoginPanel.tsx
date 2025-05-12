@@ -40,6 +40,7 @@ function LoginPanel({onSignIn}: LoginPanelProp) {
                         <div key="inline-radio" className="mb-3">
                             <Form.Check inline label="Student" name="user" type={"radio"} defaultChecked onClick={() => setUserType("Student")}/>
                             <Form.Check inline label="Tutor" name="user" type={"radio"} onClick={() => setUserType("Tutor")}/>
+                                <Form.Check inline label="Admin" name="user" type={"radio"} onClick={() => setUserType("Admin")}/>
                         </div>
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label>Username:</Form.Label>
