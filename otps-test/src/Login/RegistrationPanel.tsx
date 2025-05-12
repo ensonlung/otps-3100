@@ -1,5 +1,5 @@
 import { Row, Col, Card, Form, Button } from "react-bootstrap"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -22,22 +22,6 @@ function RegistrationPanel() {
     const NewDay = new Date("01-01-2020");
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
-
-    useEffect(() => {
-        console.log('fetching license');
-        const fetchLicenses = async () => {
-          try {
-            const response = await axios.post('http://localhost:3000/api/license-get');
-            console.log(response)
-            const licenses: any[] = response.data.licenses;
-            setAllLicense(licenses);
-          } catch (error) {
-            console.error('Error fetching licenses:', error);
-            setAllLicense([]);
-          }
-        };
-        fetchLicenses();
-      }, []);
 
     const HandleRegister = async () => { //add validation check
         setError('');

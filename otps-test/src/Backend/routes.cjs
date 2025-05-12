@@ -35,5 +35,6 @@ router.post('/remove-feedback', adminController.removeFeedback);
 router.post('/remove-user', adminController.removeUser);
 router.post('/ignore', adminController.ignore);
 router.post('/license-check', licenseController.checkLicense);
+router.post('/license-get', licenseController.getLicense);
 
 module.exports = router;
