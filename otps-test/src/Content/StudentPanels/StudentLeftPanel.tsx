@@ -25,7 +25,6 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
-
     const HandleShowInfo = async () => {
         try {
             const response = await axios.post("http://localhost:3000/api/get-info", {
@@ -43,9 +42,36 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
             alert("Failed to get user information");
         }
     }
-
+     const NewDay = new Date("01-01-2020");
+    const OldDay = new Date("01-01-1900");
+    const Bday = new Date(bday);
     const HandleInfoUpdate = async () => {
         // TODO:
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+            console.log("Invalid email");
+            setError('Invalid email. Register Failed.');
+            return;
+        }
+        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
+            console.log("Invalid Birth Day");
+            alert('Invalid birth date. Register Failed.');
+            return;
+        }
+        else if (phoneNumber.length!=8){
+            console.log("Invalid Phone Number");
+            alert('Invalid Phone Number. Register Failed.');
+            return;
+        }
+        else if (username.length<5){ //newly added
+             console.log("User name is too short");
+            alert('User name is too short. Register Failed.');
+            return;
+        }
+        else if (lastName.length==0 ||firstName.length==0) { 
+                console.log("Please fill in all data");
+                alert("Please fill in all data. Register Failed.");
+                return;
+        }
         try {
             const updatedInfo = {"last name": lastName, "first name": firstName, "gender": gender,
                 "email": email, "bday": bday, "phone number": phoneNumber};
@@ -100,7 +126,7 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
             setError('Password must contain at least one digit.');
             return;
         }
-        else if (/[${userName}]/.test(newPassword)){
+        else if (newPassword.includes(username)){
             console.log("Password cannot contain username.");
             setError('Password cannot contain username.');
             return;

@@ -39,7 +39,7 @@ function RegistrationPanel() {
         }
         else if (userName.length<5){ //newly added
              console.log("User name is too short");
-            setError('User name is too short. Register Failed.'+lastName.length+firstName.length+userName.length+gender.length);
+            setError('User name is too short. Register Failed.');
             return;
         }
         else if (password != rePassword) {
