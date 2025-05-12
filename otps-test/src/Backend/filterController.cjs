@@ -175,7 +175,7 @@ const filterController = {
           return {
             id: post.id,
             username: post.username,
-            name: record ? `${record["last name"]}${record["first name"]}` : 'Unknown',
+            name: record ? `${record["last name"]} ${record["first name"]}` : 'Unknown',
             subject: post.subject || [],
             gender: record?.gender || 'Unknown',
             day: post.day || [],
