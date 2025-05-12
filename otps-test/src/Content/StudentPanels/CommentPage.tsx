@@ -77,7 +77,7 @@ function CommentPage() {
   };
 
   const HandleBack = () => {
-    navigate("/Content/StudentPage");
+    navigate("/Content/StudentPage", { state: {username}, replace: true });
   };
 
   return (
