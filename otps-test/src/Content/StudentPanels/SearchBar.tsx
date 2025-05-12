@@ -30,6 +30,7 @@ const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 selfIntro: post.selfIntro || "None",
                 getHide: false, 
                 isHide: post.isHide, 
+                avgRating: post.avgRating,
             }));
 
             setDisplayPosts(formattedPost);

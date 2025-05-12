@@ -14,3 +14,9 @@
     color: #7f8c8d; /* Gray color for username */
     font-size: 1.05rem; /* Font size for username (20px) */
   }
+
+  .rating {
+    color: #000204; /* Gray color for username */
+    float: right; /* Add some spacing between username and rating */
+    font-size: 1.05rem; /* Font size for username (20px) */
+  }

@@ -89,6 +89,7 @@ function TutorPostForm({username}: StudentLeftPanelProp) {
                 selfIntro: post.selfIntro,
                 time: post.time,
                 isHide: post.isHide,
+                avgRating: post.avgRating,
             }));
             setDisplayPosts(formattedPosts);
           } catch (error) {

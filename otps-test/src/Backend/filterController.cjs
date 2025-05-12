@@ -170,6 +170,7 @@ const filterController = {
       const finalPosts = await Promise.all(
         posts.map(async (post) => {
           const record = await getRecordByName(post.username);
+          const rating = await getAvgRatingByName(post.username);
           const formattedStartTime = formatTimeTo12Hour(post.startTime);
           const formattedEndTime = formatTimeTo12Hour(post.endTime);
           return {
@@ -184,6 +185,7 @@ const filterController = {
             contact: record?.["phone number"] || "Not Spec",
             selfIntro: post.selfIntro || "None",
             isHide: post.isHide,
+            avgRating: rating,
           };
         })
       );
@@ -202,6 +204,29 @@ async function getRecordByName(name) {
     if (userQuery.empty) return null;
     const userData = userQuery.docs[0].data();
     return userData.userInfo;
+  } catch (error) {
+    console.error('Error fetching record for name', name, ':', error);
+    return null;
+  }
+}
+
+async function getAvgRatingByName(name){
+  try {
+    const userQuery = await db.collection('comment').where('commentInfo.tutorName', '==', name).get();
+    if (userQuery.empty) 
+      return '--';
+    
+    const ratings = userQuery.docs
+      .map(doc => parseFloat(doc.data().commentInfo.rating))
+      .filter(rating => !isNaN(rating));
+
+    // Handle case where no valid ratings are found
+    if (ratings.length === 0) 
+      return '--';
+
+    // Calculate the average
+    const totalRating = ratings.reduce((acc, num) => acc + num, 0);
+    return totalRating / ratings.length;
   } catch (error) {
     console.error('Error fetching record for name', name, ':', error);
     return null;

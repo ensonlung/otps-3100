@@ -44,6 +44,7 @@ function CommentPage() {
           contact: post.contact || 'Not Spec',
           selfIntro: post.selfIntro || "None",
           isHide: post.isHide,
+          avgRating: post.avgRating,
         }));
         setDisplayPosts(formattedPosts);
       } catch (error) {

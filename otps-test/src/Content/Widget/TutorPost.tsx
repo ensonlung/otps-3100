@@ -13,6 +13,7 @@ export interface TutorPostProps {
   tuitionFee: string;
   contact: string;
   selfIntro: string;
+  avgRating: string;
   isHide: string;
 }
 
@@ -34,6 +35,7 @@ function TutorPost(props: TutorPostProps, onComment: (username: string) => void)
               {props.name}
           </Button>
           <span className={styles.username}>@{props.username}</span>
+          <span className={styles.rating}> Rating: {props.avgRating} </span>
         </Card.Title>
         <Card.Text>{props.gender}</Card.Text>
       </Card.Body>

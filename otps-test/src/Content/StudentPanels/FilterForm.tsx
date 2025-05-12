@@ -49,6 +49,7 @@ const FilterForm: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 contact: post.contact || 'Not Spec',
                 selfIntro: post.selfIntro || "None",
                 isHide: post.isHide,
+                avgRating: post.avgRating,
             }));
             setDisplayPosts(formattedPost);
         }

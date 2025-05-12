@@ -40,7 +40,7 @@ const searchController = {
               querySnapshot.docs.map(async (doc) => {
                 const postData = doc.data().postContent;
                 const record = await getRecordByName(postData.username);
-                
+                const rating = await getAvgRatingByName(postData.username);
                 const formattedStartTime = formatTimeTo12Hour(postData.startTime);
                 const formattedEndTime = formatTimeTo12Hour(postData.endTime);
                 return {
@@ -55,6 +55,7 @@ const searchController = {
                   fee: postData.fee,
                   contact: record["phone number"],
                   selfIntro: postData.selfIntro,
+                  avgRating: rating,
                 };
               })
             );
@@ -77,5 +78,27 @@ async function getRecordByName(name) {
     return undefined;
   }
 }
+
+async function getAvgRatingByName(name){
+  try {
+    const userQuery = await db.collection('comment').where('commentInfo.tutorName', '==', name).get();
+    if (userQuery.empty) 
+      return '--';
+    
+    const ratings = userQuery.docs
+      .map(doc => parseFloat(doc.data().commentInfo.rating))
+      .filter(rating => !isNaN(rating));
+
+    if (ratings.length === 0) 
+      return '--';
+
+    const totalRating = ratings.reduce((acc, num) => acc + num, 0);
+    return totalRating / ratings.length;
+  } catch (error) {
+    console.error('Error fetching record for name', name, ':', error);
+    return null;
+  }
+}
+
 
 module.exports = searchController;
