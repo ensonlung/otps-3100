@@ -32,7 +32,6 @@ const SearchBar: React.FC<FilterFormProps> = ({ setDisplayPosts }) => {
                 isHide: post.isHide, 
                 avgRating: post.avgRating,
             }));
-
             setDisplayPosts(formattedPost);
         } catch (error){
             console.error("Error Search");

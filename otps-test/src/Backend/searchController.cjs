@@ -28,17 +28,31 @@ const searchController = {
                 if (userInfo && (userInfo.username.toLowerCase().includes(anyName.toLowerCase()) || (userInfo["last name"]+" "+userInfo["first name"]).toLowerCase().includes(anyName.toLowerCase()) || (userInfo["first name"]+" "+userInfo["last name"]).toLowerCase().includes(anyName.toLowerCase()))) 
                   matchingRecords.push(userInfo.username);
             });
-            console.log(matchingRecords);
 
             if (matchingRecords.length == 0){
               return res.json({ posts: [] });
             }
-            const postRef = db.collection('post').where('postContent.isHide', '==', false).where('postContent.username', 'in', matchingRecords);
-            postRef.orderBy('postContent.createdAt', 'desc');
-            const querySnapshot = await postRef.get();
+            const posts = [];
+            for (let i = 0; i < matchingRecords.length; i += 10) {
+              const batch = matchingRecords.slice(i, i + 10);
+              const postQuery = db.collection('post')
+                .where('postContent.isHide', '==', false)
+                .where('postContent.username', 'in', batch);
+
+              const querySnapshot = await postQuery.get();
+              querySnapshot.docs.forEach(doc => {
+                posts.push({ id: doc.id, ...doc.data().postContent });
+              });
+            }
+
+            posts.sort((a, b) => {
+              const timeA = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+              const timeB = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+              return timeB - timeA;
+            });
+
             const filteredPosts = await Promise.all(
-              querySnapshot.docs.map(async (doc) => {
-                const postData = doc.data().postContent;
+              posts.map(async (postData) => {
                 const record = await getRecordByName(postData.username);
                 const rating = await getAvgRatingByName(postData.username);
                 const formattedStartTime = formatTimeTo12Hour(postData.startTime);
@@ -56,10 +70,11 @@ const searchController = {
                   contact: record["phone number"],
                   selfIntro: postData.selfIntro,
                   avgRating: rating,
+                  isHide: postData.isHide,
                 };
               })
             );
-
+            console.log(filteredPosts);
           return res.json({ posts: filteredPosts });
         } catch (error) {
           console.error('Error Searchhhhhh', error);
