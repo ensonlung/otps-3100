@@ -1,7 +1,7 @@
 # Online Tutorial Pairing System
 
 ## Overview
-A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. \\
+A tutoring platform built with React, React Bootstrap, Node.js, Express, and Firebase Firestore. <br>
 Features include tutor post creation, search, filter, feedback, and reporting.
 
 ## Project Structure
@@ -47,7 +47,6 @@ Features include tutor post creation, search, filter, feedback, and reporting.
 2. Install: `npm install`
 4. Run Backend: `node src/Backend/server.js`
 5. Run Frontend: `npm run dev`
-
 
 ## Future Improvements
 - Add Match Function with Chat System
