@@ -25,7 +25,7 @@ const searchController = {
 
             snapshot.forEach(doc => {
                 const userInfo = doc.data().userInfo;
-                if (userInfo && (userInfo.username.toLowerCase().includes(anyName.toLowerCase()) || (userInfo["last name"]+" "+userInfo["first name"]).toLowerCase().includes(anyName.toLowerCase()))) 
+                if (userInfo && (userInfo.username.toLowerCase().includes(anyName.toLowerCase()) || (userInfo["last name"]+" "+userInfo["first name"]).toLowerCase().includes(anyName.toLowerCase()) || (userInfo["first name"]+" "+userInfo["last name"]).toLowerCase().includes(anyName.toLowerCase()))) 
                   matchingRecords.push(userInfo.username);
             });
             console.log(matchingRecords);
