@@ -1,5 +1,20 @@
 const { db } = require('./firebase.cjs');
 
+const formatTimeTo12Hour = (time) => {
+  if (!time || time === 'All') return null;
+
+  const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+  if (!timeRegex.test(time)) {
+    console.warn(`Invalid time format: ${time}, expected HH:MM`);
+    return null;
+  }
+
+  const [hours, minutes] = time.split(':').map(Number);
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const adjustedHours = hours % 12 || 12; 
+  return `${adjustedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+};
+
 const searchController = {
     searchRelevantName: async (req, res) => {
         const { anyName } = req.body;
@@ -25,7 +40,9 @@ const searchController = {
               querySnapshot.docs.map(async (doc) => {
                 const postData = doc.data().postContent;
                 const record = await getRecordByName(postData.username);
-
+                
+                const formattedStartTime = formatTimeTo12Hour(postData.startTime);
+                const formattedEndTime = formatTimeTo12Hour(postData.endTime);
                 return {
                   id: postData.id,
                   username: postData.username,
@@ -34,6 +51,7 @@ const searchController = {
                   gender: record.gender,
                   day: postData.day,
                   district: postData.district,
+                  time: formattedStartTime && formattedEndTime ? `${formattedStartTime} - ${formattedEndTime}` : 'Not specified',
                   fee: postData.fee,
                   contact: record["phone number"],
                   selfIntro: postData.selfIntro,
