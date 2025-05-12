@@ -65,7 +65,7 @@ function RegistrationPanel() {
             setError('Password must contain at least one lowercase letter. Register Failed.');
             return;
         }
-        else if (!/^[0-9]{8}$/.test(password) || !/[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(password)){
+        else if (!/[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(password)){
             console.log("Password must contain at least one special character.");
             setError('Password must contain at least one special character. Register Failed.');
             return;
