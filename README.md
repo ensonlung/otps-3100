@@ -13,3 +13,5 @@ Lee King Sang Carey
 Wong Man Lai Angus
 
 Please read **documentation.md** for more details.
+
+Thanks!
