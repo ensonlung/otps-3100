@@ -55,7 +55,7 @@ function RegistrationPanel() {
             setError('Password should at least '+ minLength +' digit. Register Failed.');
             return;
         }
-        else if (/^[0-9]{8}$/.test(phoneNumber)){
+        else if (!/^[0-9]{8}$/.test(phoneNumber)){
             console.log("Invalid Phone Number");
             setError('Invalid Phone Number. Register Failed.');
             return;
@@ -65,7 +65,7 @@ function RegistrationPanel() {
             setError('Password must contain at least one lowercase letter. Register Failed.');
             return;
         }
-        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){
+        else if (!/^[0-9]{8}$/.test(password) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(password)){
             console.log("Password must contain at least one special character.");
             setError('Password must contain at least one special character. Register Failed.');
             return;
