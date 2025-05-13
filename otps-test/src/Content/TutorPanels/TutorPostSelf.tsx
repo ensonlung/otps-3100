@@ -134,11 +134,6 @@ function TutorPostSelf(props: TutorPostProps) {
                     <ListGroup.Item>Tuition Fee: {props.tuitionFee}</ListGroup.Item>
                     <ListGroup.Item>Description: {props.selfIntro}</ListGroup.Item>
                 </ListGroup>
-                {/* <Row>
-                    <Col md="2"><Button variant="danger" onClick={() => {setPostId(props.id), setShowDelete(true)}}>Delete</Button></Col>
-                    <Col md="2"><Button variant="primary" onClick={() => {setPostId(props.id),  setIsHide(props.isHide), setShowHide(true)}}>{props.isHide.toString() == "false" ? "Hide" : "Show"}</Button></Col>
-                    <Col md="2"><Button variant="secondary" onClick={() => {setPostId(props.id), setShowEdit(true), HandleShowEdit()}}>Edit</Button></Col>
-                </Row> */}
                 
             </Card>
 

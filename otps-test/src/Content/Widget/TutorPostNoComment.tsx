@@ -2,7 +2,6 @@ import { Form, Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap"
 import { useState } from "react"
 import Select from "react-select"
 import { reportReason } from "../../TutorPostInfo.cjs"
-import styles from './TutorPost.module.css';
 import axios from "axios";
 import { TutorPostProps } from "./TutorPost";
 

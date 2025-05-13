@@ -1,4 +1,4 @@
-import { Card, ListGroup, Button, Modal, Col, Row } from "react-bootstrap"
+import { Card, ListGroup, Button, Col, Row } from "react-bootstrap"
 import styles from '../Widget/TutorPost.module.css';
 import axios from "axios";
 

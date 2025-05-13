@@ -48,28 +48,27 @@ function TutorLeftPanel({username}: TutorLeftPanelProp) {
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
     const HandleInfoUpdate = async () => {
-        // TODO:
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){ // check email
             console.log("Invalid email");
             alert('Invalid email. Register Failed.');
             return;
         }
-        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
+        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) { // check bday
             console.log("Invalid Birth Day");
             alert('Invalid birth date. Register Failed.');
             return;
         }
-        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){
+        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){ // check phone number
             console.log("Invalid Phone Number");
             alert('Invalid Phone Number. Register Failed.');
             return;
         }
-        else if (username.length<5){ //newly added
+        else if (username.length<5){ // check username length
              console.log("User name is too short");
             alert('User name is too short. Register Failed.');
             return;
         }
-        else if (lastName.length==0 ||firstName.length==0) { 
+        else if (lastName.length==0 ||firstName.length==0) {  // check name length
                 console.log("Please fill in all data");
                 alert("Please fill in all data. Register Failed.");
                 return;

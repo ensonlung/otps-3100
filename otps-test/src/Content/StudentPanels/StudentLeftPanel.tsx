@@ -46,28 +46,27 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
     const OldDay = new Date("01-01-1900");
     const Bday = new Date(bday);
     const HandleInfoUpdate = async () => {
-        // TODO:
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)){ // check email
             console.log("Invalid email");
             alert('Invalid email. Register Failed.');
             return;
         }
-        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) {
+        else if (bday=="" || Bday>=NewDay || Bday<=OldDay) { // check bday
             console.log("Invalid Birth Day");
             alert('Invalid birth date. Register Failed.');
             return;
         }
-        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){
+        else if (!/^[0-9]{8}$/.test(phoneNumber) || /[!@#$%^&*()))_+~=-{}|":';<>.,/?]/.test(phoneNumber)){ // check phone number
             console.log("Invalid Phone Number");
             alert('Invalid Phone Number. Register Failed.');
             return;
         }
-        else if (username.length<5){ //newly added
+        else if (username.length<5){ // check username length
              console.log("User name is too short");
             alert('User name is too short. Register Failed.');
             return;
         }
-        else if (lastName.length==0 ||firstName.length==0) { 
+        else if (lastName.length==0 || firstName.length==0) {  // check name length
                 console.log("Please fill in all data");
                 alert("Please fill in all data. Register Failed.");
                 return;
@@ -92,16 +91,16 @@ function StudentLeftPanel({username}: StudentLeftPanelProp) {
         });
         setError('');
         const realOldPassword = response.data.password;
-        if (realOldPassword != oldPassword){
+        if (realOldPassword != oldPassword){ // check password
             console.log("Old password is wrong.");
             setError('Old password is wrong.');
             return;
-        } else if (newPassword != rePassword) {
+        } else if (newPassword != rePassword) { // check new password
             console.log("Two passwords are not the same.");
             setError('Two passwords do not match.');
             return;
         }
-        else if (newPassword.length < minLength){
+        else if (newPassword.length < minLength){ // password validations
             console.log("Password too short.");
             setError('Password should at least 8 digit.');
             return;

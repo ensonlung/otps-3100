@@ -1,4 +1,4 @@
-import { Form, Card, ListGroup, Row, Col, Button, Modal } from "react-bootstrap";
+import { Form, Card, ListGroup, Row, Button } from "react-bootstrap";
 import styles from './TutorPost.module.css';
 
 export interface TutorPostProps {

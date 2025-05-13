@@ -8,7 +8,7 @@ function RegistrationPanel() {
     const [userType, setUserType] = useState('Student');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
-    const [gender, setGender] = useState('Male'); //Preset Male
+    const [gender, setGender] = useState('Male');
     const [email, setEmail] = useState('');
     const [bday, setBday] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('')

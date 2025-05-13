@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Card, ListGroup, Button, Modal, Col, Row } from "react-bootstrap"
+import { Card, ListGroup, Button, Col, Row } from "react-bootstrap"
 import axios from "axios";
 
 export interface AdminFeedbackProps {

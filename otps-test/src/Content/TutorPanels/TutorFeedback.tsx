@@ -1,7 +1,6 @@
 import { Form, Card, ListGroup, Button, Modal, Dropdown } from "react-bootstrap"
 import { useState, useEffect } from "react"
 import Select from "react-select"
-import styles from '../Widget/TutorPost.module.css';
 import { tutorReportReason } from "../../TutorPostInfo.cjs"
 import axios from "axios"
 
@@ -103,7 +102,6 @@ const TutorFeedback: React.FC<TutorFeedbackProps> = ({ username }) => {
                             <ListGroup.Item>Comment: {feedback.comment}</ListGroup.Item>
                             <ListGroup.Item>Rating: {feedback.rating}</ListGroup.Item>
                         </ListGroup>
-                        {/* <Button variant="danger" onClick={() => {setShowReport(true), setReportFeedbackID(feedback.id)}}>Report</Button> */}
                     </Card>
                 ))
                 ) : (

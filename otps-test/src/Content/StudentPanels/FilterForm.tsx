@@ -1,6 +1,6 @@
 import { Form, Button } from "react-bootstrap"
 import React, { useState } from "react"
-import { subjects, districts, days, times, fees } from "../../TutorPostInfo.cjs"
+import { subjects, districts, days, fees } from "../../TutorPostInfo.cjs"
 import axios from "axios";
 import { TutorPostProps } from "../Widget/TutorPost";
 
